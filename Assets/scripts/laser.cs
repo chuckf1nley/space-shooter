@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class laser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //speed variable up
 
     // Update is called once per frame
     void Update()
     {
-        
+        private instantiate
+    //translate laser up
     }
-}
+       
+
+    private class instantiate
+    {
+        transform.translate = Vector3(0, transform.translate.y = 8f, 0);
+    }
