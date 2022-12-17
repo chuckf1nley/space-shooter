@@ -1,20 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class laser : MonoBehaviour
 {
+    [SerializeField]
+    private float VerticalMovement;
+    private float _speed = 8f;
+
     //speed variable up
+    //laser up
 
     // Update is called once per frame
-    void Update()
-    {
-        private instantiate
-    //translate laser up
-    }
-       
 
-    private class instantiate
-    {
-        transform.translate = Vector3(0, transform.translate.y = 8f, 0);
-    }
+    void Update()
+   //void CalculateMovement()
+    { 
+    float verticalMovement;
+    
+    
+         transform.Translate(Vector3.up * _speed * Time.deltaTime);
+    } 
+    
+
+
+}
