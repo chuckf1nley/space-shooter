@@ -8,21 +8,27 @@ public class laser : MonoBehaviour
     [SerializeField]
     private float VerticalMovement;
     private float _speed = 8f;
-
-    //speed variable up
-    //laser up
+      
+   
 
     // Update is called once per frame
 
     void Update()
    //void CalculateMovement()
-    { 
-    float verticalMovement;
+    {
+       
+        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+
+
+        //if ;aser position is greater thsn 8 on the y
+        //destroy the object
+
+        if (transform.position.y > 9f)
+        {
+            Destroy(this.gameObject);
+        }    
     
-    
-         transform.Translate(Vector3.up * _speed * Time.deltaTime);
     } 
     
-
 
 }
