@@ -62,9 +62,9 @@ public class player : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, 0, 0);
 
             }
-            else if (transform.position.y <= -3.8f)
+            else if (transform.position.y <= -4.8f)
             {
-                transform.position = new Vector3(transform.position.x, -3.8f, 0);
+                transform.position = new Vector3(transform.position.x, -4.8f, 0);
             }
 
 
