@@ -29,15 +29,11 @@ public class enemy : MonoBehaviour
 
         if (transform.position.y < -7.5f)
         {
-            transform.position = new Vector3(transform.position.x,  9f,  0);
+            float randomx = Random.Range(-10f, 10f);
+            transform.position = new Vector3(randomx, 10,  0);
         }
-
-        //else if (transform.position.y > 9f)
-        //{
-            //const float V = 9f;
-            //transform.position = new Vector3(transform.position.x,  V, 0);
-        //}
-
+        
+        
         void SpawnObject()
         {
             GameObject newObject = Instantiate(objectToSpawn);
