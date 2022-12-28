@@ -32,17 +32,19 @@ public class enemy : MonoBehaviour
             float randomx = Random.Range(-10f, 10f);
             transform.position = new Vector3(randomx, 10,  0);
         }
-        
-        
-        void SpawnObject()
-        {
-            GameObject newObject = Instantiate(objectToSpawn);
-           
-        }
-
+      
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit: " + other.transform.name);
+        //if other is player
+        //damage player
+        //destroy us
+        
+        //if player;
+        
+        
+        //if other is laser
+        //laser
+        //destroy us
     }
 }
