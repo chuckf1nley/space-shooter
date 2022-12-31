@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - spawnable
+  - laser
+  - enemy
   layers:
   - Default
   - TransparentFX

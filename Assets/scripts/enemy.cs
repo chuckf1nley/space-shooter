@@ -14,8 +14,13 @@ public class enemy : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    { 
+    
+    }    
+   
+    private void Instantiate(object objectToSpawn, object position, object rotation)
     {
-        //Instantiate(GameObject objectToSpawn, Vector3 position, Quaternion rotation);
+        throw new System.NotImplementedException();
     }
 
     // Update is called once per frame
@@ -39,12 +44,18 @@ public class enemy : MonoBehaviour
         //if other is player
         //damage player
         //destroy us
-        
-        //if player;
-        
-        
+
+        //if (other = player DestroygameObject)
+        //{DestroyGaameObject;
+        //}       
         //if other is laser
         //laser
         //destroy us
+
     }
+    void DestroyGameObject()
+    {
+        Destroy (gameObject);
+        }
+
 }
