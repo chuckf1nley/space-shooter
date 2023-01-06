@@ -45,13 +45,20 @@ public class enemy : MonoBehaviour
         //damage player
         //destroy us
 
-        //if (other = player DestroygameObject)
-        //{DestroyGaameObject;
-        //}       
+        if (other.tag == "Player")
+        {
+            Destroy(this.gameObject);
+        }
+
         //if other is laser
         //laser
         //destroy us
 
+        if (other.tag == "laser")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
     }
     void DestroyGameObject()
     {
