@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class Player : MonoBehaviour
 {
     //public or private
-    //data tyoe (int, bool, float string)
+    //data tyoe (int, bool, float, string)
     //everey variable has a name
     //optional value assigned
     [SerializeField]
@@ -94,7 +94,6 @@ public class player : MonoBehaviour
     public void Damage()
     {
         _lives -= 1;
-        //check if dead
         if (_lives < 1)
         {
             Destroy(this.gameObject);

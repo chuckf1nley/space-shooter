@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float vertical;
@@ -40,7 +40,7 @@ public class enemy : MonoBehaviour
        
         if (other.tag == "Player")
         {
- //43           Player player = other.transform.GetComponent<Player>();
+           Player player = other.transform.GetComponent<Player>();
 
             if (player != null)
             {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class laser : MonoBehaviour
+public class Laser : MonoBehaviour
 {
     [SerializeField]
     private float VerticalMovement;
@@ -18,10 +18,6 @@ public class laser : MonoBehaviour
     {
        
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
-
-
-        //if ;aser position is greater thsn 8 on the y
-        //destroy the object
 
         if (transform.position.y > 9f)
         {
