@@ -40,13 +40,10 @@ public class Player : MonoBehaviour
             {
                 FireLaser();
             }
-
         }
 
         {
             transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-
-
         }
 
         void CalculaateMovement()
@@ -68,8 +65,6 @@ public class Player : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, -4.8f, 0);
             }
-
-
 
             if (transform.position.x > 11f)
             {
