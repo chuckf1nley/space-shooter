@@ -5,46 +5,33 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private object EnemyPrefab;
-    private object GameObject;
-    private float _time = 5;
+    [SerializeField]
+    private GameObject _enemyPrefab;
+    [SerializeField]
+    private GameObject _enemyContainer;
+   
     // Start is called before the first frame update
+    Rigidbody Enemy;
     void Start()
     {
-
+        StartCoroutine(SpawnRoutine());
     }
-
+    
     // Update is called once per frame
     void Update()
     {
 
-        //while
-        {
-            //Instantiate(GameObject && Time.time);
-        }
-
     }
-
-    //spawn game objects every 5 seconds
-    //create a coroutine of type IEnumerator -- Yield Events
-    //while loop
 
     IEnumerator SpawnRoutine()
     {
-        //while loop (infinite loop)
-        //instantiate enemy prefab
-        //yield wait for 5 seconds
-               
-        int Enemy = 5;
-        while (Enemy > 0)
-        //Instantiate(EnemyPrefab (&& _time ));
-        yield return new WaitForSeconds(5);
-    }
+       while (true)
+        {
+            Vector3 posToSpawn = new Vector3(UnityEngine.Random.Range(-8f, 8f), 7, 0);
+           GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            newEnemy.transform.parent = _enemyContainer.transform;
+            yield return new WaitForSeconds(5.0f);
+        }
 
-       internal class Instantiate
-    {
-        Instantiate Enemy;
-
-        internal Instantiate Enemy1 { get => Enemy; set => Enemy = value; }
+        }
     }
-}
