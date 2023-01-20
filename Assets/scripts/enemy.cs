@@ -7,20 +7,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float vertical;
     private float _speed = 4f;
-    public GameObject objectToSpawn;
-    public Vector3 origin = Vector3.zero;
-    public float radius = 10;
+    private GameObject objectToSpawn;
+    private Vector3 origin = Vector3.zero;
+    private float radius = 10;
 
 
     // Start is called before the first frame update
     void Start()
-    { 
-    
-    }    
-   
-    private void Instantiate(object objectToSpawn, object position, object rotation)
     {
-        throw new System.NotImplementedException();
+
     }
 
     // Update is called once per frame
@@ -31,16 +26,16 @@ public class Enemy : MonoBehaviour
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
-            transform.position = new Vector3(randomx, 10,  0);
+            transform.position = new Vector3(randomx, 10, 0);
         }
-      
+
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-       
+
         if (other.tag == "Player")
         {
-           Player player = other.transform.GetComponent<Player>();
+            Player player = other.transform.GetComponent<Player>();
 
             if (player != null)
             {
@@ -55,10 +50,6 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
-    }
-    void DestroyGameObject()
-    {
-        Destroy (gameObject);
     }
 
 }

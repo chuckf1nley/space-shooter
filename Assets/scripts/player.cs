@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //public or private
-    //data tyoe (int, bool, float, string)
-    //everey variable has a name
-    //optional value assigned
     [SerializeField]
     private float _speed = 3.5f;
-    public string playerName = "samaxe";
-    public float horizontal;
-    public float vertical;
+    public string _playerName = "samaxe";
+    private float _horizontal;
+    private float _vertical;
     [SerializeField]
     private GameObject _laserPrefab;
-    public Vector3 laserOffset = new Vector3(0, (float).884, 0);
+    private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canfire = -2f;
@@ -29,7 +25,7 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-       
+
         if (_spawnManager == null)
         {
             Debug.LogError(" The Spawn Manager is NULL.");
@@ -39,62 +35,65 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-              
+
+
+        CalculaateMovement();
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
-            CalculaateMovement();
-            if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
-            {
-                FireLaser();
-            }
+            FireLaser();
         }
 
+
+
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+
+
+
+    }
+
+    void CalculaateMovement()
+
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, vertical, 0);
+
+        transform.Translate(direction * _speed * Time.deltaTime);
+
+        if (transform.position.y >= 0)
         {
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+            transform.position = new Vector3(transform.position.x, 0, 0);
+
+        }
+        else if (transform.position.y <= -4.8f)
+        {
+            transform.position = new Vector3(transform.position.x, -4.8f, 0);
         }
 
-        void CalculaateMovement()
-
+        if (transform.position.x > 18f)
         {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-
-            Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
-            transform.Translate(direction * _speed * Time.deltaTime);
-
-            if (transform.position.y >= 0)
-            {
-                transform.position = new Vector3(transform.position.x, 0, 0);
-
-            }
-            else if (transform.position.y <= -4.8f)
-            {
-                transform.position = new Vector3(transform.position.x, -4.8f, 0);
-            }
-
-            if (transform.position.x > 18f)
-            {
-                transform.position = new Vector3(-18f, transform.position.y, 0);
-            }
-            else if (transform.position.x < -18f)
-            {
-                transform.position = new Vector3(18f, transform.position.y, 0);
-            }
+            transform.position = new Vector3(-18f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -18f)
+        {
+            transform.position = new Vector3(18f, transform.position.y, 0);
         }
     }
+
     void FireLaser()
     {
-                 
-        {
-            _canfire = Time.time + _fireRate;
-            Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
-        }
+
+
+        _canfire = Time.time + _fireRate;
+        Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+
 
     }
 
     public void Damage()
     {
-        _lives --;
+        _lives--;
 
         if (_lives < 1)
         {
@@ -102,5 +101,6 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 
 }
