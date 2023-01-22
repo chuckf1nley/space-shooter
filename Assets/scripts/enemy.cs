@@ -9,8 +9,7 @@ public class Enemy : MonoBehaviour
     private float _speed = 4f;
     private GameObject objectToSpawn;
     private Vector3 origin = Vector3.zero;
-    private float radius = 10;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +25,7 @@ public class Enemy : MonoBehaviour
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
-            transform.position = new Vector3(randomx, 10, 0);
+            transform.position = new Vector3(randomx, 10f, 0);
         }
 
     }

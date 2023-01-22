@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     private float _vertical;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _Triple_ShotPrefab;
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -18,6 +20,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
+    private bool _isTripleShotActive = false;
+   
+    //private bool Triple_ShotOffset = new Vector3(-0.529, 0.1061, -0.120(0.940, -0.454, 0.120));
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,10 +60,10 @@ public class Player : MonoBehaviour
     void CalculaateMovement()
 
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        _horizontal = Input.GetAxis("Horizontal");
+        _vertical = Input.GetAxis("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, vertical, 0);
+        Vector3 direction = new Vector3(_horizontal, _vertical, 0);
 
         transform.Translate(direction * _speed * Time.deltaTime);
 
@@ -83,13 +89,32 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
-
-
         _canfire = Time.time + _fireRate;
-        Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+      
 
+        //if space key press,
+        //if Triple_ShotActive is true
+        //fire 3 lasers
+
+        //else fire 1 laser
+
+        //instantiate 3 lasers
+
+        if (_isTripleShotActive == true)
+
+        {
+            Instantiate(_Triple_ShotPrefab, transform.position, Quaternion.identity);
+        }
+
+        else 
+        
+        {
+            Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+        }
 
     }
+
+
 
     public void Damage()
     {
