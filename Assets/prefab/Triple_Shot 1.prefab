@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 854109949682945831}
   - component: {fileID: 1255619298668033418}
   - component: {fileID: 4839746921234294545}
-  - component: {fileID: 2989144992340961488}
   m_Layer: 0
   m_Name: Triple_Shot 1
   m_TagString: TripleShot
@@ -84,18 +83,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2989144992340961488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2564166531905080966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327e3f7032298ef49a302396150d3fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2681310235976421360
 PrefabInstance:
   m_ObjectHideFlags: 0
