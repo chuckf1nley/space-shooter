@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float vertical;
     private float _speed = 4f;
-    private GameObject objectToSpawn;
+    private GameObject _objectToSpawn;
     private Vector3 origin = Vector3.zero;
     
 
