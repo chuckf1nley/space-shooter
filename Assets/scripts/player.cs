@@ -24,8 +24,6 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     
    
-    //private bool Triple_ShotOffset = new Vector3(-0.529, 0.1061, -0.120(0.940, -0.454, 0.120));
-
 
     // Start is called before the first frame update
     void Start()
@@ -94,14 +92,6 @@ public class Player : MonoBehaviour
         _canfire = Time.time + _fireRate;
 
 
-        //if space key press,
-        //if Triple_ShotActive is true
-        //fire 3 lasers
-
-        //else fire 1 laser
-
-        //instantiate 3 lasers
-
         if (_isTriple_ShotActive == true)
 
         {
@@ -129,5 +119,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TripleShotActive()
+    {
+        _isTriple_ShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    
+    }
 
+    IEnumerator TripleShotPowerDownRoutine()
+    { 
+        yield return new WaitForSeconds(5.0f);
+        _isTriple_ShotActive = false;
+    }
+      
 }

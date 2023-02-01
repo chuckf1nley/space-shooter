@@ -23,26 +23,29 @@ public class Powerup : MonoBehaviour
 
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
 
 
-        if (transform.position.y >= -7.5)
+
+        if (transform.position.y < -7.5)
         {
 
             Destroy(this.gameObject);
         }
 
-       
+
     }
-    private void OnTriggerCollision(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
 
-         if (other.tag == "Player")
+        if (other.tag == "Player")
         {
-           // Player player = other.transform.GetComponenmt<Player>();
+           
+            Player player = other.transform.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TripleShotActive();
+            }
+            Destroy(this.gameObject);
 
 
         }
@@ -50,9 +53,4 @@ public class Powerup : MonoBehaviour
     }
 
 
-
-
-    //OnTriggerCollision
-    //only be collectable by player
-    //on collected destroy object
 }
