@@ -22,7 +22,7 @@ public class Laser : MonoBehaviour
             //check if object has a parent.. destroy parent as well
             if (gameObject)
             { 
-            
+                
             }
             Destroy(this.gameObject);
         }
