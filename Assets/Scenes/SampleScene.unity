@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327e3f7032298ef49a302396150d3fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
+  _speed: 3
 --- !u!95 &562912714
 Animator:
   serializedVersion: 4
@@ -746,6 +746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2322430216361035325, guid: 594e84d4d37269e4c8c61e616baae5bb, type: 3}
   _enemyContainer: {fileID: 955404439}
+  _tripleShotPowerupPrefab: {fileID: 8430668821751775207, guid: e199286ab172692449b8710e86aacf8d, type: 3}
 --- !u!4 &2126228722
 Transform:
   m_ObjectHideFlags: 0
