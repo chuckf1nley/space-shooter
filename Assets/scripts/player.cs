@@ -126,6 +126,16 @@ public class Player : MonoBehaviour
     
     }
 
+    //create a system that distinguiushes which powerup 0-2
+    //tripleshot functional
+    public void Powerup()
+    { 
+    
+
+
+
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     { 
         yield return new WaitForSeconds(5.0f);

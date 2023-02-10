@@ -37,7 +37,6 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-        //every 3-7 seconds spawn powerup
         while (_stopSpawning  == false)
         {
            Vector3 posToSpawn = new Vector3(UnityEngine.Random.Range(-10f, 10f), 7, 0);
@@ -50,13 +49,6 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
 }
