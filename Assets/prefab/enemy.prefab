@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8558875584774661471}
   m_Layer: 0
   m_Name: enemy
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,9 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vertical: 0
-  objectToSpawn: {fileID: 0}
-  origin: {x: 0, y: 0, z: 0}
-  radius: 10
 --- !u!212 &4513636766571482674
 SpriteRenderer:
   m_ObjectHideFlags: 0

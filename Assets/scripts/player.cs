@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
+    private float _speedMultiplier =2;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -22,6 +23,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int Player_lives = 3;
     private SpawnManager _spawnManager;
+    private bool _isSpeedBoostActive = false;
+    [SerializeField]
+    private GameObject _SpeedBoostPrefab;
+   
+
     
    
 
@@ -49,11 +55,7 @@ public class Player : MonoBehaviour
             FireLaser();
         }
 
-
-
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-
-
 
     }
 
@@ -65,8 +67,12 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(_horizontal, _vertical, 0);
 
-        transform.Translate(direction * _speed * Time.deltaTime);
 
+        //check if powerup enabled if it is 8.5 speed boost for 5 seconds
+        //then returrn to normal speed
+                
+            transform.Translate(direction * _speed * Time.deltaTime);
+        
         if (transform.position.y >= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
@@ -126,20 +132,28 @@ public class Player : MonoBehaviour
     
     }
 
-    //create a system that distinguiushes which powerup 0-2
-    //tripleshot functional
-    public void Powerup()
-    { 
-    
-
-
-
-    }
+   
 
     IEnumerator TripleShotPowerDownRoutine()
     { 
         yield return new WaitForSeconds(5.0f);
         _isTriple_ShotActive = false;
     }
-      
+
+    public void SpeedBoostActive()
+    {
+
+        _isSpeedBoostActive = true;
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    { 
+        yield return new WaitForSeconds(5.0f);
+        _isSpeedBoostActive = false;
+        _speed /= _speedMultiplier;
+    }
+
 }
