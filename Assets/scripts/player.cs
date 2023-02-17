@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
-    private float _speedMultiplier =2;
+    private float _speedMultiplier = 2;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
-    [SerializeField]
-    private bool _isTriple_ShotActive = false;
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -23,10 +21,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int Player_lives = 3;
     private SpawnManager _spawnManager;
-    private bool _isSpeedBoostActive = false;
     [SerializeField]
     private GameObject _SpeedBoostPrefab;
+    [SerializeField]
+    private GameObject _ShieldPrefab;
+    private bool _isShieldActive = false;
+    private bool _isSpeedBoostActive = false;
+    private bool _isTriple_ShotActive = false;
+    private GameObject ShieldVisualizer;
+    [SerializeField]
+    private GameObject _shieldVisualizerPrefab;
    
+
+    //variable reference to the shield visualizer
+
 
     // Start is called before the first frame update
     void Start()
@@ -64,12 +72,8 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(_horizontal, _vertical, 0);
 
+        transform.Translate(direction * _speed * Time.deltaTime);
 
-        //check if powerup enabled if it is 8.5 speed boost for 5 seconds
-        //then returrn to normal speed
-                
-            transform.Translate(direction * _speed * Time.deltaTime);
-        
         if (transform.position.y >= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
@@ -113,6 +117,15 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+       
+        if (_isShieldActive == true)
+        {
+            _isShieldActive = false;
+            ShieldVisualizer.SetActive(false);
+            //disable the visualizer
+            return;
+        }
+
         Player_lives--;
 
         if (Player_lives < 1)
@@ -126,11 +139,11 @@ public class Player : MonoBehaviour
     {
         _isTriple_ShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
-    
+
     }
 
     IEnumerator TripleShotPowerDownRoutine()
-    { 
+    {
         yield return new WaitForSeconds(5.0f);
         _isTriple_ShotActive = false;
     }
@@ -145,10 +158,22 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
-    { 
+    {
         yield return new WaitForSeconds(5.0f);
         _isSpeedBoostActive = false;
         _speed /= _speedMultiplier;
     }
 
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shieldVisualizerPrefab.SetActive(true);
+        
+    }
+       
+    IEnumerator ShieldPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+
+    }
 }
