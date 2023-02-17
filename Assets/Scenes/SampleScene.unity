@@ -292,63 +292,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1001 &673050520
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_Name
-      value: Speed_Powerup
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6316494547898774272, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +539,6 @@ MonoBehaviour:
   _isTriple_ShotActive: 0
   _fireRate: 0.15
   Player_lives: 3
-  _isSpeed_BoostActive: 0
   _SpeedBoostPrefab: {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
 --- !u!212 &1500934017
 SpriteRenderer:
@@ -806,7 +748,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2322430216361035325, guid: 594e84d4d37269e4c8c61e616baae5bb, type: 3}
   _enemyContainer: {fileID: 955404439}
-  _tripleShotPowerupPrefab: {fileID: 8430668821751775207, guid: 21fc8b9785d8cd54bb996c8890797da6, type: 3}
+  _powerups:
+  - {fileID: 8430668821751775207, guid: 21fc8b9785d8cd54bb996c8890797da6, type: 3}
+  - {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
 --- !u!4 &2126228722
 Transform:
   m_ObjectHideFlags: 0

@@ -28,9 +28,6 @@ public class Player : MonoBehaviour
     private GameObject _SpeedBoostPrefab;
    
 
-    
-   
-
     // Start is called before the first frame update
     void Start()
     {
@@ -131,8 +128,6 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerDownRoutine());
     
     }
-
-   
 
     IEnumerator TripleShotPowerDownRoutine()
     { 
