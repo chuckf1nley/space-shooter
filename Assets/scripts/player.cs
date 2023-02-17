@@ -28,10 +28,9 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isTriple_ShotActive = false;
-    private GameObject ShieldVisualizer;
     [SerializeField]
-    private GameObject _shieldVisualizerPrefab;
-   
+    private GameObject _shieldVisualizer;
+    private bool _ShieldVisualizer = false;
 
     //variable reference to the shield visualizer
 
@@ -113,16 +112,13 @@ public class Player : MonoBehaviour
 
     }
 
-
-
     public void Damage()
     {
-       
+
         if (_isShieldActive == true)
         {
             _isShieldActive = false;
-            ShieldVisualizer.SetActive(false);
-            //disable the visualizer
+            _shieldVisualizer.SetActive(false);
             return;
         }
 
@@ -167,13 +163,8 @@ public class Player : MonoBehaviour
     public void ShieldActive()
     {
         _isShieldActive = true;
-        _shieldVisualizerPrefab.SetActive(true);
-        
-    }
-       
-    IEnumerator ShieldPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(10.0f);
+        _shieldVisualizer.SetActive(true);
 
     }
+
 }
