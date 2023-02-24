@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canfire = -2f;
     [SerializeField]
-    private int Player_lives = 3;
+    private int _lives = 3;
     private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _SpeedBoostPrefab;
@@ -129,12 +129,16 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Player_lives--;
+        _lives--;
 
-        if (Player_lives < 1)
+        _uiManager.UpdateLives(_lives);
+
+        if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
+            //GetComponent<"canvas"> (GameOver).enabled = true;
+          
         }
     }
 
@@ -178,9 +182,6 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
-        //method to add 10 to score
-        //comminucate with the UI to update the score!
-
-        //scoreText.text = GetComponent<Text>();
+       
     }
 }
