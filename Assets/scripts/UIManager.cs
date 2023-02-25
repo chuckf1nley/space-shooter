@@ -4,7 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
+public enum alphaValue
+{ 
+    Shrinking, 
+    Growing
+}
+
 public class UIManager : MonoBehaviour
+
 {
     //handle to text 
     [SerializeField]
@@ -14,13 +22,52 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] _liveSprites;
     [SerializeField]
-    private Text _gameOverText;
+    private TMP_Text _gameOverText;
+ 
+
+    public alphaValue currentAlphaValue;
+    public float CommentMinAlpha;
+    public float CommentMaxAlpha;
+    public float CommentCurrentAlpha;
 
     // Start is called before the first frame update
     void Start()
     {
-       // _liveSprites(CurrentPlayerLives = 3);
+        CommentCurrentAlpha = 0.2f;
+        CommentMinAlpha = 1f;
+        CommentMaxAlpha = 1f;
+        currentAlphaValue = alphaValue.Shrinking;
         _scoreText.text = "Score: " + 0;
+        _gameOverText.gameObject.SetActive(false);
+
+    }
+
+    private void Update()
+    {
+        AlphaComments(); 
+    }
+    public void AlphaComments()
+    {
+        if (currentAlphaValue == alphaValue.Shrinking)
+        {
+            CommentCurrentAlpha = CommentCurrentAlpha - 0.1f;
+            _gameOverText.color = new Color(Color.blue.r, Color.blue.g, Color.blue.b, CommentCurrentAlpha);
+            if (CommentCurrentAlpha <= CommentMinAlpha)
+            {
+                currentAlphaValue = alphaValue.Growing;
+            }
+        }
+        else if (currentAlphaValue == alphaValue.Growing)
+        {
+            CommentCurrentAlpha = CommentCurrentAlpha + 0.1f;
+            _gameOverText.color = new Color(Color.blue.r, Color.blue.g, Color.blue.b, CommentCurrentAlpha);
+            if(CommentCurrentAlpha>= CommentMaxAlpha)
+            {
+                currentAlphaValue = alphaValue.Shrinking;
+            }
+        }
+
+
 
     }
 
@@ -33,7 +80,25 @@ public class UIManager : MonoBehaviour
     {
        
         _livesImage.sprite = _liveSprites[currentLives];
+
+        if (currentLives == 0)
+        {
+            _gameOverText.gameObject.SetActive(true);
+            StartCoroutine(GameOverFlickerRoutine());
+        }
     
     }
+
+    IEnumerator GameOverFlickerRoutine()
+    {
+        while(true)
+        {
+            _gameOverText.text = "Game Over";
+            yield return new WaitForSeconds(0.5f);
+            _gameOverText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+        
 
 }

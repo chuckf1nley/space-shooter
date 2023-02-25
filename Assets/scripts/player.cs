@@ -137,8 +137,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
-            //GetComponent<"canvas"> (GameOver).enabled = true;
-          
+                   
         }
     }
 
