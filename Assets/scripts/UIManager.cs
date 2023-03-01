@@ -23,6 +23,11 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private TMP_Text _gameOverText;
+    [SerializeField]
+    private TMP_Text _restartText;
+
+    private GameManager _gameManager;
+   
  
 
     public alphaValue currentAlphaValue;
@@ -36,10 +41,14 @@ public class UIManager : MonoBehaviour
         CommentCurrentAlpha = 0.2f;
         CommentMinAlpha = 1f;
         CommentMaxAlpha = 1f;
-        currentAlphaValue = alphaValue.Shrinking;
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        if (_gameManager == null)
+        {
+            Debug.LogError("GameManager is NULL");
+        }
     }
 
     private void Update()
@@ -83,10 +92,19 @@ public class UIManager : MonoBehaviour
 
         if (currentLives == 0)
         {
-            _gameOverText.gameObject.SetActive(true);
-            StartCoroutine(GameOverFlickerRoutine());
+            GameOverSequence();
         }
     
+    }
+
+    void GameOverSequence()
+    {
+        _gameManager.GameOver();
+        _gameOverText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        StartCoroutine(GameOverFlickerRoutine());
+        
+
     }
 
     IEnumerator GameOverFlickerRoutine()
@@ -99,6 +117,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-        
 
+   
+       
 }
