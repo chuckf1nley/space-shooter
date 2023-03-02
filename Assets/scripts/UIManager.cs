@@ -11,6 +11,9 @@ public enum alphaValue
     Growing
 }
 
+
+//create ui for the powerups so i can have 3 of each and activate them at will
+
 public class UIManager : MonoBehaviour
 
 {
@@ -28,8 +31,6 @@ public class UIManager : MonoBehaviour
 
     private GameManager _gameManager;
    
- 
-
     public alphaValue currentAlphaValue;
     public float CommentMinAlpha;
     public float CommentMaxAlpha;
@@ -76,8 +77,6 @@ public class UIManager : MonoBehaviour
             }
         }
 
-
-
     }
 
     public void UpdateScore(int playerscore)
@@ -104,7 +103,6 @@ public class UIManager : MonoBehaviour
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());
         
-
     }
 
     IEnumerator GameOverFlickerRoutine()
@@ -117,7 +115,5 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-
-   
-       
+ 
 }

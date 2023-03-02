@@ -12,6 +12,12 @@ public class Powerup : MonoBehaviour
     // Update is called once per frame
     void Update()
 
+        //ideas for powerups: carry up to 3 of each, use numbers to activate 1-3
+        //create EMP to destroy radius for every 500 points
+        // create asset to destroy all enemies on screen for every 1000
+
+
+
     {
 
         transform.Translate(Vector3.down * _speed * Time.deltaTime);

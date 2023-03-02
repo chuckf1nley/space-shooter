@@ -11,6 +11,12 @@ public class Enemy : MonoBehaviour
 
     private Player _player;
 
+    //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
+    // after 180 seconds decrease spawn timer from 5 seconds to 3 seconds
+    // after 300 seconds decrease spawn timer to 2 second
+    // after 600 seconds decrease spawn timer to 1 enemy a second
+
+
 
     // Start is called before the first frame update
     void Start()
