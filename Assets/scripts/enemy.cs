@@ -5,24 +5,35 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float vertical;
     private float _speed = 4f;
-    private GameObject _objectToSpawn;
-
+   
     private Player _player;
+    private Animator _Anim;
+    //handle to animetor component
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 180 seconds decrease spawn timer from 5 seconds to 3 seconds
     // after 300 seconds decrease spawn timer to 2 second
     // after 600 seconds decrease spawn timer to 1 enemy a second
 
-
-
+  
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-    }
+        if (_player == null)
+        {
+            Debug.LogError("player is null");
+        }
+
+        _Anim = GetComponent<Animator>();
+
+        if (_Anim == null)
+        {
+            Debug.LogError("animator is null!");
+        }
+    
+     }
 
     // Update is called once per frame
     void Update()
@@ -47,19 +58,21 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-
-            Destroy(this.gameObject);
+            _Anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            Destroy(this.gameObject, 2.6f);
         }
 
         if (other.tag == "laser")
         {
             Destroy(other.gameObject);
-            //Add 10 to score
             if (_player != null)
             {
                 _player.AddScore(10);
             }
-            Destroy(this.gameObject);
+            _Anim.SetTrigger("OnEnemyDeath");
+            _speed =  0;
+            Destroy(this.gameObject, 2.6f);
         }
     }
 
