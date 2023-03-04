@@ -15,6 +15,7 @@ public class Powerup : MonoBehaviour
         //ideas for powerups: carry up to 3 of each, use numbers to activate 1-3
         //create EMP to destroy radius for every 500 points
         // create asset to destroy all enemies on screen for every 1000
+        // after 300 seconds decrease spawn timer to 3 seconds
 
 
 
