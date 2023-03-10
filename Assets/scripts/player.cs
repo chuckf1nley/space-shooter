@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canfire = -2f;
     [SerializeField]
+    private GameObject _missilePrefab;
+    [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
     [SerializeField]
@@ -123,6 +125,15 @@ public class Player : MonoBehaviour
 
     }
 
+    void FireMissile()
+    {
+        _canfire = Time.time + _fireRate;
+
+        Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+    
+    }
+
+
     public void Damage()
     {
 
@@ -135,10 +146,6 @@ public class Player : MonoBehaviour
 
         _lives--;
 
-        //if lives is 2
-        //enable right engine
-        //else if lives is 1
-        //enable left engine
         if (_lives == 2)
         {
             _leftengine.SetActive(true);
@@ -155,7 +162,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
-                   
+
         }
     }
 
@@ -199,6 +206,6 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
-       
+
     }
 }
