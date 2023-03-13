@@ -4,43 +4,36 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 3.5f;
+    [SerializeField]  private float _speed = 3.5f;
     private float _speedMultiplier = 2;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
-    [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _tripleShotPrefab;
+    [SerializeField]  private GameObject _laserPrefab;
+    [SerializeField]  private GameObject _tripleShotPrefab;
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
-    [SerializeField]
-    private float _fireRate = 0.5f;
+    [SerializeField]  private float _fireRate = 0.5f;
     private float _canfire = -2f;
-    [SerializeField]
-    private GameObject _missilePrefab;
-    [SerializeField]
-    private int _lives = 3;
+    [SerializeField]  private GameObject _missilePrefab;
+    [SerializeField]  private int _lives = 3;
     private SpawnManager _spawnManager;
-    [SerializeField]
-    private GameObject _SpeedBoostPrefab;
-    [SerializeField]
-    private GameObject _ShieldPrefab;
+    [SerializeField]  private GameObject _SpeedBoostPrefab;
+    [SerializeField]  private GameObject _ShieldPrefab;
     private bool _isShieldActive = false;
     private bool _isSpeedBoostActive = false;
     private bool _isTriple_ShotActive = false;
-    [SerializeField]
-    private GameObject _shieldVisualizer;
-    [SerializeField]
-    private GameObject _rightengine;
-    [SerializeField]
-    private GameObject _leftengine;
+    [SerializeField]  private GameObject _shieldVisualizer;
+    [SerializeField]  private GameObject _rightengine;
+    [SerializeField]  private GameObject _leftengine;
 
-    [SerializeField]
-    private int _score;
+    [SerializeField]  private int _score;
 
     private UIManager _uiManager;
+
+    //variable to store the audio clip
+     private AudioSource _audioSource;
+
+    [SerializeField]  private AudioClip _laserSoundClip;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +42,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
         {
@@ -58,6 +52,14 @@ public class Player : MonoBehaviour
         if (_uiManager == null)
         {
             Debug.LogError("The UI manager is null");
+        }
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource on player is null!");
+        }
+        else 
+        {
+            _audioSource.clip = _laserSoundClip;
         }
     }
 
@@ -123,6 +125,9 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
         }
 
+        // play the laser audio clip
+        _audioSource.Play();
+        
     }
 
     void FireMissile()
