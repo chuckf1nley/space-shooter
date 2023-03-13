@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour
    
     private Player _player;
     private Animator _Anim;
-    //handle to animetor component
+    [SerializeField] private AudioClip audioClip;
+    private AudioSource _audioSource;
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 180 seconds decrease spawn timer from 5 seconds to 3 seconds
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _audioSource = GetComponent<AudioSource>();
         if (_player == null)
         {
             Debug.LogError("player is null");
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour
             _Anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.6f);
+            _audioSource.Play();
         }
 
         if (other.tag == "laser")
@@ -73,6 +76,7 @@ public class Enemy : MonoBehaviour
             _Anim.SetTrigger("OnEnemyDeath");
             _speed =  0;
             Destroy(this.gameObject, 2.6f);
+            _audioSource.Play();
         }
     }
 
