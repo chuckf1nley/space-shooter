@@ -167,8 +167,9 @@ public class Player : MonoBehaviour
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
             _audioSource.Play();
+            Destroy(this.gameObject);
+            
 
         }
     }

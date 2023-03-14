@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    private float vertical;
     [SerializeField]
     private float _speed = 3f;
     [SerializeField] // 0 = Triple Shot 1 = speed 2 = shield
     private int powerupID;
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip _Clip;
+
     // Update is called once per frame
     void Update()
 
@@ -20,7 +22,7 @@ public class Powerup : MonoBehaviour
 
 
     {
-
+       
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y < -7.5)
@@ -37,6 +39,9 @@ public class Powerup : MonoBehaviour
         {
 
             Player player = other.transform.GetComponent<Player>();
+
+            AudioSource.PlayClipAtPoint(_Clip, transform.position);
+
             if (player != null)
             {
 

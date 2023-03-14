@@ -9,7 +9,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private GameObject _explosionPrefab;
     private SpawnManager _spawnManager;
-    [SerializeField] private AudioClip _asteroidDestroyed;
     private AudioSource _audioSource;
 
     // Start is called before the first frame update
@@ -34,8 +33,9 @@ public class Asteroid : MonoBehaviour
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(other.gameObject);
             _spawnManager.StartSpawning();
-            Destroy(this.gameObject, 0.15f);
             _audioSource.Play();
+            Destroy(this.gameObject, 0.15f);
+            
 
         }
     }
