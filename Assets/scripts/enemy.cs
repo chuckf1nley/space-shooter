@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
    
     private Player _player;
     private Animator _Anim;
-    [SerializeField] private AudioClip audioClip;
     private AudioSource _audioSource;
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
@@ -44,7 +43,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -7.5f)
         {
-            float randomx = Random.Range(-18f, 18f);
+            float randomx = Random.Range(-12f, 12f);
             transform.position = new Vector3(randomx, 10f, 0);
         }
 

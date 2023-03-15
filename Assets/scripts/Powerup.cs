@@ -8,7 +8,6 @@ public class Powerup : MonoBehaviour
     private float _speed = 3f;
     [SerializeField] // 0 = Triple Shot 1 = speed 2 = shield
     private int powerupID;
-    private AudioSource _audioSource;
     [SerializeField] private AudioClip _Clip;
 
     // Update is called once per frame
