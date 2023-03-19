@@ -5,15 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
-    [SerializeField] private GameObject _enemyLaserPrefab;
-    private Vector3 _offset = new Vector3(0, 0.5f, 0);
-    private float _fireRate = 3f - 7f;
+    [SerializeField] private GameObject _laserPrefab;
+   // private Vector3 _offset = new Vector3(0, 0.5f, 0);
+    private float _fireRate = 3f;
     private float _canfire = -1;
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
-    private bool _isAlive;
-
+    
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 180 seconds decrease spawn timer from 5 seconds to 3 seconds
     // after 300 seconds decrease spawn timer to 2 second
@@ -25,7 +24,6 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        //StartCoroutine(FireRoutihe);
         if (_player == null)
         {
             Debug.LogError("player is null");
@@ -49,8 +47,9 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(3f, 7f);
             _canfire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+           
            
             for (int i = 0; i < lasers.Length; i++)
             {
@@ -70,18 +69,6 @@ public class Enemy : MonoBehaviour
 
 
         }
-
-    
-
-    IEnumerator FireRoutihe()
-    {
-        while (_isAlive)
-        {
-            yield return new WaitForSeconds(_fireRate);
-            GameObject gameobject =  Instantiate(_enemyLaserPrefab, transform.position + _offset, Quaternion.identity);
-           // gameobject.transform.parent = EnemyLaser;
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

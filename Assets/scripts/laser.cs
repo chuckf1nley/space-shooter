@@ -14,12 +14,11 @@ public class Laser : MonoBehaviour
     {
         if (_isEnemyLaser == false)
         {
-           
-                MoveUp();
+           MoveUp();
         }
         else
         {
-            MoveDown();
+           MoveDown();
         }
     }
     void MoveUp()
@@ -36,8 +35,6 @@ public class Laser : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-
-
     }
 
     void MoveDown()
