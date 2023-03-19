@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _enemyLaserPrefab;
     private Vector3 _offset = new Vector3(0, 0.5f, 0);
     private float _fireRate = 3f - 7f;
-
+    private float _canfire = -1;
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        StartCoroutine(FireRoutihe);
+        //StartCoroutine(FireRoutihe);
         if (_player == null)
         {
             Debug.LogError("player is null");
@@ -40,30 +40,46 @@ public class Enemy : MonoBehaviour
     
      }
 
-    private void StartCoroutine(System.Func<IEnumerator> fireRoutihe)
-    {
-        throw new System.NotImplementedException();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        CalculateMovement();
 
-        if (transform.position.y < -7.5f)
+        if (Time.time > _canfire)
         {
-            float randomx = Random.Range(-12f, 12f);
-            transform.position = new Vector3(randomx, 10f, 0);
+            _fireRate = Random.Range(3f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_enemyLaserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+           
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+    }
+        void CalculateMovement()
+        { 
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+            if (transform.position.y < -7.5f)
+            {
+                float randomx = Random.Range(-12f, 12f);
+                transform.position = new Vector3(randomx, 10f, 0);
+            }
+
+
         }
 
-    }
+    
 
     IEnumerator FireRoutihe()
     {
         while (_isAlive)
         {
             yield return new WaitForSeconds(_fireRate);
-            Instantiate(_enemyLaserPrefab, transform.position + _offset, Quaternion.identity);
+            GameObject gameobject =  Instantiate(_enemyLaserPrefab, transform.position + _offset, Quaternion.identity);
+           // gameobject.transform.parent = EnemyLaser;
         }
     }
 
