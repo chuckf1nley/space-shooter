@@ -98,6 +98,7 @@ public class Enemy : MonoBehaviour
             _speed =  0;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
+            Destroy(GetComponent<Laser>());
             Destroy(this.gameObject, 2.6f);
             
         }
