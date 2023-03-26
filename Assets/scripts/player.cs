@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
-    private float _speedMultiplier = 2;
+    private float _speedMultiplier = 3;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -19,19 +19,20 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField] private GameObject _SpeedBoostPrefab;
     [SerializeField] private GameObject _ShieldPrefab;
+    [SerializeField] private float _thruster;
     private bool _isShieldActive = false;
-    private bool _isSpeedBoostActive = false;
+
     private bool _isTriple_ShotActive = false;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
 
-    [SerializeField]  private int _score;
+    [SerializeField] private int _score;
 
     private UIManager _uiManager;
 
     //variable to store the audio clip
-     private AudioSource _audioSource;
+    private AudioSource _audioSource;
 
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
@@ -58,7 +59,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("AudioSource on player is null!");
         }
-        else 
+        else
         {
             _audioSource.clip = _laserSoundClip;
         }
@@ -107,6 +108,13 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(12f, transform.position.y, 0);
         }
+
+        {
+            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;
+
+            else _speed = 3.5f;
+        }
+
     }
 
     void FireLaser()
@@ -128,7 +136,7 @@ public class Player : MonoBehaviour
 
         // play the laser audio clip
         _audioSource.Play();
-        
+
     }
 
     void FireMissile()
@@ -136,7 +144,7 @@ public class Player : MonoBehaviour
         _canfire = Time.time + _fireRate;
 
         Instantiate(_missilePrefab, transform.position, Quaternion.identity);
-    
+
     }
 
 
@@ -169,7 +177,7 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             _audioSource.Play();
             Destroy(this.gameObject);
-            
+
 
         }
     }
@@ -190,7 +198,6 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
 
-        _isSpeedBoostActive = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
 
@@ -199,7 +206,6 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isSpeedBoostActive = false;
         _speed /= _speedMultiplier;
     }
 
@@ -216,4 +222,6 @@ public class Player : MonoBehaviour
         _uiManager.UpdateScore(_score);
 
     }
+
+    
 }
