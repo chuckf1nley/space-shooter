@@ -6,13 +6,15 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
     [SerializeField] private GameObject _laserPrefab;
-   // private Vector3 _offset = new Vector3(0, 0.5f, 0);
+    // private Vector3 _offset = new Vector3(0, 0.5f, 0);
     private float _fireRate = 3f;
     private float _canfire = -1;
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
-    
+    private GameObject Shield;
+    private GameObject Explode;
+
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 180 seconds decrease spawn timer from 5 seconds to 3 seconds
     // after 300 seconds decrease spawn timer to 2 second
@@ -35,8 +37,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("animator is null!");
         }
-    
-     }
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -49,25 +51,25 @@ public class Enemy : MonoBehaviour
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-                      
+
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
             }
         }
     }
-        void CalculateMovement()
-        { 
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+    void CalculateMovement()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-            if (transform.position.y < -7.5f)
-            {
-                float randomx = Random.Range(-12f, 12f);
-                transform.position = new Vector3(randomx, 10f, 0);
-            }
-
-
+        if (transform.position.y < -7.5f)
+        {
+            float randomx = Random.Range(-12f, 12f);
+            transform.position = new Vector3(randomx, 10f, 0);
         }
+
+
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -84,7 +86,7 @@ public class Enemy : MonoBehaviour
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 2.6f);
-            
+
         }
 
         if (other.tag == "laser")
@@ -95,12 +97,19 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10);
             }
             _Anim.SetTrigger("OnEnemyDeath");
-            _speed =  0;
+            _speed = 0;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
             Destroy(GetComponent<Laser>());
             Destroy(this.gameObject, 2.6f);
-            
+
+        }
+        if (other.CompareTag ("Shield"))
+            if (Shield != null)
+        {
+            other.GetComponent<Shield>().Damage();
+            _player.AddScore(10);
+            //this.Explode;
         }
     }
 

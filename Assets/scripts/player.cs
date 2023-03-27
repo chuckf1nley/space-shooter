@@ -9,29 +9,26 @@ public class Player : MonoBehaviour
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
-    [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private GameObject _tripleShotPrefab;
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField] private float _fireRate = 0.5f;
     private float _canfire = -2f;
-    [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
+    private bool _isShieldActive = false;
+    private bool _isTriple_ShotActive = false;
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _tripleShotPrefab;
+    [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
     [SerializeField] private GameObject _ShieldPrefab;
-    [SerializeField] private float _thruster;
-    private bool _isShieldActive = false;
-
-    private bool _isTriple_ShotActive = false;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
-
+    private Player _player;
     [SerializeField] private int _score;
+    private GameObject _shield;
 
     private UIManager _uiManager;
-
-    //variable to store the audio clip
     private AudioSource _audioSource;
 
     [SerializeField] private AudioClip _laserSoundClip;
@@ -211,8 +208,20 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        if (_shield != null)
+        {
+            Destroy(_shield);
+        }
+
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+
+        GameObject shield;
+        shield = Instantiate(_ShieldPrefab, transform.position, Quaternion.identity);
+        //shield.transform.position;
+        _shield = shield;
+
+       
 
     }
 
@@ -220,6 +229,7 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+       
 
     }
 

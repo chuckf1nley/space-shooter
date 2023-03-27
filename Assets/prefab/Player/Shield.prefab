@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2227840082293806544}
   - component: {fileID: 1283426529698537481}
+  - component: {fileID: 8481047975578509101}
   m_Layer: 0
-  m_Name: Shields
-  m_TagString: Untagged
+  m_Name: Shield
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8481047975578509101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5905899532380202443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d64a1c59765a5242b366d200a824c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
