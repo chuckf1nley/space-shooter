@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
     }
 
-    public void ShieldActive()
+    public void ActivateShield()
     {
         if (_shield != null)
         {
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
 
         GameObject shield;
         shield = Instantiate(_ShieldPrefab, transform.position, Quaternion.identity);
-        //shield.transform.position;
+        Vector3 position = shield.transform.position;
         _shield = shield;
 
        

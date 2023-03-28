@@ -6,8 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    
     [SerializeField]
     private bool _isGameOver;
+    public UIManager uIManager;
+    private readonly UIManager uiManager;
+
+    void Start()
+    {
+       
+
+    }
 
     private void Update()
     {
@@ -23,11 +32,19 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
+        
     }
     
     public void GameOver()
     {
         _isGameOver = true;
     }
-        
+
+    public void UpdateShieldStrength(int shieldStrength)
+    {
+        this.uiManager.UpdateShieldStrength(shieldStrength);
+        GameObject managerObject = GameObject.Find("Shield");
+        UIManager uiManager = managerObject.GetComponent<UIManager>();
+       
+    }
 }

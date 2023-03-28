@@ -44,7 +44,7 @@ public class Shield : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Eneny Laser"))
+        if (other.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
             Damage();
