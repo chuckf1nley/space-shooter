@@ -97,11 +97,11 @@ public class Player : MonoBehaviour
 
         if (transform.position.x > 18f)
         {
-            transform.position = new Vector3(-12f, transform.position.y, 0);
+            transform.position = new Vector3(-18f, transform.position.y, 0);
         }
         else if (transform.position.x < -18f)
         {
-            transform.position = new Vector3(12f, transform.position.y, 0);
+            transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
         {
