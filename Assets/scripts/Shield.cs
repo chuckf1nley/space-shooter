@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-    private int _lives = 3;
+    [SerializeField] private int _lives = 3;
     private SpriteRenderer _spriteRenderer;
     private void Start()
     {
