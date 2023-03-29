@@ -24,27 +24,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
-    [SerializeField] private Sprite[] _shieldStrength;
-    [SerializeField] private Image _shieldStrengthimage;
-    private GameManager _gameManager;
+    //[SerializeField] private Sprite[] _shieldStrength;
+    //[SerializeField] private Image _shieldStrengthimage;
+    [SerializeField] private GameManager _gameManager;
    
    
 
     // Start is called before the first frame update
     void Start()
     {
-       
-        if (_gameManager == null)
-        {
-            Debug.LogError("GameManager is NULL");
-        }
-
-        
-    }
-
-    internal void UpdateShieldStrength(int shieldStrength)
-    {
-        throw new NotImplementedException();
+                    
     }
 
     private void Update()
@@ -69,15 +58,16 @@ public class UIManager : MonoBehaviour
         }
     
     }
-    public void UpdateShiedstrength(int shieldStrength)
-    {
-        GameObject imageObject = _shieldStrengthimage.gameObject;
+
+    //public void UpdateShiedstrength(int shieldStrength)
+    //{
+        //GameObject imageObject = _shieldStrengthimage.gameObject;
         //GameObject parentGameObject = imageGameObject.transform.parent.gaemObject;
 
         //_shieldStrengthimage.sprite = _shieldStrengthimage(shieldStrength);
         //_imageGameObject.SetActive(shieldStrength > 0);
         //parentGameObject.SetActive(shieldStrength > 0);
-    }
+    //}
 
     void GameOverSequence()
     {
@@ -85,7 +75,7 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         _takeTheL.gameObject.SetActive(true);
-        StartCoroutine(GameOverFlickerRoutine());
+       
         
     }
 

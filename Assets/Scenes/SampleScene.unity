@@ -1834,16 +1834,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a706de05a7fce674c9f239c128a56be3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 3.5
   _playerName: samaxe
-  _fireRate: 0.15
+  _fireRate: 0.5
   _lives: 3
   _laserPrefab: {fileID: 6915159565038734937, guid: 354a78f6c350f6c47b198d4bb6cad6d5, type: 3}
   _tripleShotPrefab: {fileID: 2564166531905080966, guid: b9d37007e29879449a89ddba9d018acc, type: 3}
   _missilePrefab: {fileID: 0}
   _SpeedBoostPrefab: {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
-  _ShieldPrefab: {fileID: 2911204223339304364, guid: 293b1f86fde727f4d83b221a127b9a82, type: 3}
-  _shieldVisualizer: {fileID: 2088038369}
+  _ShieldPrefab: {fileID: 5905899532380202443, guid: afe15ac314a129c4897cf6e07e4e48d7, type: 3}
+  _shieldVisualizer: {fileID: 5905899532380202443, guid: afe15ac314a129c4897cf6e07e4e48d7, type: 3}
   _rightengine: {fileID: 1489766952}
   _leftengine: {fileID: 1996793762}
   _score: 0

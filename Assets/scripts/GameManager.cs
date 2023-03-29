@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //if the r key was pressed
-        //restart current scene
+        
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
         {
             SceneManager.LoadScene(1); // current game scene
@@ -40,11 +39,5 @@ public class GameManager : MonoBehaviour
         _isGameOver = true;
     }
 
-    public void UpdateShieldStrength(int shieldStrength)
-    {
-        this.uiManager.UpdateShieldStrength(shieldStrength);
-        GameObject managerObject = GameObject.Find("Shield");
-        UIManager uiManager = managerObject.GetComponent<UIManager>();
-       
-    }
+   
 }

@@ -104,6 +104,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject, 2.6f);
 
         }
+
         if (other.CompareTag ("Shield"))
             if (Shield != null)
         {

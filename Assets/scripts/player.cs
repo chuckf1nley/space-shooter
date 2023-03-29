@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private float _horizontal;
     private float _vertical;
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
-    [SerializeField] private float _fireRate = 0.5f;
+    [SerializeField] private float _fireRate = 0.25f;
     private float _canfire = -2f;
     [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
@@ -20,11 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
-    [SerializeField] private GameObject _ShieldPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
-    private Player _player;
     [SerializeField] private int _score;
     private GameObject _shield;
 
@@ -216,12 +214,6 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
 
-        GameObject shield;
-        shield = Instantiate(_ShieldPrefab, transform.position, Quaternion.identity);
-        Vector3 position = shield.transform.position;
-        _shield = shield;
-
-       
 
     }
 
@@ -229,9 +221,9 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
-       
+
 
     }
 
-    
+
 }
