@@ -25,11 +25,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     //[SerializeField] private Sprite[] _shieldStrength;
-    //[SerializeField] private Image _shieldStrengthimage;
+    //[SerializeField] private Image _shieldStrengthimages = new Sprite[4];
     [SerializeField] private GameManager _gameManager;
    
-   
-
     // Start is called before the first frame update
     void Start()
     {

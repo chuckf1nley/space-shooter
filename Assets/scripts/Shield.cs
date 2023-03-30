@@ -51,5 +51,9 @@ public class Shield : MonoBehaviour
         }
     }
 
+    private void UpdateLives()
+    {
+        _lives = 3;
+    }
 
 }

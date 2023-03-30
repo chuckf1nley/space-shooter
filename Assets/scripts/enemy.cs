@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
+    private GameObject _isShieldActive;
     private GameObject Shield;
     private GameObject Explode;
 
@@ -71,6 +72,8 @@ public class Enemy : MonoBehaviour
 
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 
@@ -105,13 +108,21 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if (other.CompareTag ("Shield"))
+        if (other.CompareTag("Shield"))
             if (Shield != null)
-        {
-            other.GetComponent<Shield>().Damage();
-            _player.AddScore(10);
-            //this.Explode;
-        }
+            {
+                
+                other.GetComponent<Shield>().Damage();
+                _player.AddScore(10);
+                this.Damage();
+            }
     }
 
+    public void Damage() { }
+     //{ 
+      //     if(_isShieldActive == true)
+      //  {
+      //      Find.GetComponent<Shield>;
+       // }
+     //}
 }
