@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();
 
@@ -89,10 +89,11 @@ public class Enemy : MonoBehaviour
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 2.6f);
-
+            Destroy(GetComponent<Laser>());
+            Destroy(GetComponent<Collider2D>());
         }
 
-        if (other.tag == "laser")
+        if (other.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
             if (_player != null)
@@ -115,6 +116,8 @@ public class Enemy : MonoBehaviour
                 other.GetComponent<Shield>().Damage();
                 _player.AddScore(10);
                 this.Damage();
+                Destroy(GetComponent<Laser>());
+                Destroy(GetComponent<Collider2D>());
             }
     }
 

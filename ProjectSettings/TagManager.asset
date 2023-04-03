@@ -4,12 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - spawnable
-  - laser
-  - enemy
   - TripleShot
   - Shield
   - Speed
+  - Enemy
+  - Laser
+  - Spawnable
+  - laser
   layers:
   - Default
   - TransparentFX

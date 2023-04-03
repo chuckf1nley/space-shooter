@@ -8,6 +8,7 @@ public class Shield : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private void Start()
     {
+        Debug.Log("Shield start");
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (_spriteRenderer == null)
@@ -15,16 +16,17 @@ public class Shield : MonoBehaviour
             Debug.LogError("Sprite Renderer is NULL");
         }
     }
-        
-        public void Damage()
-        {
-            _lives--;
 
-            if (_lives <= 0)
-            {
-                Destroy(gameObject);
+    public void Damage()
+    {
+        Debug.Log("Shield:: Damage()");
+        _lives--;
+
+        if (_lives <= 0)
+        {
+            Destroy(gameObject);
             return;
-            }
+        }
 
         Color auxColor = _spriteRenderer.color;
 
@@ -40,11 +42,12 @@ public class Shield : MonoBehaviour
 
         _spriteRenderer.color = auxColor;
 
-        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Laser"))
+        Debug.Log("Shield:: Triggerenter" + other.name);
+        if (other.CompareTag("Laser") || other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
             Damage();

@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
         CalculaateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
+            Debug.Log("Fired");
             FireLaser();
         }
 
@@ -129,7 +130,7 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
         }
 
-        // play the laser audio clip
+        
         _audioSource.Play();
 
     }
@@ -214,8 +215,7 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
 
-
-    }
+}
 
     public void AddScore(int points)
     {
