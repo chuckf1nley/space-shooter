@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
-    [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private int _score;
@@ -149,8 +149,14 @@ public class Player : MonoBehaviour
 
         if (_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldVisualizer.Damage();
+            if (_shieldVisualizer.ShieldStrength() <= 0)
+            {
+                _isShieldActive = false;
+                _shieldVisualizer.ShieldActive(false);
+            }
+            
+            
             return;
         }
 
@@ -213,10 +219,10 @@ public class Player : MonoBehaviour
         }
 
         _isShieldActive = true;
-        _shieldVisualizer.SetActive(true);
+        _shieldVisualizer.ShieldActive(true);
 
-}
 
+    }
     public void AddScore(int points)
     {
         _score += points;

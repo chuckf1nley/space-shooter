@@ -6,15 +6,31 @@ public class Shield : MonoBehaviour
 {
     [SerializeField] private int _lives = 3;
     private SpriteRenderer _spriteRenderer;
+    private UIManager _uiManager;
+    private Color _auxColor;
+
+
+
     private void Start()
     {
         Debug.Log("Shield start");
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _auxColor = _spriteRenderer.color;
 
         if (_spriteRenderer == null)
         {
             Debug.LogError("Sprite Renderer is NULL");
         }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI manager is null");
+        }
+    }
+    public void Update()
+    {
+
     }
 
     public void Damage()
@@ -24,39 +40,51 @@ public class Shield : MonoBehaviour
 
         if (_lives <= 0)
         {
-            Destroy(gameObject);
+            _auxColor.a = 1;
+            _auxColor = Color.white;
+
             return;
         }
 
-        Color auxColor = _spriteRenderer.color;
+
+        _uiManager.UpdateLives(_lives);
 
         switch (_lives)
         {
             case 2:
-                auxColor.a = 0.1f;
+                _auxColor.a = 0.1f;
                 break;
             case 1:
-                auxColor = Color.red;
+                _auxColor = Color.red;
                 break;
         }
 
-        _spriteRenderer.color = auxColor;
+        _spriteRenderer.color = _auxColor;
 
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public void ShieldActive(bool state)
     {
-        Debug.Log("Shield:: Triggerenter" + other.name);
-        if (other.CompareTag("Laser") || other.CompareTag("Enemy"))
+        if (state == true)
         {
-            Destroy(other.gameObject);
-            Damage();
+            _lives = 3;
+            _auxColor.a = 1;
+            _auxColor = Color.white;
         }
+        _spriteRenderer.enabled = state;
     }
 
-    private void UpdateLives()
+    public int ShieldStrength()
     {
-        _lives = 3;
+        return _lives;
     }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    Debug.Log("Shield:: Triggerenter" + other.name);
+    //    if (other.CompareTag("Laser") || other.CompareTag("Enemy"))
+    //    {
+    //        Destroy(other.gameObject);
+    //        Damage();
+    //    }
+    //}
 
 }
