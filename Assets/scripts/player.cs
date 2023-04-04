@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField] private float _fireRate = 0.25f;
     private float _canfire = -2f;
-    [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -24,6 +23,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private int _score;
+    [SerializeField] private int _lives = 3;
+    [SerializeField] private int _currentAmmo;
+    [SerializeField] private int _maxAmmo = 15;
+    private int _minAmmo = 0;
     private GameObject _shield;
 
     private UIManager _uiManager;
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _currentAmmo = _maxAmmo;
 
         if (_spawnManager == null)
         {
@@ -118,21 +122,31 @@ public class Player : MonoBehaviour
         _canfire = Time.time + _fireRate;
 
 
-        if (_isTriple_ShotActive == true)
+        if (_isTriple_ShotActive == true && _currentAmmo > _minAmmo)
 
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+
+            _audioSource.Play();
         }
 
-        else
+        else if (_currentAmmo > _minAmmo)
 
         {
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+
+            _audioSource.Play();
         }
 
-        
-        _audioSource.Play();
+        else
+        {
+            Debug.Log("Player ammo = 0");
+        }
 
+        int _laserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
+
+        _currentAmmo--;
+        _uiManager.UpdateAmmo(_currentAmmo);
     }
 
     void FireMissile()

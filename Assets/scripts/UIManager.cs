@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     //[SerializeField] private Sprite[] _shieldStrength;
     //[SerializeField] private Image _shieldStrengthimages = new Sprite[4];
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private TMP_Text _laserAmmoText;
    
     // Start is called before the first frame update
     void Start()
@@ -54,17 +55,23 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
-    
+
+    }
+
+    public void UpdateAmmo(int currentAmmo)
+    {
+
+        _laserAmmoText.text = $"Ammo: { currentAmmo}";
     }
 
     //public void UpdateShiedstrength(int shieldStrength)
     //{
-        //GameObject imageObject = _shieldStrengthimage.gameObject;
-        //GameObject parentGameObject = imageGameObject.transform.parent.gaemObject;
+    //GameObject imageObject = _shieldStrengthimage.gameObject;
+    //GameObject parentGameObject = imageGameObject.transform.parent.gaemObject;
 
-        //_shieldStrengthimage.sprite = _shieldStrengthimage(shieldStrength);
-        //_imageGameObject.SetActive(shieldStrength > 0);
-        //parentGameObject.SetActive(shieldStrength > 0);
+    //_shieldStrengthimage.sprite = _shieldStrengthimage(shieldStrength);
+    //_imageGameObject.SetActive(shieldStrength > 0);
+    //parentGameObject.SetActive(shieldStrength > 0);
     //}
 
     void GameOverSequence()
