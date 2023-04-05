@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public enum alphaValue
-{ 
-    Shrinking, 
-    Growing
-}
+//public enum alphaValue
+//{ 
+//    Shrinking, 
+//    Growing
+//}
 
 
 //create ui for the powerups so i can have 3 of each and activate them at will
@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-                    
+        //_laserAmmoText.text = "Ammo:" = 15;          
     }
 
     private void Update()
@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(int currentAmmo)
     {
 
-        _laserAmmoText.text = $"Ammo: { currentAmmo}";
+        _laserAmmoText.text = $"Ammo:{currentAmmo}";
     }
 
     //public void UpdateShiedstrength(int shieldStrength)

@@ -13,7 +13,7 @@ public class Shield : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Shield start");
+        //Debug.Log("Shield start");
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _auxColor = _spriteRenderer.color;

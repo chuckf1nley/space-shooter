@@ -5,17 +5,17 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private int powerupID; // 0 = Triple Shot 1 = speed 2 = shield 
+    [SerializeField] private int powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo
     [SerializeField] private AudioClip _Clip;
+    private Player player;
 
     // Update is called once per frame
     void Update()
 
-        //ideas for powerups: carry up to 3 of each, use numbers to activate 1-3
+        //ideas for powerups: carry up to 3 of each, use numbers to activate 1-4
         //create EMP to destroy radius for every 500 points
         // create asset to destroy all enemies on screen for every 1000
         // after 300 seconds decrease spawn timer to 3 seconds
-
 
 
     {
@@ -41,7 +41,8 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-
+                Debug.Log("powerup is null");
+                
                 switch (powerupID)
                 {
                     case 0:
@@ -52,6 +53,9 @@ public class Powerup : MonoBehaviour
                         break;
                     case 2:
                         player.ActivateShield();
+                        break;
+                    case 3:
+                        player.AmmooRefillActive();
                         break;
 
                     default:

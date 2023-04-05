@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
+    [SerializeField] private GameObject _ammoRefillPrefab;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
         CalculaateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
-            Debug.Log("Fired");
+           // Debug.Log("Fired");
             FireLaser();
         }
 
@@ -245,5 +246,12 @@ public class Player : MonoBehaviour
 
     }
 
+    public void AmmooRefillActive()
+    {
+
+        _currentAmmo = _maxAmmo;
+        _uiManager.UpdateAmmo(_currentAmmo);
+
+    }
 
 }
