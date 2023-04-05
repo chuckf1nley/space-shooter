@@ -41,21 +41,25 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-                Debug.Log("powerup is null");
+                
                 
                 switch (powerupID)
                 {
                     case 0:
                         player.TripleShotActive();
+                        Debug.Log("tripleshot is null");
                         break;
                     case 1:
                         player.SpeedBoostActive();
+                        Debug.Log("speed is null");
                         break;
                     case 2:
                         player.ActivateShield();
+                        Debug.Log("shield is null");
                         break;
                     case 3:
                         player.AmmooRefillActive();
+                        Debug.Log("ammo is null");
                         break;
 
                     default:
