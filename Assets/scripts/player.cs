@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField] private float _fireRate = 0.25f;
     private float _canfire = -2f;
+    private float PlayerLives = 1f;
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -25,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private int _score;
     [SerializeField] private int _lives = 3;
+    private int _addLives = 1;
+    private int _currentLives;
+    private int _maxLives;
     [SerializeField] private int _currentAmmo;
     [SerializeField] private int _maxAmmo = 15;
     private int _minAmmo = 0;
@@ -68,8 +72,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         CalculaateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+       
 
     }
 
@@ -162,6 +165,7 @@ public class Player : MonoBehaviour
     public void Damage()
     {
 
+        
         if (_isShieldActive == true)
         {
             _shieldVisualizer.Damage();
@@ -194,7 +198,6 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             _audioSource.Play();
             Destroy(this.gameObject);
-
 
         }
     }
@@ -254,4 +257,14 @@ public class Player : MonoBehaviour
 
     }
 
+    public void HealthRestore()
+    {
+       // if (PlayerLives._currentLives < PlayerLives._maxLives)
+        {
+            _lives += _addLives;
+            _uiManager.UpdateLives(_currentLives);
+        }
+       
+
+    }
 }
