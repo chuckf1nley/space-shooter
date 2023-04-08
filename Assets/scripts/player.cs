@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private Vector3 laserOffset = new Vector3(0, .884f, 0);
     [SerializeField] private float _fireRate = 0.25f;
     private float _canfire = -2f;
-    private float PlayerLives = 1f;
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -21,19 +20,18 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
     [SerializeField] private GameObject _ammoRefillPrefab;
+    [SerializeField] private GameObject _healthPrefab;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private int _score;
-    [SerializeField] private int _lives = 3;
-    private int _addLives = 1;
-    private int _currentLives;
-    private int _maxLives;
-    [SerializeField] private int _currentAmmo;
+    [SerializeField] private int _maxLives = 3;
+    private int _minLives = 0;
+    [SerializeField] private int _currentLives;
+    private int _currentAmmo;
     [SerializeField] private int _maxAmmo = 15;
     private int _minAmmo = 0;
     private GameObject _shield;
-
     private UIManager _uiManager;
     private AudioSource _audioSource;
 
@@ -49,6 +47,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
+        _currentLives = _maxLives;
 
         if (_spawnManager == null)
         {
@@ -75,12 +74,12 @@ public class Player : MonoBehaviour
         CalculaateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
-           // Debug.Log("Fired");
+            // Debug.Log("Fired");
             FireLaser();
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-       
+
 
     }
 
@@ -164,8 +163,11 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        _currentLives--;
+        int _currentLivesDamageClamp = Mathf.Clamp(_currentLives, _maxLives, _minLives);
+        _currentLives = _currentLivesDamageClamp;
+        _maxLives = 3;
 
-        
         if (_isShieldActive == true)
         {
             _shieldVisualizer.Damage();
@@ -174,26 +176,23 @@ public class Player : MonoBehaviour
                 _isShieldActive = false;
                 _shieldVisualizer.ShieldActive(false);
             }
-            
-            
+
             return;
         }
 
-        _lives--;
-
-        if (_lives == 2)
+        if (_currentLives == 2)
         {
             _leftengine.SetActive(true);
         }
 
-        else if (_lives == 1)
+        else if (_currentLives == 1)
         {
             _rightengine.SetActive(true);
         }
 
-        _uiManager.UpdateLives(_lives);
+        _uiManager.UpdateLives(_currentLives);
 
-        if (_lives < 1)
+        if (_minLives == 0)
         {
             _spawnManager.OnPlayerDeath();
             _audioSource.Play();
@@ -253,18 +252,21 @@ public class Player : MonoBehaviour
     {
 
         _currentAmmo = _maxAmmo;
+       // int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _maxAmmo, _minAmmo);
+        //_currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
 
     }
 
-    public void HealthRestore()
+    public void Heal()
     {
-       // if (PlayerLives._currentLives < PlayerLives._maxLives)
-        {
-            _lives += _addLives;
-            _uiManager.UpdateLives(_currentLives);
-        }
-       
+        _currentLives++;
+        Debug.Log("health powerup collected");
+        int _currentLivesHealClamp = Mathf.Clamp(_currentLives, _maxLives, _minLives);
+        _currentLives = _currentLivesHealClamp;
+        _uiManager.UpdateLives(_currentLives);
+
+
 
     }
 }

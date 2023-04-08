@@ -5,7 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private int powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo
+    [SerializeField] private int powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo 4 = health
     [SerializeField] private AudioClip _Clip;
     private Player _player;
 
@@ -19,8 +19,6 @@ public class Powerup : MonoBehaviour
 
     {
 
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        //var Lives = GameObject.FindObjectOfType<PlayerLives>();
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y < -7.5)
@@ -59,9 +57,8 @@ public class Powerup : MonoBehaviour
                     case 3:
                         player.AmmooRefillActive();
                         break;
-
                     case 4:
-                        player.HealthRestore();
+                        player.Heal();
                         break;
 
                     default:

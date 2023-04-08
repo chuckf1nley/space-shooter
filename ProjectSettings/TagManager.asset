@@ -12,6 +12,7 @@ TagManager:
   - Spawnable
   - laser
   - Ammo
+  - Health
   layers:
   - Default
   - TransparentFX
