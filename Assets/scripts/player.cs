@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     private GameObject _shield;
     private UIManager _uiManager;
     private AudioSource _audioSource;
-
+   
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
 
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
     public void Damage()
     {
         _currentLives--;
-        int _currentLivesDamageClamp = Mathf.Clamp(_currentLives, _maxLives, _minLives);
+        int _currentLivesDamageClamp = Mathf.Clamp(_currentLives, _minLives, _maxLives);
         _currentLives = _currentLivesDamageClamp;
         _maxLives = 3;
 
@@ -192,13 +192,16 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateLives(_currentLives);
 
-        if (_minLives == 0)
+        if (_currentLives == 0)
         {
+            Debug.Log("player out of lives" + _minLives);
             _spawnManager.OnPlayerDeath();
             _audioSource.Play();
             Destroy(this.gameObject);
 
         }
+
+       
     }
 
     public void TripleShotActive()
@@ -262,11 +265,22 @@ public class Player : MonoBehaviour
     {
         _currentLives++;
         Debug.Log("health powerup collected");
-        int _currentLivesHealClamp = Mathf.Clamp(_currentLives, _maxLives, _minLives);
+        int _currentLivesHealClamp = Mathf.Clamp(_currentLives, _minLives, _maxLives);
         _currentLives = _currentLivesHealClamp;
+      
         _uiManager.UpdateLives(_currentLives);
+        RestoreHealthVisualizer();
+    }
+    public void RestoreHealthVisualizer()
+    {
+        if (_currentLives > 2)
+        {
+            _leftengine.SetActive(false);
+        }
 
-
-
+        else if (_currentLives > 1)
+        {
+            _rightengine.SetActive(false);
+        }
     }
 }

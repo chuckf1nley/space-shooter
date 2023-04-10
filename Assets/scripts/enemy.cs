@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
     // after 300 seconds decrease spawn timer to 2 second
-    
+
 
 
     // Start is called before the first frame update
@@ -115,18 +115,9 @@ public class Enemy : MonoBehaviour
 
                 other.GetComponent<Shield>().Damage();
                 _player.AddScore(10);
-                this.Damage();
                 Destroy(GetComponent<Laser>());
                 Destroy(GetComponent<Collider2D>());
             }
     }
 
-    public void Damage() 
-    {
-    
-    
-    }
-    
-
-      
 }
