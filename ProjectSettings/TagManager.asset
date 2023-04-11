@@ -13,6 +13,7 @@ TagManager:
   - laser
   - Ammo
   - Health
+  - AltFire
   layers:
   - Default
   - TransparentFX

@@ -15,12 +15,14 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
+    private bool _isAltFireActive = false;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _SpeedBoostPrefab;
     [SerializeField] private GameObject _ammoRefillPrefab;
     [SerializeField] private GameObject _healthPrefab;
+    [SerializeField] private GameObject _altFirePrefab;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
@@ -146,6 +148,14 @@ public class Player : MonoBehaviour
             Debug.Log("Player ammo = 0");
         }
 
+        if (_isAltFireActive == true && _currentAmmo > _minAmmo)
+        {
+            Instantiate(_altFirePrefab, transform.position, Quaternion.identity);
+
+            _audioSource.Play();
+
+        }
+
         int _laserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
 
         _currentAmmo--;
@@ -255,8 +265,8 @@ public class Player : MonoBehaviour
     {
 
         _currentAmmo = _maxAmmo;
-       // int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _maxAmmo, _minAmmo);
-        //_currentAmmo = _currentAmmoLaserAmmoClamp;
+        int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
+       _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
 
     }
@@ -282,5 +292,19 @@ public class Player : MonoBehaviour
         {
             _rightengine.SetActive(false);
         }
+    }
+
+    public void AltFire()
+    {
+        _isAltFireActive = true;
+        StartCoroutine(AltFirePowerDownRoutine());
+       
+
+    }
+
+    IEnumerator AltFirePowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isAltFireActive = false;
     }
 }
