@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
+    private bool firingConstantly = false;
+    private float nextFire = 0f;
+    private float fireDelay = 100f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -36,7 +40,7 @@ public class Player : MonoBehaviour
     private GameObject _shield;
     private UIManager _uiManager;
     private AudioSource _audioSource;
-   
+
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
 
@@ -151,7 +155,7 @@ public class Player : MonoBehaviour
         if (_isAltFireActive == true)
         {
             Instantiate(_altFirePrefab, transform.position, Quaternion.identity);
-            
+
             _audioSource.Play();
 
         }
@@ -211,7 +215,7 @@ public class Player : MonoBehaviour
 
         }
 
-       
+
     }
 
     public void TripleShotActive()
@@ -266,7 +270,7 @@ public class Player : MonoBehaviour
 
         _currentAmmo = _maxAmmo;
         int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
-       _currentAmmo = _currentAmmoLaserAmmoClamp;
+        _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
 
     }
@@ -277,7 +281,7 @@ public class Player : MonoBehaviour
         Debug.Log("health powerup collected");
         int _currentLivesHealClamp = Mathf.Clamp(_currentLives, _minLives, _maxLives);
         _currentLives = _currentLivesHealClamp;
-      
+
         _uiManager.UpdateLives(_currentLives);
         RestoreHealthVisualizer();
     }
@@ -296,31 +300,28 @@ public class Player : MonoBehaviour
 
     public void AltFire()
     {
+        Debug.Log("AltFire collected");
+        if (firingConstantly)
+        {
+            if (Time.time * 1000 > nextFire)
+            {
+                nextFire = (Time.time * 1000) + fireDelay;
+                FireLaser();
+            }
+        }
         _isAltFireActive = true;
         StartCoroutine(AltFirePowerDownRoutine());
-
-
     }
 
+    
     IEnumerator AltFirePowerDownRoutine()
     {
-        while (_isAltFireActive == false)
+        if (_isAltFireActive == false)
         {
-            //Vector3 posToSpawn = new Vector3(UnityEngine);
-
-
+           
             yield return new WaitForSeconds(5.0f);
         }
 
     }
-}
 
-//while (_stopSpawning == false)
-//{
-//    Vector3 posToSpawn = new Vector3(UnityEngine.Random.Range(-18f, 18f), 6, 0);
-//    // float randomPowerup = UnityEngine.Random.Range(0.0f, 7.0f);
-//    int randomPowerup = UnityEngine.Random.Range(0, 7);
-//    GameObject newPowerup = Instantiate(_powerups[randomPowerup], new Vector3(UnityEngine.Random.Range(-18f, 18f), 6, 0), Quaternion.identity);
-//    //Instantiate(_powerups[randomPowerup], posToSpawn, Quaternion.identity);
-//    yield return new WaitForSeconds(UnityEngine.Random.Range(3, 8));
-//}
+}
