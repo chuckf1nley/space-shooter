@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private GameObject _isShieldActive;
     private GameObject Shield;
     private GameObject Explode;
+    private bool _isEnemyAlive = false;
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
@@ -44,18 +45,21 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CalculateMovement();
-
-        if (Time.time > _canfire)
+        _isEnemyAlive = true;
         {
-            _fireRate = Random.Range(3f, 7f);
-            _canfire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            CalculateMovement();
 
-            for (int i = 0; i < lasers.Length; i++)
+            if (Time.time > _canfire)
             {
-                lasers[i].AssignEnemyLaser();
+                _fireRate = Random.Range(3f, 7f);
+                _canfire = Time.time + _fireRate;
+                GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+                Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+                for (int i = 0; i < lasers.Length; i++)
+                {
+                    lasers[i].AssignEnemyLaser();
+                }
             }
         }
     }
