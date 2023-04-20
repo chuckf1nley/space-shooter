@@ -18,8 +18,7 @@ public class Player : MonoBehaviour
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
     private bool firingConstantly = false;
-    private float nextFire = 0f;
-    private float fireDelay = 100f;
+    private int altFiring;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -152,16 +151,7 @@ public class Player : MonoBehaviour
             Debug.Log("Player ammo = 0");
         }
 
-        if (_isAltFireActive == true)
-        {
-            Instantiate(_altFirePrefab, transform.position, Quaternion.identity);
-
-            _audioSource.Play();
-
-        }
-
         int _laserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
-
         _currentAmmo--;
         _uiManager.UpdateAmmo(_currentAmmo);
     }
@@ -291,7 +281,6 @@ public class Player : MonoBehaviour
         {
             _leftengine.SetActive(false);
         }
-
         else if (_currentLives > 1)
         {
             _rightengine.SetActive(false);
@@ -300,28 +289,27 @@ public class Player : MonoBehaviour
 
     public void AltFire()
     {
-        Debug.Log("AltFire collected");
-        if (firingConstantly)
-        {
-            if (Time.time * 1000 > nextFire)
-            {
-                nextFire = (Time.time * 1000) + fireDelay;
-                FireLaser();
-            }
-        }
-        _isAltFireActive = true;
+        firingConstantly = true;
+        StartCoroutine(AltFiring());
         StartCoroutine(AltFirePowerDownRoutine());
+
     }
 
+    IEnumerator AltFiring()
+    {
+        while (firingConstantly)
+        {
+            yield return new WaitForSeconds(5.0f);
+            Instantiate(_altFirePrefab, transform.position + laserOffset, Quaternion.identity);
+
+        }
+    }
     
     IEnumerator AltFirePowerDownRoutine()
     {
         if (_isAltFireActive == false)
         {
-           
             yield return new WaitForSeconds(5.0f);
         }
-
     }
-
 }
