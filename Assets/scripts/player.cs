@@ -17,7 +17,9 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
-    private bool firingConstantly = false;   
+    private bool firingConstantly = false;
+    private float nextFire = 0f;
+    private float fireDelay = 100f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -133,6 +135,7 @@ public class Player : MonoBehaviour
 
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+
             _audioSource.Play();
         }
 
@@ -140,12 +143,21 @@ public class Player : MonoBehaviour
 
         {
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+
             _audioSource.Play();
         }
 
         else
         {
             Debug.Log("Player ammo = 0");
+        }
+
+        if (_isAltFireActive == true)
+        {
+            Instantiate(_altFirePrefab, transform.position, Quaternion.identity);
+
+            _audioSource.Play();
+
         }
 
         int _laserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
@@ -181,10 +193,12 @@ public class Player : MonoBehaviour
 
             return;
         }
+
         if (_currentLives == 2)
         {
             _leftengine.SetActive(true);
         }
+
         else if (_currentLives == 1)
         {
             _rightengine.SetActive(true);
@@ -286,28 +300,28 @@ public class Player : MonoBehaviour
 
     public void AltFire()
     {
-
-        firingConstantly = true;      
-        StartCoroutine(AltFirePowerDownRoutine());
-        StartCoroutine(AltFiring());
-    }
-
-    public IEnumerator AltFiring()
-    {
-        while (firingConstantly)
+        Debug.Log("AltFire collected");
+        if (firingConstantly)
         {
-            yield return new WaitForSeconds(_fireRate);
-            Instantiate(_altFirePrefab, transform.position + laserOffset, Quaternion.identity);
-        }    
+            if (Time.time * 1000 > nextFire)
+            {
+                nextFire = (Time.time * 1000) + fireDelay;
+                FireLaser();
+            }
+        }
+        _isAltFireActive = true;
+        StartCoroutine(AltFirePowerDownRoutine());
     }
 
+    
     IEnumerator AltFirePowerDownRoutine()
     {
         if (_isAltFireActive == false)
         {
-
+           
             yield return new WaitForSeconds(5.0f);
         }
 
     }
+
 }
