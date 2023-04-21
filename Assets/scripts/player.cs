@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
     private bool firingConstantly = false;
-    private int altFiring;
+   // private int altFiring;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -119,22 +119,17 @@ public class Player : MonoBehaviour
 
         {
             if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;
-
             else _speed = 3.5f;
         }
-
     }
 
     void FireLaser()
     {
         _canfire = Time.time + _fireRate;
 
-
         if (_isTriple_ShotActive == true && _currentAmmo > _minAmmo)
-
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-
             _audioSource.Play();
         }
 
@@ -159,9 +154,7 @@ public class Player : MonoBehaviour
     void FireMissile()
     {
         _canfire = Time.time + _fireRate;
-
         Instantiate(_missilePrefab, transform.position, Quaternion.identity);
-
     }
 
 
@@ -180,39 +173,31 @@ public class Player : MonoBehaviour
                 _isShieldActive = false;
                 _shieldVisualizer.ShieldActive(false);
             }
-
             return;
         }
-
         if (_currentLives == 2)
         {
             _leftengine.SetActive(true);
         }
-
         else if (_currentLives == 1)
         {
             _rightengine.SetActive(true);
         }
-
         _uiManager.UpdateLives(_currentLives);
 
         if (_currentLives == 0)
         {
-            Debug.Log("player out of lives" + _minLives);
-            _spawnManager.OnPlayerDeath();
+            //Debug.Log("player out of lives" + _minLives);
             _audioSource.Play();
+            _spawnManager.OnPlayerDeath();            
             Destroy(this.gameObject);
-
         }
-
-
     }
 
     public void TripleShotActive()
     {
         _isTriple_ShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
-
     }
 
     IEnumerator TripleShotPowerDownRoutine()
@@ -223,10 +208,8 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
-
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
@@ -241,28 +224,21 @@ public class Player : MonoBehaviour
         {
             Destroy(_shield);
         }
-
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-
-
     }
     public void AddScore(int points)
     {
         _score += points;
         _uiManager.UpdateScore(_score);
-
-
     }
 
     public void AmmooRefillActive()
     {
-
         _currentAmmo = _maxAmmo;
         int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
         _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
-
     }
 
     public void Heal()
@@ -271,7 +247,6 @@ public class Player : MonoBehaviour
         Debug.Log("health powerup collected");
         int _currentLivesHealClamp = Mathf.Clamp(_currentLives, _minLives, _maxLives);
         _currentLives = _currentLivesHealClamp;
-
         _uiManager.UpdateLives(_currentLives);
         RestoreHealthVisualizer();
     }
@@ -299,9 +274,8 @@ public class Player : MonoBehaviour
     {
         while (firingConstantly)
         {
-            yield return new WaitForSeconds(5.0f);
             Instantiate(_altFirePrefab, transform.position + laserOffset, Quaternion.identity);
-
+            yield return new WaitForSeconds(5.0f);
         }
     }
     

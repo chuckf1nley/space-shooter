@@ -12,9 +12,7 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
-    private GameObject _isShieldActive;
     private GameObject Shield;
-    private GameObject Explode;
     private bool _isEnemyAlive = false;
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
@@ -45,22 +43,23 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        _isEnemyAlive = true;
         CalculateMovement();
-        
+       
+          if (Time.time > _canfire)
+          {
+            
+                _fireRate = Random.Range(3f, 7f);
+                _canfire = Time.time + _fireRate;
+                GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+                Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
-            if (Time.time > _canfire)
-        {
-            _fireRate = Random.Range(3f, 7f);
-            _canfire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
-        }
+                for (int i = 0; i < lasers.Length; i++)
+                {
+                    lasers[i].AssignEnemyLaser();
+                }
+            
+          }
 
     }
     void CalculateMovement()
@@ -73,12 +72,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            _isEnemyAlive = true;
+
         {
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
@@ -90,7 +87,7 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             _isEnemyAlive = false;
             Destroy(this.gameObject, 2.6f);
-            Destroy(GetComponent<Laser>());
+            Destroy(GetComponent<EnemyLaser>());
             Destroy(GetComponent<Collider2D>());
         }
         if (other.CompareTag("Laser"))
@@ -105,7 +102,7 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             _isEnemyAlive = false;
             Destroy(GetComponent<Collider2D>());
-            Destroy(GetComponent<Laser>());
+            Destroy(GetComponent<EnemyLaser>());
             Destroy(this.gameObject, 2.6f);
         }
         if (other.CompareTag("Shield"))
@@ -115,7 +112,7 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10);
                 _audioSource.Play();
                 _isEnemyAlive = false;
-                Destroy(GetComponent<Laser>());
+                Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
             }
     }

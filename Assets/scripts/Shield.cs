@@ -35,7 +35,7 @@ public class Shield : MonoBehaviour
 
     public void Damage()
     {
-        Debug.Log("Shield:: Damage()");
+        //Debug.Log("Shield:: Damage()");
         _lives--;
 
         if (_lives <= 0)
@@ -45,9 +45,7 @@ public class Shield : MonoBehaviour
 
             return;
         }
-
-
-        _uiManager.UpdateLives(_lives);
+       // _uiManager.UpdateLives(_lives);
 
         switch (_lives)
         {
