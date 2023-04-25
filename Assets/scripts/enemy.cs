@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
 
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
+        _isEnemyAlive = true;
         if (_player == null)
         {
             Debug.LogError("player is null");
@@ -43,23 +44,22 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _isEnemyAlive = true;
-        CalculateMovement();
-       
-          if (Time.time > _canfire)
-          {
-            
-                _fireRate = Random.Range(3f, 7f);
-                _canfire = Time.time + _fireRate;
-                GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-                Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
-                for (int i = 0; i < lasers.Length; i++)
-                {
-                    lasers[i].AssignEnemyLaser();
-                }
-            
-          }
+        CalculateMovement();
+
+        if (Time.time > _canfire && _isEnemyAlive == true)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+
+        }
 
     }
     void CalculateMovement()
@@ -74,47 +74,50 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (_isEnemyAlive == true)
+        {
+            if (other.CompareTag("Player"))
 
-        {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
             {
-                player.Damage();
-            }
-            _Anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _audioSource.Play();
-            _isEnemyAlive = false;
-            Destroy(this.gameObject, 2.6f);
-            Destroy(GetComponent<EnemyLaser>());
-            Destroy(GetComponent<Collider2D>());
-        }
-        if (other.CompareTag("Laser"))
-        {
-            Destroy(other.gameObject);
-            if (_player != null)
-            {
-                _player.AddScore(10);
-            }
-            _Anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _audioSource.Play();
-            _isEnemyAlive = false;
-            Destroy(GetComponent<Collider2D>());
-            Destroy(GetComponent<EnemyLaser>());
-            Destroy(this.gameObject, 2.6f);
-        }
-        if (other.CompareTag("Shield"))
-            if (Shield != null)
-            {
-                other.GetComponent<Shield>().Damage();
-                _player.AddScore(10);
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
+                _Anim.SetTrigger("OnEnemyDeath");
+                _speed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                Destroy(this.gameObject, 2.6f);
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
             }
+            if (other.CompareTag("Laser"))
+            {
+                Destroy(other.gameObject);
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+                _Anim.SetTrigger("OnEnemyDeath");
+                _speed = 0;
+                _audioSource.Play();
+                _isEnemyAlive = false;
+                Destroy(GetComponent<Collider2D>());
+                Destroy(GetComponent<EnemyLaser>());
+                Destroy(this.gameObject, 2.6f);
+            }
+            if (other.CompareTag("Shield"))
+                if (Shield != null)
+                {
+                    other.GetComponent<Shield>().Damage();
+                    _player.AddScore(10);
+                    _audioSource.Play();
+                    _isEnemyAlive = false;
+                    Destroy(GetComponent<EnemyLaser>());
+                    Destroy(GetComponent<Collider2D>());
+                }
+        }
     }
 
 }

@@ -45,12 +45,11 @@ public class Shield : MonoBehaviour
 
             return;
         }
-       // _uiManager.UpdateLives(_lives);
-
+       
         switch (_lives)
         {
             case 2:
-                _auxColor.a = 0.1f;
+                _auxColor = Color.yellow;
                 break;
             case 1:
                 _auxColor = Color.red;
@@ -75,14 +74,5 @@ public class Shield : MonoBehaviour
     {
         return _lives;
     }
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    Debug.Log("Shield:: Triggerenter" + other.name);
-    //    if (other.CompareTag("Laser") || other.CompareTag("Enemy"))
-    //    {
-    //        Destroy(other.gameObject);
-    //        Damage();
-    //    }
-    //}
-
+    
 }

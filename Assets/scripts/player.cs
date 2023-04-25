@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
     private bool firingConstantly = false;
-   // private int altFiring;
+    private int altFiring;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -85,7 +85,6 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
-
     }
 
     void CalculaateMovement()
@@ -132,18 +131,21 @@ public class Player : MonoBehaviour
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _audioSource.Play();
         }
-
         else if (_currentAmmo > _minAmmo)
-
         {
             Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
 
             _audioSource.Play();
         }
-
         else
         {
             Debug.Log("Player ammo = 0");
+        }
+
+        if (_isAltFireActive == true)
+        {
+            Instantiate(_altFirePrefab);
+
         }
 
         int _laserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
@@ -160,10 +162,7 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _currentLives--;
-        int _currentLivesDamageClamp = Mathf.Clamp(_currentLives, _minLives, _maxLives);
-        _currentLives = _currentLivesDamageClamp;
-        _maxLives = 3;
+        
 
         if (_isShieldActive == true)
         {
@@ -175,6 +174,8 @@ public class Player : MonoBehaviour
             }
             return;
         }
+        _currentLives--;
+       
         if (_currentLives == 2)
         {
             _leftengine.SetActive(true);
@@ -183,15 +184,16 @@ public class Player : MonoBehaviour
         {
             _rightengine.SetActive(true);
         }
-        _uiManager.UpdateLives(_currentLives);
 
-        if (_currentLives == 0)
+        _uiManager.UpdateLives(_currentLives);
+        if (_currentLives <= 0)
         {
             //Debug.Log("player out of lives" + _minLives);
             _audioSource.Play();
-            _spawnManager.OnPlayerDeath();            
+            _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+
     }
 
     public void TripleShotActive()
@@ -199,7 +201,6 @@ public class Player : MonoBehaviour
         _isTriple_ShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
-
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -211,7 +212,6 @@ public class Player : MonoBehaviour
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
-
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -265,25 +265,20 @@ public class Player : MonoBehaviour
     public void AltFire()
     {
         firingConstantly = true;
-        StartCoroutine(AltFiring());
         StartCoroutine(AltFirePowerDownRoutine());
-
+        StartCoroutine(AltFiring());
     }
-
     IEnumerator AltFiring()
     {
         while (firingConstantly)
         {
-            Instantiate(_altFirePrefab, transform.position + laserOffset, Quaternion.identity);
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(_fireRate);
+            Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
         }
     }
-    
     IEnumerator AltFirePowerDownRoutine()
-    {
-        if (_isAltFireActive == false)
-        {
-            yield return new WaitForSeconds(5.0f);
-        }
+    {       
+        yield return new WaitForSeconds(5.0f);
+        _isAltFireActive = false;
     }
 }
