@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class Player : MonoBehaviour
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
     private bool firingConstantly = false;
-    private int altFiring;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private int _score;
     [SerializeField] private int _maxLives = 3;
+    [SerializeField] private TMP_Text _thrusterText;
+    [SerializeField] private GameObject _thruster;
     private int _minLives = 0;
     [SerializeField] private int _currentLives;
     private int _currentAmmo;
@@ -117,9 +119,16 @@ public class Player : MonoBehaviour
         }
 
         {
-            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;
+            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;           
             else _speed = 3.5f;
         }
+        if (Input.GetKey(KeyCode.LeftShift)) _thruster.SetActive(true);
+        else _thruster.SetActive(false);
+    }
+
+    public void thruster(int _thruster) //the text should appear only when the shift key is pressed
+    {
+        _thrusterText.text = "thruster active";
     }
 
     void FireLaser()

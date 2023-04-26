@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-//create ui for the powerups so i can have 3 of each and activate them at will
+//create ui for the powerups so i can have 3 of each and activate them on number press
 
 public class UIManager : MonoBehaviour
 
@@ -18,23 +18,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
-    //[SerializeField] private Sprite[] _shieldStrength;
-    //[SerializeField] private Image _shieldStrengthimages = new Sprite[4];
+    [SerializeField] private TMP_Text _thrusterText;
+    
     [SerializeField] private GameManager _gameManager;
     
    
-    // Start is called before the first frame update
-    void Start()
-    {
-        //_laserAmmoText.text = "Ammo:" = 15;          
-    }
-
-    private void Update()
-    {
-       
-    }
-   
-
     public void UpdateScore(int playerscore)
     {
         _scoreText.text = "Score:" + playerscore.ToString();
@@ -51,6 +39,10 @@ public class UIManager : MonoBehaviour
         }
 
     }
+    public void thruster(int _thruster) //the text should appear only when the shift key is pressed
+    {
+       _thrusterText.text = "thruster active";
+    }
    
 
     public void UpdateAmmo(int currentAmmo)
@@ -59,16 +51,7 @@ public class UIManager : MonoBehaviour
         _laserAmmoText.text = $"Ammo:{currentAmmo}";
     }
 
-    //public void UpdateShiedstrength(int shieldStrength)
-    //{
-    //GameObject imageObject = _shieldStrengthimage.gameObject;
-    //GameObject parentGameObject = imageGameObject.transform.parent.gaemObject;
-
-    //_shieldStrengthimage.sprite = _shieldStrengthimage(shieldStrength);
-    //_imageGameObject.SetActive(shieldStrength > 0);
-    //parentGameObject.SetActive(shieldStrength > 0);
-    //}
-
+    
     void GameOverSequence()
     {
         _gameManager.GameOver();
@@ -85,9 +68,12 @@ public class UIManager : MonoBehaviour
         {
             _gameOverText.text = "Game Over";
             yield return new WaitForSeconds(0.5f);
-            _gameOverText.text = "";
-            yield return new WaitForSeconds(0.5f);
+
         }
     }
- 
+
+    internal float SetActive(bool v)
+    {
+        throw new NotImplementedException();
+    }
 }
