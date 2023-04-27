@@ -7,7 +7,7 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
-    private float _speedMultiplier = 3;
+    private float _speedMultiplier = 3f;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _score;
     [SerializeField] private int _maxLives = 3;
     [SerializeField] private TMP_Text _thrusterText;
+    private TMP_Text _shield_Lives_Display;
+    private CameraShake _camShake;
     [SerializeField] private GameObject _thruster;
     private int _minLives = 0;
     [SerializeField] private int _currentLives;
@@ -48,7 +50,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _camShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        if (_camShake == null)
+        {
+            Debug.LogError("Main Camera - CameraShake Script is null");
+        }
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -119,16 +125,25 @@ public class Player : MonoBehaviour
         }
 
         {
-            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;           
+            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;
             else _speed = 3.5f;
         }
         if (Input.GetKey(KeyCode.LeftShift)) _thruster.SetActive(true);
         else _thruster.SetActive(false);
+        StartCoroutine(thrusterPowerDownRoutine());
+
     }
 
-    public void thruster(int _thruster) //the text should appear only when the shift key is pressed
+    public void thruster(int _thruster)
     {
         _thrusterText.text = "thruster active";
+    }
+
+
+    IEnumerator thrusterPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _thruster.SetActive(false);
     }
 
     void FireLaser()
@@ -171,27 +186,31 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        
+
 
         if (_isShieldActive == true)
         {
             _shieldVisualizer.Damage();
+           
             if (_shieldVisualizer.ShieldStrength() <= 0)
-            {
+            {               
                 _isShieldActive = false;
-                _shieldVisualizer.ShieldActive(false);
+                _shieldVisualizer.ShieldActive(false);              
             }
+            
             return;
         }
         _currentLives--;
-       
+
         if (_currentLives == 2)
         {
             _leftengine.SetActive(true);
+            _camShake.ShakeCamera();
         }
         else if (_currentLives == 1)
         {
             _rightengine.SetActive(true);
+            _camShake.ShakeCamera();
         }
 
         _uiManager.UpdateLives(_currentLives);
@@ -203,6 +222,11 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+    }
+
+    public void shieldLives(int shield)
+    {
+        _shield_Lives_Display.text = "shield lives";
     }
 
     public void TripleShotActive()
@@ -286,8 +310,11 @@ public class Player : MonoBehaviour
         }
     }
     IEnumerator AltFirePowerDownRoutine()
-    {       
+    {
         yield return new WaitForSeconds(5.0f);
         _isAltFireActive = false;
     }
+
+   
+
 }

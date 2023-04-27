@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
     [SerializeField] private TMP_Text _thrusterText;
-    
+    [SerializeField] private TMP_Text _shield_Lives_Display;
     [SerializeField] private GameManager _gameManager;
     
    
@@ -41,9 +41,14 @@ public class UIManager : MonoBehaviour
     }
     public void thruster(int _thruster) //the text should appear only when the shift key is pressed
     {
-       _thrusterText.text = "thruster active";
+        _thrusterText.text = "thruster active";
+        
     }
-   
+
+    public void shieldLives(int shield)
+    {
+        _shield_Lives_Display.text = "shield lives";
+    }
 
     public void UpdateAmmo(int currentAmmo)
     {

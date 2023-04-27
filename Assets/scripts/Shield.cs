@@ -8,6 +8,8 @@ public class Shield : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private UIManager _uiManager;
     private Color _auxColor;
+    private UIManager uIManager;
+
 
 
 
@@ -30,7 +32,7 @@ public class Shield : MonoBehaviour
     }
     public void Update()
     {
-
+        //_uiManager = GameObject.Find("Canvas").GetComponent<_shield_Lives_Display>;
     }
 
     public void Damage()
@@ -73,6 +75,7 @@ public class Shield : MonoBehaviour
     public int ShieldStrength()
     {
         return _lives;
+
     }
     
 }
