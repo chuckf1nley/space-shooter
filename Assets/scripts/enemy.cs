@@ -5,8 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
-    [SerializeField] private GameObject _laserPrefab;
-    // private Vector3 _offset = new Vector3(0, 0.5f, 0);
+    [SerializeField] private GameObject _laserPrefab;    
     private float _fireRate = 3f;
     private float _canfire = -1;
     private Player _player;
@@ -17,8 +16,7 @@ public class Enemy : MonoBehaviour
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
-    // after 300 seconds decrease spawn timer to 2 second
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +63,11 @@ public class Enemy : MonoBehaviour
     void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.left * _speed * Time.deltaTime);
+        if (transform.position.x <= 18)             
+        transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        if(transform.position.x <= -18)
+        Debug.Log("enemy moves left and right");        
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
