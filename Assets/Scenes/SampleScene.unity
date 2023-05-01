@@ -919,6 +919,37 @@ RectTransform:
   m_AnchoredPosition: {x: 187.4, y: -52.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &701039394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 701039395}
+  m_Layer: 0
+  m_Name: Laser_container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &701039395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701039394}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2126228722}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,6 +2635,7 @@ MonoBehaviour:
   _ammoRefillPrefab: {fileID: 5634565700187194058, guid: e5af0948f721cd246bfb08e28dce2302, type: 3}
   _healthPrefab: {fileID: 5783914751581226875, guid: 300f787aa4f94d24396ee6e6b00c4032, type: 3}
   _altFirePrefab: {fileID: 2721285368598825506, guid: f3a27af6b1efd5840bd0877bb643d87c, type: 3}
+  _altFire: {fileID: 8908845556085783795, guid: 563a73d4b6ddd7d4a9a3c32f9e8c2315, type: 3}
   _shieldVisualizer: {fileID: 1505447057}
   _rightengine: {fileID: 1489766952}
   _leftengine: {fileID: 1996793762}
@@ -3741,6 +3773,7 @@ MonoBehaviour:
   - {fileID: 5634565700187194058, guid: e5af0948f721cd246bfb08e28dce2302, type: 3}
   - {fileID: 5783914751581226875, guid: 300f787aa4f94d24396ee6e6b00c4032, type: 3}
   - {fileID: 2721285368598825506, guid: f3a27af6b1efd5840bd0877bb643d87c, type: 3}
+  _laserContainer: {fileID: 701039394}
 --- !u!4 &2126228722
 Transform:
   m_ObjectHideFlags: 0
@@ -3754,6 +3787,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 955404440}
+  - {fileID: 701039395}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

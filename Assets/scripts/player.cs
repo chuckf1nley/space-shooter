@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _ammoRefillPrefab;
     [SerializeField] private GameObject _healthPrefab;
     [SerializeField] private GameObject _altFirePrefab;
+    [SerializeField] private GameObject _altFire;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
@@ -183,7 +184,6 @@ public class Player : MonoBehaviour
         Instantiate(_missilePrefab, transform.position, Quaternion.identity);
     }
 
-
     public void Damage()
     {
 
@@ -306,13 +306,14 @@ public class Player : MonoBehaviour
         while (firingConstantly)
         {
             yield return new WaitForSeconds(_fireRate);
-            Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+            Instantiate(_altFire, transform.position + laserOffset, Quaternion.identity);
         }
     }
     IEnumerator AltFirePowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         _isAltFireActive = false;
+        firingConstantly = false;
     }
 
    

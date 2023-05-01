@@ -5,24 +5,37 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
-    [SerializeField] private GameObject _laserPrefab;    
+    [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private int _enemyID; //0 normal enemy, 1 enemy at right angle, 2 enemy at left angle
+    [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private GameObject _laserContainer;
     private float _fireRate = 3f;
-    private float _canfire = -1;
+    private float _canfire = -1f;
     private Player _player;
     private Animator _Anim;
     private AudioSource _audioSource;
     private GameObject Shield;
     private bool _isEnemyAlive = false;
+    private bool _canFire;
+    private SpawnManager _spawnManager;
+    private float fMinX = 50.0f;
+    private float fMaxX = 250.0f;
+    private int Direction = -18;
+
+    public Vector3 _laserOffset { get; private set; }
+
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
-    
+
     // Start is called before the first frame update
     void Start()
     {
 
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
+        _laserSoundClip = GetComponent<AudioClip>();
         _isEnemyAlive = true;
         if (_player == null)
         {
@@ -58,16 +71,21 @@ public class Enemy : MonoBehaviour
             }
 
         }
+       
 
     }
     void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         transform.Translate(Vector3.left * _speed * Time.deltaTime);
-        if (transform.position.x <= 18)             
-        transform.Translate(Vector3.right * _speed * Time.deltaTime);
-        if(transform.position.x <= -18)
-        Debug.Log("enemy moves left and right");        
+        if (transform.position.x <= 18)
+            transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        if (transform.position.x <= -18)
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        //return;
+
+        Debug.Log("enemy moves left and right");
+
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
@@ -120,6 +138,41 @@ public class Enemy : MonoBehaviour
                     Destroy(GetComponent<EnemyLaser>());
                     Destroy(GetComponent<Collider2D>());
                 }
+        }
+    }
+
+    public void SetID(int _ID)
+    {
+        _enemyID = _ID;
+
+        switch (_enemyID)
+        {
+            default:
+                transform.rotation = Quaternion.identity;
+                break;
+            case 1:
+                transform.rotation = Quaternion.Euler(0, 0, 75);
+                break;
+            case 2:
+                transform.rotation = Quaternion.Euler(0, 0, -75);
+                break;
+
+        }
+
+    }
+
+    private IEnumerator FireLasserCoroutine()
+    {
+        while (_canFire == true)
+        {
+            Vector3 _laserPos = transform.TransformPoint(_laserOffset);
+            GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
+            //_laserSoundClip.Play(this.gameObject);
+
+            _laser.tag = "Enemy Laser";
+            _laser.transform.parent = _laserContainer.transform;
+
+            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
     }
 
