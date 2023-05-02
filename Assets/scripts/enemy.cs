@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private AudioSource _audioSource;
     [SerializeField] private float _speed = 4f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 enemy at right angle, 2 enemy at left angle
     [SerializeField] private AudioClip _laserSoundClip;
-    [SerializeField] private GameObject _laserContainer;
+    
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private Player _player;
     private Animator _Anim;
-    private AudioSource _audioSource;
     private GameObject Shield;
     private bool _isEnemyAlive = false;
     private bool _canFire;
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
-        _laserSoundClip = GetComponent<AudioClip>();
+       // _audioClip = GetComponent<AudioClip>();
         _isEnemyAlive = true;
         if (_player == null)
         {
@@ -48,7 +48,14 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("animator is null!");
         }
-
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource on Enemy is null!");
+        }
+        else
+        {
+            _audioSource.clip = _laserSoundClip;
+        }
 
     }
 
@@ -82,15 +89,15 @@ public class Enemy : MonoBehaviour
             transform.Translate(Vector3.right * _speed * Time.deltaTime);
         if (transform.position.x <= -18)
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        //return;
-
+      
         Debug.Log("enemy moves left and right");
+       
 
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
-            transform.position = new Vector3(randomx, 10f, 0);
-        }
+            transform.position = new Vector3(randomx, 9f, 0);
+        }        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -161,16 +168,16 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private IEnumerator FireLasserCoroutine()
+    private IEnumerator FireLaserCoroutine()
     {
         while (_canFire == true)
         {
             Vector3 _laserPos = transform.TransformPoint(_laserOffset);
             GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-            //_laserSoundClip.Play(this.gameObject);
+           _audioSource.Play();
 
             _laser.tag = "Enemy Laser";
-            _laser.transform.parent = _laserContainer.transform;
+           
 
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }

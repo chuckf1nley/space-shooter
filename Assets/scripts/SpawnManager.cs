@@ -21,31 +21,32 @@ public class SpawnManager : MonoBehaviour
     {
 
     }
-    //public void StartSpawning()
-    //{
-    //    StartCoroutine(SpawnEnemyRoutine());
-    //    StartCoroutine(SpawnPowerupRoutine());
-    //}
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
+    }
 
-    //IEnumerator SpawnEnemyRoutine()
-    //{
-    //    yield return new WaitForSeconds(3.0f);
+    IEnumerator SpawnEnemyRoutine()
+    {
+        yield return new WaitForSeconds(3.0f);
 
-    //    while (_stopSpawning == false)
-    //    {
-    //        int _randomEnemy = Random.Range((0, 2) _enemyPrefab.length);
-    //        Vector3 _enemySpawnPos = GetEnemySpawnPos(_randomEnemy);
-    //        GameObject _enemy = Instantiate(_enemyPrefab(_randomEnemy), _enemySpaawnPos, Quaternion.identity);
+        //while (_stopSpawning == false)
+        //{
+        //    int randomEnemy = UnityEngine.Random.Range(0, 2);
+        //    _enemyPrefab.length;
+        //    Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
+        //    GameObject _enemy = Instantiate(_enemyPrefab(randomEnemy), _enemySpaawnPos, Quaternion.identity);
 
-    //        _enemy.transform.parent = _enemyContainer.transform;
-    //        Enemy _enemyScript = _enemy.GetComponent<Enemy>();
-    //        _enemyScript.SetID(_randomEnemy);
+        //    _enemy.transform.parent = _enemyContainer.transform;
+        //    Enemy _enemyScript = _enemy.GetComponent<Enemy>();
+        //    _enemyScript.SetID(randomEnemy);
 
-    //        _enemy.transform.parent = _enemyContainer.transform;
-    //        yield return new WaitForSeconds(5.0f);
-    //    }
+        //    _enemy.transform.parent = _enemyContainer.transform;
+        //    yield return new WaitForSeconds(5.0f);
+        //}
 
-    //}
+    }
 
     IEnumerator SpawnPowerupRoutine()
     {
@@ -63,33 +64,33 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    //private Vector3 GetEnemySpawnPos(int EnemyID)
-    //{
-    //    float _xSpawnPos;
-    //    float _ySpawnPos;
-    //    Vector3 _enemySpawnPos;
+    private Vector3 GetEnemySpawnPos(int EnemyID)
+    {
+        float _xSpawnPos;
+        float _ySpawnPos;
+        Vector3 _enemySpawnPos;
 
-    //    switch (_enemyID)
-    //    {
-    //        case 1:
-    //            _xSpawnPos = Random.Range(-18, -10);
-    //            _ySpawnPos = Random.Range(4, 8);
-    //            _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
-    //            break;
+        switch (_enemyID)
+        {
+            case 1:
+                _xSpawnPos = UnityEngine.Random.Range(-18, -10);
+                _ySpawnPos = UnityEngine.Random.Range(4, 8);
+                _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
+                break;
 
-    //        case 2:
-    //            _xSpawnPos = Random.Range(13, 10);
-    //            _ySpawnPos = Random.Range(4, 8);
-    //            _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
-    //            break;
+            case 2:
+                _xSpawnPos = UnityEngine.Random.Range(13, 10);
+                _ySpawnPos = UnityEngine.Random.Range(4, 8);
+                _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
+                break;
 
-    //        default:
-    //            _xSpawnPos = Mathf.Round(Random.Range(-9.0f, 9.0f) * 10) / 10;
-    //            _enemySpawnPos = new Vector3(_xSpawnPos, 6.5f, 0f);
-    //            break;
-    //    }
-    //    return _enemySpawnPos;
-    //}
+            default:
+                _xSpawnPos = Mathf.Round(UnityEngine.Random.Range(-9.0f, 9.0f) * 10) / 10;
+                _enemySpawnPos = new Vector3(_xSpawnPos, 6.5f, 0f);
+                break;
+        }
+        return _enemySpawnPos;
+    }
 
     public void OnPlayerDeath()
     {
