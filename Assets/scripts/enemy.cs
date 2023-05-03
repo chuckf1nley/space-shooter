@@ -8,8 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed = 4f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 enemy at right angle, 2 enemy at left angle
-    [SerializeField] private AudioClip _laserSoundClip;
-    
+    [SerializeField] private AudioClip _audioClip;  
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private Player _player;
@@ -17,7 +16,6 @@ public class Enemy : MonoBehaviour
     private GameObject Shield;
     private bool _isEnemyAlive = false;
     private bool _canFire;
-    private SpawnManager _spawnManager;
     private float fMinX = 50.0f;
     private float fMaxX = 250.0f;
     private int Direction = -18;
@@ -32,10 +30,9 @@ public class Enemy : MonoBehaviour
     void Start()
     {
 
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        _player = GameObject.Find("Player").GetComponent<Player>();       
         _audioSource = GetComponent<AudioSource>();
-       // _audioClip = GetComponent<AudioClip>();
+        _audioClip = GetComponent<AudioClip>();
         _isEnemyAlive = true;
         if (_player == null)
         {
@@ -54,7 +51,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            _audioSource.clip = _laserSoundClip;
+            _audioSource.clip = _audioClip;
         }
 
     }
@@ -176,8 +173,7 @@ public class Enemy : MonoBehaviour
             GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
            _audioSource.Play();
 
-            _laser.tag = "Enemy Laser";
-           
+            _laser.tag = "Enemy Laser";           
 
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
