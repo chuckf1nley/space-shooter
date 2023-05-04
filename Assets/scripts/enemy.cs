@@ -16,9 +16,11 @@ public class Enemy : MonoBehaviour
     private GameObject Shield;
     private bool _isEnemyAlive = false;
     private bool _canFire;
-    private float fMinX = 50.0f;
-    private float fMaxX = 250.0f;
-    private int Direction = -18;
+    private float _fMinX = 50.0f;
+    private float _fMaxX = 250.0f;
+    private int _direction;
+    private float _startX;
+  
 
     public Vector3 _laserOffset { get; private set; }
 
@@ -34,6 +36,10 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _isEnemyAlive = true;
+        _startX = transform.position.x;
+        _direction = Random.Range(0, 2);
+        if (_direction == 0)
+            _direction = -1;
         if (_player == null)
         {
             Debug.LogError("player is null");
@@ -59,7 +65,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      
         CalculateMovement();
 
         if (Time.time > _canfire && _isEnemyAlive == true)
@@ -81,12 +87,12 @@ public class Enemy : MonoBehaviour
     void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        transform.Translate(Vector3.left * _speed * Time.deltaTime);
-        if (transform.position.x <= 18)
-            transform.Translate(Vector3.right * _speed * Time.deltaTime);
-        if (transform.position.x <= -18)
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-      
+        if (transform.position.x > _startX + 4)
+            _direction = -1;
+        if (transform.position.x < _startX - 4)
+            _direction = 1;
+
+        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
         Debug.Log("enemy moves left and right");
        
 
@@ -165,7 +171,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private IEnumerator FireLaserCoroutine()
+    IEnumerator FireLaserCoroutine()
     {
         while (_canFire == true)
         {

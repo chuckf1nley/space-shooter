@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour
         {
             int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
             Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
-            GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpaawnPos, Quaternion.identity);
+            GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
             _enemy.transform.parent = _enemyContainer.transform;
             Enemy _enemyScript = _enemy.GetComponent<Enemy>();
@@ -82,7 +82,7 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             default:
-                _xSpawnPos = Mathf.Round(UnityEngine.Random.Range(-9.0f, 9.0f) * 10) / 10;
+                _xSpawnPos = Mathf.Round(UnityEngine.Random.Range(-9.0f, 9.0f));
                 _enemySpawnPos = new Vector3(_xSpawnPos, 9.11f, 0f);
                 break;
         }
