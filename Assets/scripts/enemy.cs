@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     private float _fMaxX = 250.0f;
     private int _direction;
     private float _startX;
-  
+    private SpawnManager _spawnManager;
 
     public Vector3 _laserOffset { get; private set; }
 
@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();       
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _isEnemyAlive = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
@@ -93,7 +94,7 @@ public class Enemy : MonoBehaviour
             _direction = 1;
 
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
-        Debug.Log("enemy moves left and right");
+        
        
 
         if (transform.position.y < -7.5f)
@@ -119,6 +120,7 @@ public class Enemy : MonoBehaviour
                 _speed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                _spawnManager.EnemyDeath();
                 Destroy(this.gameObject, 2.6f);
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
@@ -134,6 +136,7 @@ public class Enemy : MonoBehaviour
                 _speed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                _spawnManager.EnemyDeath();
                 Destroy(GetComponent<Collider2D>());
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(this.gameObject, 2.6f);

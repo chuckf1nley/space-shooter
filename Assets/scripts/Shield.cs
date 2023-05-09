@@ -63,13 +63,14 @@ public class Shield : MonoBehaviour
     }
     public void ShieldActive(bool state)
     {
+        _spriteRenderer.enabled = state;
         if (state == true)
         {
             _lives = 3;
             _auxColor.a = 1;
             _auxColor = Color.white;
+            _spriteRenderer.color = _auxColor;
         }
-        _spriteRenderer.enabled = state;
     }
 
     public int ShieldStrength()

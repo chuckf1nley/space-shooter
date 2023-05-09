@@ -585,7 +585,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 992252f4ff0311e4b90e3e5bed574573, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -919,6 +919,11 @@ RectTransform:
   m_AnchoredPosition: {x: 187.4, y: -52.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &606659573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5905899532380202443, guid: afe15ac314a129c4897cf6e07e4e48d7, type: 3}
+  m_PrefabInstance: {fileID: 1505447054}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &701039394
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,6 +2650,7 @@ MonoBehaviour:
   _thruster: {fileID: 930148500}
   _currentLives: 3
   _maxAmmo: 15
+  _shield: {fileID: 606659573}
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _playerDeathSoundClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!4 &1500934018
@@ -2917,7 +2923,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7907845973429014991, guid: afe15ac314a129c4897cf6e07e4e48d7, type: 3}
   m_PrefabInstance: {fileID: 1505447054}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 606659573}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d64a1c59765a5242b366d200a824c40, type: 3}
@@ -3281,7 +3287,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 992252f4ff0311e4b90e3e5bed574573, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

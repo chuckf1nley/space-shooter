@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
     private int _currentAmmo;
     [SerializeField] private int _maxAmmo = 15;
     private int _minAmmo = 0;
-    private GameObject _shield;
+    [SerializeField] private GameObject _shield;
     private UIManager _uiManager;
     private AudioSource _audioSource;
 
@@ -253,10 +253,10 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
-        if (_shield != null)
-        {
-            Destroy(_shield);
-        }
+        //if (_shield != null)
+        //{
+        //  _shield.SetActive(true);
+        //}
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
     }

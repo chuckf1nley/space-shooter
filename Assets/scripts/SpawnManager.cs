@@ -15,109 +15,75 @@ public class SpawnManager : MonoBehaviour
     private float Range;
     private float Length;
 
-    public List<Enemy> enemies = new List<Enemy>();
-    public int currWave;
-    public int waveValue;
-    public List<GameObject> enemiesToSpawn = new List<GameObject>();
+   
+    private int currWave;
+    private int _waveValue;
+    private int _enemyCount;
+    private int _waveTotal;
 
-    public Transform spawnLocation;
-    public int waveDuration;
-    public float waveTimer;
+    private Transform spawnLocation;
+    private int waveDuration;
+    private float waveTimer;
     private float spawnInterval;
     private float spawnTimer;
 
     // Start is called before the first frame update
     void Start()
     {
-        GenerateWave();
-    }
-
-    void FixedUpdate()
-    {
-        if (spawnTimer < -0)
-        {
-            if(enemiesToSpawn.Count >0)
-            {
-                Instantiate(enemiesToSpawn[0], spawnLocation.position, Quaternion.identity);
-                enemiesToSpawn.RemoveAt(0);
-                spawnTimer = spawnInterval;
-            }
-            else
-            {
-                waveTimer = 0;
-            }
-        }
-        else
-        {
-            spawnTimer -= Time.fixedDeltaTime;
-            waveTimer -= Time.fixedDeltaTime;
-        }
-    }
-
-    public void GenerateWave()
-    {
-        waveValue = currWave * 10;
-        GenerateEnemies();
-
-        spawnInterval = waveDuration / enemiesToSpawn.Count;
-        waveTimer = waveDuration;
-    }
-
-    public void GenerateEnemies()
-    {
-        List<GameObject> generatedEnemies = new List<GameObject>();
-        while (waveValue > 0)
-        {
-            int randEnemyId = UnityEngine.Random.Range(0, enemies.Count);
-            int randEnemyCost = enemies[randEnemyId].cost;
-
-            if (waveValue - randEnemyCost > -0)
-            {
-                generatedEnemies.Add(enemies[randEnemyId].enemyPrefab);
-                waveValue -= randEnemyCost;
-            }
-            else if(waveValue <= 0)
-            {
-                break;
-            }
         
-        }
-        enemiesToSpawn.Clear();
-        enemiesToSpawn = generatedEnemies;
     }
 
-
-    [System.Serializable]
-    public class Enemy
-    {
-        public GameObject enemyPrefab;
-        public int cost;
     
-    }
+    //set enemy spwnn couroutine have set numbr of enemies
+    //wave value = currwave *10
+    //in coroutine while currcount is less than wave value spanwn enemy
+    //second system for enemy checking enemy count
+    //when enemy count hits 0 start next wave
+
+   
     public void StartSpawning()
     {
+        currWave = 1;
+        _waveValue = 10;
+        _enemyCount = 0;
+        _waveTotal = _waveValue;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine()
     {
-        yield return new WaitForSeconds(3.0f);
-
         while (_stopSpawning == false)
         {
-            int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
-            Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
-            GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
+            yield return new WaitForSeconds(3.0f);
 
-            _enemy.transform.parent = _enemyContainer.transform;
-            Enemy _enemyScript = _enemy.GetComponent<Enemy>();
-          // _enemyScript.SetID(randomEnemy);
+            while (_stopSpawning == false && _waveValue > 0)
+            {
+                int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+                Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
+                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
-            _enemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(5.0f);
+                _enemy.transform.parent = _enemyContainer.transform;
+                Enemy _enemyScript = _enemy.GetComponent<Enemy>();
+                // _enemyScript.SetID(randomEnemy);
+
+                _enemy.transform.parent = _enemyContainer.transform;
+                _waveValue--;
+                _enemyCount++;
+                yield return new WaitForSeconds(5.0f);
+
+            }
+            if(_enemyCount <= 0)
+            {
+                currWave++;
+                _waveValue = currWave * 10;
+
+            }
         }
-
+    }
+    public void EnemyDeath()
+    {
+        _enemyCount--;
     }
 
     IEnumerator SpawnPowerupRoutine()
