@@ -8,11 +8,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultiplier = 3f;
-    private float _negSpeedMultiplier = 1f;
+    [SerializeField] private float _negSpeedMultiplier = .5f;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
-    private Vector3 laserOffset = new Vector3(0, .884f, 0);
+    private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     [SerializeField] private float _fireRate = 0.25f;
     private float _canfire = -2f;
     private SpawnManager _spawnManager;
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
-    [SerializeField] private int _score;
+    private int _score;
     [SerializeField] private int _maxLives = 3;
     [SerializeField] private TMP_Text _thrusterText;
     private TMP_Text _shield_Lives_Display;
@@ -128,13 +128,11 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
-        {
-            if (Input.GetKey(KeyCode.LeftShift)) _speed = 7f;
-            else _speed = 3.5f;
-        }
-        if (Input.GetKey(KeyCode.LeftShift)) _thruster.SetActive(true);
-        else _thruster.SetActive(false);
-        StartCoroutine(thrusterPowerDownRoutine());
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
+        if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
+
+
 
     }
 
@@ -161,7 +159,7 @@ public class Player : MonoBehaviour
         }
         else if (_currentAmmo > _minAmmo)
         {
-            Instantiate(_laserPrefab, transform.position + laserOffset, Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
 
             _audioSource.Play();
         }
@@ -305,7 +303,7 @@ public class Player : MonoBehaviour
         while (_firingConstantly)
         {
             yield return new WaitForSeconds(_fireRate);
-            Instantiate(_altFire, transform.position + laserOffset, Quaternion.identity);
+            Instantiate(_altFire, transform.position + _laserOffset, Quaternion.identity);
         }
     }
     IEnumerator AltFirePowerDownRoutine()
@@ -317,17 +315,19 @@ public class Player : MonoBehaviour
 
     public void NegSpeed()
     {
-        if (_negSpeed == true)
+        if (_negSpeed == false)
         {
+            _negSpeed = true;
             _speed *= _negSpeedMultiplier;
+            StartCoroutine(NegSpeedPowerDownRoutine());
+            Debug.Log("debuff collected");
         }
-        StartCoroutine(NegSpeedPowerDownRoutine());
     }
     IEnumerator NegSpeedPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         _negSpeed = false;
-
+        _speed /= _negSpeedMultiplier;
     }
 
 }
