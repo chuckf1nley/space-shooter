@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultiplier = 3f;
+    private float _negSpeedMultiplier = 1f;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -18,7 +19,8 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
     private bool _isAltFireActive = false;
-    private bool firingConstantly = false;
+    private bool _firingConstantly = false;
+    private bool _negSpeed = false;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _ammoRefillPrefab;
     [SerializeField] private GameObject _healthPrefab;
     [SerializeField] private GameObject _altFirePrefab;
+    [SerializeField] private GameObject _negSpeeedPrefab;
     [SerializeField] private GameObject _altFire;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
@@ -191,13 +194,13 @@ public class Player : MonoBehaviour
         if (_isShieldActive == true)
         {
             _shieldVisualizer.Damage();
-           
+
             if (_shieldVisualizer.ShieldStrength() <= 0)
-            {               
+            {
                 _isShieldActive = false;
-                _shieldVisualizer.ShieldActive(false);              
+                _shieldVisualizer.ShieldActive(false);
             }
-            
+
             return;
         }
         _currentLives--;
@@ -253,10 +256,6 @@ public class Player : MonoBehaviour
 
     public void ActivateShield()
     {
-        //if (_shield != null)
-        //{
-        //  _shield.SetActive(true);
-        //}
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
     }
@@ -297,13 +296,13 @@ public class Player : MonoBehaviour
 
     public void AltFire()
     {
-        firingConstantly = true;
+        _firingConstantly = true;
         StartCoroutine(AltFirePowerDownRoutine());
         StartCoroutine(AltFiring());
     }
     IEnumerator AltFiring()
     {
-        while (firingConstantly)
+        while (_firingConstantly)
         {
             yield return new WaitForSeconds(_fireRate);
             Instantiate(_altFire, transform.position + laserOffset, Quaternion.identity);
@@ -313,9 +312,22 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isAltFireActive = false;
-        firingConstantly = false;
+        _firingConstantly = false;
     }
 
-   
+    public void NegSpeed()
+    {
+        if (_negSpeed == true)
+        {
+            _speed *= _negSpeedMultiplier;
+        }
+        StartCoroutine(NegSpeedPowerDownRoutine());
+    }
+    IEnumerator NegSpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _negSpeed = false;
+
+    }
 
 }

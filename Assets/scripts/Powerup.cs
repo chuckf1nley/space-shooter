@@ -41,8 +41,8 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-                
-                
+
+
                 switch (powerupID)
                 {
                     case 0:
@@ -62,7 +62,10 @@ public class Powerup : MonoBehaviour
                         break;
                     case 5:
                         player.AltFire();
-                            break;
+                        break;
+                    case 6:
+                        player.NegSpeed();
+                        break;
 
                     default:
                         Debug.Log("Default Value");
