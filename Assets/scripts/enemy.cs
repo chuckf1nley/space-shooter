@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
-    [SerializeField] private float _speed = 4f;
+    private float _speed = 4f;
+    private float _fastSpeed = 8f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 enemy at right angle, 2 enemy at left angle
     [SerializeField] private AudioClip _audioClip;  
@@ -103,10 +104,23 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomx, 9f, 0);
         }        
     }
+    public void FastEnemy()
+    {
+        if (_isEnemyAlive == true)
+        {
+            FireLaserCoroutine();
+        }
+
+        transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
+        if (transform.position.x > _startX + 8)
+            _direction = -4;
+        if (transform.position.x <_startX - 8)
+            _direction = 4;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyAlive == true)
+        if (_isEnemyAlive == true) 
         {
             if (other.CompareTag("Player"))
 
@@ -152,6 +166,7 @@ public class Enemy : MonoBehaviour
                     Destroy(GetComponent<Collider2D>());
                 }
         }
+                
     }
 
     public void SetID(int _ID)
@@ -164,7 +179,7 @@ public class Enemy : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 break;
             case 1:
-                transform.rotation = Quaternion.Euler(0, 0, 75);
+                FastEnemy();
                 break;
             case 2:
                 transform.rotation = Quaternion.Euler(0, 0, -75);
