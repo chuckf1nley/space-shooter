@@ -5,7 +5,7 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private int powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo 4 = health
+    [SerializeField] private int _powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo 4 = health
     [SerializeField] private AudioClip _Clip;
     private Player _player;
 
@@ -43,7 +43,7 @@ public class Powerup : MonoBehaviour
             {
 
 
-                switch (powerupID)
+                switch (_powerupID)
                 {
                     case 0:
                         player.TripleShotActive();

@@ -16,6 +16,9 @@ TagManager:
   - AltFire
   - NegSpeed
   - FastEnemy
+  - EnemyRight
+  - EnemyMissile
+  - PlayerMissile
   layers:
   - Default
   - TransparentFX

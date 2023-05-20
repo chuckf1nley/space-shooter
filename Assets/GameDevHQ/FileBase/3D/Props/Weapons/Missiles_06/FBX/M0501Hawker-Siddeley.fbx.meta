@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 1eb12bcf75cfb144b8c6b115315efb15
+guid: ba3b8e3666fa7314a97794154b6bcff5
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Missile07_01
+    2100000: Missile05_01
     2300000: //RootNode
     3300000: //RootNode
     4300000: Circle_009
@@ -13,8 +13,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Missile07_01
-    second: {fileID: 2100000, guid: 8e9d78607af41e442abea11c9c7c985a, type: 2}
+      name: Missile05_01
+    second: {fileID: 2100000, guid: 8b5459e39e7933d4f91f293cceb3afbd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

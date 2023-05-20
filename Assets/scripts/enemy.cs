@@ -6,25 +6,29 @@ public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
     private float _speed = 4f;
-    private float _fastSpeed = 8f;
+    private float _fastSpeed = 6f;
     [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private int _enemyID; //0 normal enemy, 1 enemy at right angle, 2 enemy at left angle
-    [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private GameObject _missilePrefab;
+    [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
+    [SerializeField] private AudioClip _audioClip;    
     private float _fireRate = 3f;
     private float _canfire = -1f;
+    private float _canMissileFire = -1.5f;
     private Player _player;
     private Animator _anim;
     private GameObject _shield;
     private bool _isEnemyAlive = true;
+    private bool _isFastEnemy = true;
+    private bool _isEnemyRight = true;
     private bool _canFire;
-    private float _fMinX = 50.0f;
-    private float _fMaxX = 250.0f;
+    private bool _canFireMissile; 
     private int _direction;
     private float _startX;
     private SpawnManager _spawnManager;
 
-    public Vector3 _laserOffset = new Vector3(0, 1, 0);
-   
+    public Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
+    public Vector3 _missileOffset = new Vector3(0f, 0f, 0);
+
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
     // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
@@ -37,9 +41,13 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _anim = GetComponent<Animator>();
         _isEnemyAlive = true;
+        _isEnemyRight = true;
+        _isFastEnemy = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
+        
         if (_direction == 0)
             _direction = -1;
         if (_player == null)
@@ -47,7 +55,6 @@ public class Enemy : MonoBehaviour
             Debug.LogError("player is null");
         }
 
-        _anim = GetComponent<Animator>();
 
         if (_anim == null)
         {
@@ -61,6 +68,15 @@ public class Enemy : MonoBehaviour
         {
             _audioSource.clip = _audioClip;
         }
+            switch (_enemyID)
+            {
+                default:
+                    EnemyRight();
+                    break;
+                case 1:
+                    FastEnemy();
+                    return;
+            }
 
     }
 
@@ -68,72 +84,83 @@ public class Enemy : MonoBehaviour
     //use laser offset to decide which enemy is firinig laser, change accordingly
     void Update()
     {
-
         CalculateMovement();
 
-        if (Time.time > _canfire && _isEnemyAlive == true)
+        if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
         {
             _fireRate = Random.Range(3f, 7f);
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
             }
-
         }
 
-
+        else if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
+        {
+            _fireRate = Random.Range(2f, 5f);
+            _canMissileFire = Time.time + _fireRate;
+            GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+            Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
+            for (int i = 0; i < missile.Length; i++)
+            {
+                missile[i].AssignEnemyMissile();
+            }
+        }
+        
     }
     void CalculateMovement()
     {
-        EnemyRight();
-        {
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-            if (transform.position.x > _startX + 4)
-                _direction = -1;
-            if (transform.position.x < _startX - 4)
-                _direction = 1;
-            transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
-        }
-
-
-
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (transform.position.x > _startX + 4)
+            _direction = -1;
+        if (transform.position.x < _startX - 4)
+            _direction = 1;
+        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
-    }
+
+        else  
+        {
+        transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
+        if (transform.position.x > _startX + 8)
+            _direction = -1;
+        if (transform.position.x < _startX - 8)
+            _direction = 1;
+            transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
+            if (transform.position.y < -12f)
+            {
+                float randomx = Random.Range(-18f, 18f);
+                transform.position = new Vector3(randomx, 9f, 0);
+            }
+        }
+    }  
+
     public void EnemyRight()
     {
+        _isEnemyRight = true;
         CalculateMovement();
+        FireLaserCoroutine();
 
     }
 
     public void FastEnemy()
-    {
-        if (_isEnemyAlive == true)
-        {
-            FireLaserCoroutine();
-            
-        }
-
-        _isEnemyAlive = true;
-        transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
-        if (transform.position.x > _startX + 8)
-            _direction = -4;
-        if (transform.position.x < _startX - 8)
-            _direction = 4;
-
+    {          
+        _isFastEnemy = true;
+        FireMissileCoroutine();
+        CalculateMovement();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyAlive == true)
+        if (_isEnemyAlive == true && _isEnemyRight == true && _isFastEnemy == true)
         {
+
             if (other.CompareTag("Player"))
 
             {
@@ -146,6 +173,8 @@ public class Enemy : MonoBehaviour
                 _speed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                _isEnemyRight = false;
+                _isFastEnemy = false;
                 _spawnManager.EnemyDeath();
                 Destroy(this.gameObject, 2.6f);
                 Destroy(GetComponent<EnemyLaser>());
@@ -166,6 +195,8 @@ public class Enemy : MonoBehaviour
                 _speed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                _isEnemyRight = false;
+                _isFastEnemy = false;
                 _spawnManager.EnemyDeath();
                 Destroy(GetComponent<Collider2D>());
                 Destroy(GetComponent<EnemyLaser>());
@@ -180,6 +211,8 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10);
                 _audioSource.Play();
                 _isEnemyAlive = false;
+                _isEnemyRight = false;
+                _isFastEnemy = false;
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
 
@@ -188,38 +221,32 @@ public class Enemy : MonoBehaviour
 
     }
 
-    //use setid to determine which enemy is being called
-    public void SetID(int _ID)
-    {
-        _enemyID = _ID;
-
-        switch (_enemyID)
-        {
-            default:
-                EnemyRight();
-                break;
-            case 1:
-                FastEnemy();
-                break;
-            case 2:
-                transform.rotation = Quaternion.Euler(0, 0, -75);
-                return;
-        }
-
-    }
-
     IEnumerator FireLaserCoroutine()
     {
         while (_canFire == true)
         {
+            Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
             Vector3 _laserPos = transform.TransformPoint(_laserOffset);
             GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-            _audioSource.Play();
-
             _laser.tag = "Enemy Laser";
-
+            _audioSource.Play();
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+
         }
+      
     }
 
+    IEnumerator FireMissileCoroutine()
+    {
+        while (_canFireMissile == true)
+        {
+            Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
+            Vector3 _missilePos = transform.TransformPoint(_missileOffset);
+            GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
+            _missile.tag = "Enemy Missile";
+            yield return new WaitForSeconds(Random.Range(2f, 5f));
+            
+        }
+
+    }
 }
