@@ -24,11 +24,12 @@ public class Missile : MonoBehaviour
 
     }
 
+    //explode range 7.5 to 8.5
     public void MoveUp()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
-        if (transform.position.y < 12f)
+        if (transform.position.y < 9f)
         {
             if (transform.parent != null)
             {
@@ -38,11 +39,13 @@ public class Missile : MonoBehaviour
         }
 
     }
+    
+    //explode range -4 to -6.12
     public void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -12f)
+        if (transform.position.y < -9f)
         {
             if (transform.parent != null)
             {

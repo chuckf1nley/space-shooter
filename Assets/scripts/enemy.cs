@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
     private float _speed = 4f;
-    private float _fastSpeed = 6f;
+    private float _fastSpeed = 5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
@@ -146,6 +146,7 @@ public class Enemy : MonoBehaviour
         _isEnemyRight = true;
         CalculateMovement();
         FireLaserCoroutine();
+
 
     }
 
