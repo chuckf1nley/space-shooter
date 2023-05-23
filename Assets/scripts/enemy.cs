@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
 
         if (_anim == null)
         {
-            Debug.LogError("animator is null!");
+            Debug.Log("animator is null!");
         }
         if (_audioSource == null)
         {
@@ -68,6 +68,14 @@ public class Enemy : MonoBehaviour
         {
             _audioSource.clip = _audioClip;
         }
+
+    }
+
+    // Update is called once per frame
+    //use laser offset to decide which enemy is firinig laser, change accordingly
+    void Update()
+    {
+        //CalculateMovement();
             switch (_enemyID)
             {
                 default:
@@ -78,81 +86,78 @@ public class Enemy : MonoBehaviour
                     return;
             }
 
-    }
+        //if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
+        //{
+        //    _fireRate = Random.Range(3f, 7f);
+        //    _canfire = Time.time + _fireRate;
+        //    GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        //    Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+        //    for (int i = 0; i < lasers.Length; i++)
+        //    {
+        //        lasers[i].AssignEnemyLaser();
+        //    }
+        //}
 
-    // Update is called once per frame
-    //use laser offset to decide which enemy is firinig laser, change accordingly
-    void Update()
-    {
-        CalculateMovement();
-
-        if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
-        {
-            _fireRate = Random.Range(3f, 7f);
-            _canfire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
-        }
-
-        else if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
-        {
-            _fireRate = Random.Range(2f, 5f);
-            _canMissileFire = Time.time + _fireRate;
-            GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
-            Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
-            for (int i = 0; i < missile.Length; i++)
-            {
-                missile[i].AssignEnemyMissile();
-            }
-        }
+        //else if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
+        //{
+        //    _fireRate = Random.Range(2f, 5f);
+        //    _canMissileFire = Time.time + _fireRate;
+        //    GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+        //    Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
+        //    for (int i = 0; i < missile.Length; i++)
+        //    {
+        //        missile[i].AssignEnemyMissile();
+        //    }
+        //}
         
     }
     void CalculateMovement()
-    {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (transform.position.x > _startX + 4)
-            _direction = -1;
-        if (transform.position.x < _startX - 4)
-            _direction = 1;
-        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
-        if (transform.position.y < -7.5f)
+    { 
+        if(transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
+    }
 
-        else  
-        {
+    private void RegularEnemyMovement()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        if (transform.position.x > _startX + 4)
+            _direction = -1;
+        else if (transform.position.x < _startX - 4)
+            _direction = 1;
+
+        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
+    }
+
+    private void FastEnemyMovement()
+    {
         transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
+
         if (transform.position.x > _startX + 8)
             _direction = -1;
-        if (transform.position.x < _startX - 8)
+        else if (transform.position.x < _startX - 8)
             _direction = 1;
-            transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
-            if (transform.position.y < -12f)
-            {
-                float randomx = Random.Range(-18f, 18f);
-                transform.position = new Vector3(randomx, 9f, 0);
-            }
-        }
-    }  
 
+        transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
+        
+    }
     public void EnemyRight()
     {
         _isEnemyRight = true;
+        RegularEnemyMovement();
         CalculateMovement();
         FireLaserCoroutine();
-
+        
 
     }
 
     public void FastEnemy()
     {          
         _isFastEnemy = true;
+        FastEnemyMovement();
         FireMissileCoroutine();
         CalculateMovement();
     }
@@ -170,8 +175,10 @@ public class Enemy : MonoBehaviour
                 {
                     player.Damage();
                 }
-                _anim.SetTrigger("OnEnemyDeath");
+                if (_enemyID == 0)
+                    _anim.SetTrigger("OnEnemyDeath");
                 _speed = 0;
+                _fastSpeed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
                 _isEnemyRight = false;
@@ -194,6 +201,7 @@ public class Enemy : MonoBehaviour
                     _anim.SetTrigger("OnEnemyDeath");
                 }
                 _speed = 0;
+                _fastSpeed = 0;
                 _audioSource.Play();
                 _isEnemyAlive = false;
                 _isEnemyRight = false;
