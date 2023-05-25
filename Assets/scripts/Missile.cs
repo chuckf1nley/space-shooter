@@ -7,6 +7,8 @@ public class Missile : MonoBehaviour
 
     [SerializeField] private float _speed = 12f;
     private bool _isEnemyMissile = false;
+    //Range(-4, -6.12); 
+    //public float floatRange(-4, -6.12);
 
     // Update is called once per frame
 
@@ -45,7 +47,7 @@ public class Missile : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -9f)
+        if (transform.position.y < -4f)
         {
             if (transform.parent != null)
             {
@@ -72,4 +74,9 @@ public class Missile : MonoBehaviour
         }
 
     }
+    private void DetonateMissile()
+    {
+
+    }
+
 }

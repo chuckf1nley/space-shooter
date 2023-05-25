@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyLaser : MonoBehaviour
 {
+    //this laser is inteded to track the player's position as it moves down the screen
     private GameObject _player;
     private Vector3 _targetPlayer;
     [SerializeField] private float _speed = 2.5f;

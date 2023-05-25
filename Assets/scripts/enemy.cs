@@ -86,30 +86,41 @@ public class Enemy : MonoBehaviour
                     return;
             }
 
-        //if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
-        //{
-        //    _fireRate = Random.Range(3f, 7f);
-        //    _canfire = Time.time + _fireRate;
-        //    GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-        //    Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-        //    for (int i = 0; i < lasers.Length; i++)
-        //    {
-        //        lasers[i].AssignEnemyLaser();
-        //    }
-        //}
-
-        //else if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
-        //{
-        //    _fireRate = Random.Range(2f, 5f);
-        //    _canMissileFire = Time.time + _fireRate;
-        //    GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
-        //    Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
-        //    for (int i = 0; i < missile.Length; i++)
-        //    {
-        //        missile[i].AssignEnemyMissile();
-        //    }
-        //}
         
+    }
+    private void FireLaser()
+    {
+        FireLaserCoroutine();
+
+        if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+    }
+
+
+    private void FireMissile()
+    {
+        FireMissileCoroutine();
+
+        if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
+        {
+            _fireRate = Random.Range(2f, 5f);
+            _canMissileFire = Time.time + _fireRate;
+            GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+            Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
+            for (int i = 0; i < missile.Length; i++)
+            {
+                missile[i].AssignEnemyMissile();
+            }
+        }
     }
     void CalculateMovement()
     { 
@@ -149,7 +160,7 @@ public class Enemy : MonoBehaviour
         _isEnemyRight = true;
         RegularEnemyMovement();
         CalculateMovement();
-        FireLaserCoroutine();
+        FireLaser();
         
 
     }
@@ -158,7 +169,7 @@ public class Enemy : MonoBehaviour
     {          
         _isFastEnemy = true;
         FastEnemyMovement();
-        FireMissileCoroutine();
+        FireMissile();
         CalculateMovement();
     }
 
@@ -258,4 +269,6 @@ public class Enemy : MonoBehaviour
         }
 
     }
+
+    
 }
