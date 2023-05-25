@@ -7,8 +7,16 @@ public class Missile : MonoBehaviour
 
     [SerializeField] private float _speed = 12f;
     private bool _isEnemyMissile = false;
-    //Range(-4, -6.12); 
-    //public float floatRange(-4, -6.12);
+    BoxCollider2D _missileCollider;
+    private float _enemyMissileRange = -4f;
+    private float _playerMissileRange = 7.5f;
+
+    void Start()
+    {
+        _missileCollider = GetComponent<BoxCollider2D>();
+    }
+
+
 
     // Update is called once per frame
 
@@ -73,10 +81,11 @@ public class Missile : MonoBehaviour
             }
         }
 
+        //_missileCollider.radius += 3f;
     }
-    private void DetonateMissile()
-    {
 
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //}
 
 }

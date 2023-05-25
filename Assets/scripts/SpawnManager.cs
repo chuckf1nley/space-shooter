@@ -119,7 +119,7 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 2:
-                _xSpawnPos = UnityEngine.Random.Range(18f, 18f);
+                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
                 _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;

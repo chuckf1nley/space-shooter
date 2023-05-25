@@ -46,8 +46,8 @@ public class Player : MonoBehaviour
     private int _minAmmo = 0;
     [SerializeField] private GameObject _shield;
     private UIManager _uiManager;
-    private AudioSource _audioSource;
 
+    private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
 
@@ -68,16 +68,19 @@ public class Player : MonoBehaviour
 
         if (_spawnManager == null)
         {
-            Debug.LogError(" The Spawn Manager is NULL.");
+            Debug.Log(" The Spawn Manager is NULL.");
+            return;
         }
 
         if (_uiManager == null)
         {
-            Debug.LogError("The UI manager is null");
+            Debug.Log("The UI manager is null");
+            return;
         }
         if (_audioSource == null)
         {
-            Debug.LogError("AudioSource on player is null!");
+            Debug.Log("AudioSource on player is null!");
+            return;
         }
         else
         {
@@ -217,8 +220,7 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateLives(_currentLives);
         if (_currentLives <= 0)
-        {
-            //Debug.Log("player out of lives" + _minLives);
+        {            
             _audioSource.Play();
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
@@ -226,10 +228,10 @@ public class Player : MonoBehaviour
 
     }
 
-    public void shieldLives(int shield)
-    {
-        _shield_Lives_Display.text = "shield lives";
-    }
+    //public void shieldLives(int shield)
+    //{
+        
+    //}
 
     public void TripleShotActive()
     {
@@ -257,6 +259,7 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
+        _shield_Lives_Display.text = "shield lives";
     }
     public void AddScore(int points)
     {
@@ -321,6 +324,7 @@ public class Player : MonoBehaviour
             _negSpeed = true;
             _speed *= _negSpeedMultiplier;
             StartCoroutine(NegSpeedPowerDownRoutine());
+            StartCoroutine(thrusterPowerDownRoutine());
             Debug.Log("debuff collected");
         }
     }
