@@ -65,6 +65,11 @@ public class Missile : MonoBehaviour
         }
     }
 
+    public void AssignPlayerMissile()
+    {
+        _isEnemyMissile = false;
+    }
+
     public void AssignEnemyMissile()
     {
         _isEnemyMissile = true;
@@ -81,11 +86,9 @@ public class Missile : MonoBehaviour
             }
         }
 
-        //_missileCollider.radius += 3f;
+        _missileCollider.edgeRadius += 3f;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //}
+    
 
 }

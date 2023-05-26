@@ -13,8 +13,11 @@ public class Player : MonoBehaviour
     private float _horizontal;
     private float _vertical;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
+    private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     [SerializeField] private float _fireRate = 0.25f;
+    [SerializeField] private float _missileFireRate = 2f;
     private float _canfire = -2f;
+    private float _canMissileFire;
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
     private int _currentAmmo;
     [SerializeField] private int _maxAmmo = 15;
     private int _minAmmo = 0;
+    [SerializeField] private int _missileMaxAmmo = 5;
     [SerializeField] private GameObject _shield;
     private UIManager _uiManager;
 
@@ -91,7 +95,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CalculaateMovement();
+        CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -100,9 +104,13 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
+        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+        {
+            FireMissile();
+        }
     }
 
-    void CalculaateMovement()
+    void CalculateMovement()
 
     {
         _horizontal = Input.GetAxis("Horizontal");
@@ -142,7 +150,7 @@ public class Player : MonoBehaviour
     public void thruster(int _thruster)
     {
         _thrusterText.text = "thruster active";
-        
+
     }
 
 
@@ -185,13 +193,17 @@ public class Player : MonoBehaviour
 
     void FireMissile()
     {
-        _canfire = Time.time + _fireRate;
-        Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+
+        _canMissileFire = Time.time + _missileFireRate;
+        Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
+        Vector3 _missilePos = transform.TransformPoint(_missileOffset);
+        GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
+        _missile.tag = "Player Missile";
+
     }
 
     public void Damage()
     {
-
 
         if (_isShieldActive == true)
         {
@@ -220,7 +232,7 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateLives(_currentLives);
         if (_currentLives <= 0)
-        {            
+        {
             _audioSource.Play();
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
@@ -228,10 +240,11 @@ public class Player : MonoBehaviour
 
     }
 
-    //public void shieldLives(int shield)
-    //{
-        
-    //}
+    public void shieldLives(int shield)
+    {
+        _shield_Lives_Display.text = "shield lives";
+
+    }
 
     public void TripleShotActive()
     {
@@ -259,7 +272,6 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-        _shield_Lives_Display.text = "shield lives";
     }
     public void AddScore(int points)
     {
@@ -334,5 +346,7 @@ public class Player : MonoBehaviour
         _negSpeed = false;
         _speed /= _negSpeedMultiplier;
     }
+
+
 
 }
