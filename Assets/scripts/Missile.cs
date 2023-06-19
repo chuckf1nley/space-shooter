@@ -6,14 +6,26 @@ public class Missile : MonoBehaviour
 {
 
     [SerializeField] private float _speed = 12f;
-    private bool _isEnemyMissile = false;
+    private bool _isEnemyMissile;
     BoxCollider2D _missileCollider;
     private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 7.5f;
+    private Animator _missileExplosion;
+    private Player _player;
+    private Enemy _enemy;
+
+    [SerializeField] private float _explosionForce = 3.5f;
+    [SerializeField] private float _explosionRadius = 3.5f;
+    [SerializeField] ContactFilter2D contactFilter;
+    [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
 
     void Start()
     {
+
         _missileCollider = GetComponent<BoxCollider2D>();
+        _missileExplosion = GetComponent<Animator>();
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        _enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
     }
 
 
@@ -32,17 +44,40 @@ public class Missile : MonoBehaviour
             MoveDown();
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Explode();
+        }
+
+    }
+
+    void Explode()
+    {
+        int numColliders = Physics2D.OverlapCircle(transform.position, _explosionRadius, contactFilter, affectedColliders);
+        if (numColliders > 0)
+        {
+            for (int i = 0; i < numColliders; i++)
+            {
+                if (affectedColliders[i].TryGetComponent(out Rigidbody2D rb))
+                {
+                    //rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+                }
+            }
+        }
+
     }
 
     //explode range 7.5 to 8.5
+    //the player be able to detonate the missile at will (second click), or it detonates on own
     public void MoveUp()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
-        if (transform.position.y < 9f)
+        if (transform.position.y < 8.5f)
         {
             if (transform.parent != null)
             {
+                MissileExplosion();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
@@ -55,10 +90,11 @@ public class Missile : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -4f)
+        if (transform.position.y < -3.5f)
         {
             if (transform.parent != null)
             {
+                MissileExplosion();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
@@ -86,9 +122,13 @@ public class Missile : MonoBehaviour
             }
         }
 
-        _missileCollider.edgeRadius += 3f;
     }
 
-    
+    public void MissileExplosion()
+    {
+        
+
+        _missileCollider.edgeRadius += 3f;
+    }
 
 }

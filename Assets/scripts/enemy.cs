@@ -15,9 +15,8 @@ public class Enemy : MonoBehaviour
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
     private Player _player;
-    private Animator _anim;
-    private GameObject _shield;
-    private bool _isEnemyAlive = true;
+    private Animator _enemyDeathAnim;
+    private GameObject _shield;    
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
     private bool _canFire;
@@ -41,8 +40,8 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _anim = GetComponent<Animator>();
-        _isEnemyAlive = true;
+        _enemyDeathAnim = GetComponent<Animator>();
+       
         _isEnemyRight = true;
         _isFastEnemy = true;
         _startX = transform.position.x;
@@ -56,7 +55,7 @@ public class Enemy : MonoBehaviour
         }
 
 
-        if (_anim == null)
+        if (_enemyDeathAnim == null)
         {
             Debug.Log("animator is null!");
         }
@@ -75,7 +74,7 @@ public class Enemy : MonoBehaviour
     //use laser offset to decide which enemy is firinig laser, change accordingly
     void Update()
     {
-        //CalculateMovement();
+        
             switch (_enemyID)
             {
                 default:
@@ -92,7 +91,7 @@ public class Enemy : MonoBehaviour
     {
         FireLaserCoroutine();
 
-        if (Time.time > _canfire && _isEnemyAlive == true && _isEnemyRight == true)
+        if (Time.time > _canfire && _isEnemyRight == true)
         {
             _fireRate = Random.Range(3f, 7f);
             _canfire = Time.time + _fireRate;
@@ -110,7 +109,7 @@ public class Enemy : MonoBehaviour
     {
         FireMissileCoroutine();
 
-        if (Time.time > _canMissileFire && _isEnemyAlive && _isFastEnemy == true)
+        if (Time.time > _canMissileFire  && _isFastEnemy == true)
         {
             _fireRate = Random.Range(2f, 5f);
             _canMissileFire = Time.time + _fireRate;
@@ -160,9 +159,7 @@ public class Enemy : MonoBehaviour
         _isEnemyRight = true;
         RegularEnemyMovement();
         CalculateMovement();
-        FireLaser();
-        
-
+        FireLaser();  
     }
 
     public void FastEnemy()
@@ -175,7 +172,7 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyAlive == true && _isEnemyRight == true && _isFastEnemy == true)
+        if (_isEnemyRight == true && _isFastEnemy == true)
         {
 
             if (other.CompareTag("Player"))
@@ -186,12 +183,12 @@ public class Enemy : MonoBehaviour
                 {
                     player.Damage();
                 }
-                if (_enemyID == 0)
-                    _anim.SetTrigger("OnEnemyDeath");
+                if (_enemyID == 0 && _enemyID == 1)
+                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+
                 _speed = 0;
                 _fastSpeed = 0;
                 _audioSource.Play();
-                _isEnemyAlive = false;
                 _isEnemyRight = false;
                 _isFastEnemy = false;
                 _spawnManager.EnemyDeath();
@@ -207,14 +204,13 @@ public class Enemy : MonoBehaviour
                 {
                     _player.AddScore(10);
                 }
-                if (_anim != null)
+                if (_enemyDeathAnim != null)
                 {
-                    _anim.SetTrigger("OnEnemyDeath");
+                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
                 }
                 _speed = 0;
                 _fastSpeed = 0;
                 _audioSource.Play();
-                _isEnemyAlive = false;
                 _isEnemyRight = false;
                 _isFastEnemy = false;
                 _spawnManager.EnemyDeath();
@@ -230,7 +226,6 @@ public class Enemy : MonoBehaviour
                 other.GetComponent<Shield>().Damage();
                 _player.AddScore(10);
                 _audioSource.Play();
-                _isEnemyAlive = false;
                 _isEnemyRight = false;
                 _isFastEnemy = false;
                 Destroy(GetComponent<EnemyLaser>());
