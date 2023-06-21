@@ -10,10 +10,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
-    [SerializeField] private AudioClip _audioClip;    
+    [SerializeField] private AudioClip _audioClip;
+    private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
+    private float _startX;
+    private int _enemyLives;
     private Player _player;
     private Animator _enemyDeathAnim;
     private GameObject _shield;    
@@ -22,7 +25,6 @@ public class Enemy : MonoBehaviour
     private bool _canFire;
     private bool _canFireMissile; 
     private int _direction;
-    private float _startX;
     private SpawnManager _spawnManager;
 
     public Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
@@ -37,6 +39,7 @@ public class Enemy : MonoBehaviour
     {
 
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _missile = GameObject.Find("Missile").GetComponent<Missile>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
@@ -87,6 +90,7 @@ public class Enemy : MonoBehaviour
 
         
     }
+
     private void FireLaser()
     {
         FireLaserCoroutine();
@@ -176,7 +180,6 @@ public class Enemy : MonoBehaviour
         {
 
             if (other.CompareTag("Player"))
-
             {
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
@@ -195,7 +198,6 @@ public class Enemy : MonoBehaviour
                 Destroy(this.gameObject, 2.6f);
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
-
             }
             if (other.CompareTag("Laser"))
             {
@@ -217,11 +219,8 @@ public class Enemy : MonoBehaviour
                 Destroy(GetComponent<Collider2D>());
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(this.gameObject, 2.6f);
-
-
             }
             if (other.CompareTag("Shield"))
-
             {
                 other.GetComponent<Shield>().Damage();
                 _player.AddScore(10);
@@ -232,6 +231,27 @@ public class Enemy : MonoBehaviour
                 Destroy(GetComponent<Collider2D>());
 
             }
+            if (other.CompareTag("Missile"))
+            {
+                Destroy(other.gameObject);
+                if (_player !=null)
+                {
+                    _player.AddScore(10);
+                }
+                if (_enemyDeathAnim != null)
+                {
+                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+                }
+                _speed = 0;
+                _fastSpeed = 0;
+                _isEnemyRight = false;
+                _isFastEnemy = false;
+                _spawnManager.EnemyDeath();
+                Destroy(GetComponent<Collider2D>());
+                Destroy(GetComponent<EnemyLaser>());
+                Destroy(this.gameObject, 2.6f);
+            }
+            Damage();
         }
 
     }
@@ -264,6 +284,46 @@ public class Enemy : MonoBehaviour
         }
 
     }
+    public void Damage()
+    {
+        _enemyLives--;
+    }
 
-    
+    //public void Damage()
+    //{
+
+    //    if (_isShieldActive == true)
+    //    {
+    //        _shieldVisualizer.Damage();
+
+    //        if (_shieldVisualizer.ShieldStrength() <= 0)
+    //        {
+    //            _isShieldActive = false;
+    //            _shieldVisualizer.ShieldActive(false);
+    //        }
+
+    //        return;
+    //    }
+    //    _currentLives--;
+
+    //    if (_currentLives == 2)
+    //    {
+    //        _leftengine.SetActive(true);
+    //        _camShake.ShakeCamera();
+    //    }
+    //    else if (_currentLives == 1)
+    //    {
+    //        _rightengine.SetActive(true);
+    //        _camShake.ShakeCamera();
+    //    }
+
+    //    _uiManager.UpdateLives(_currentLives);
+    //    if (_currentLives <= 0)
+    //    {
+    //        _audioSource.Play();
+    //        _spawnManager.OnPlayerDeath();
+    //        Destroy(this.gameObject);
+    //    }
+
+    //}
 }

@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private float _missileFireRate = 2f;
     private float _canfire = -2f;
-    private float _canMissileFire;
+    private bool _canMissileFire = false;
     private SpawnManager _spawnManager;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -36,18 +36,19 @@ public class Player : MonoBehaviour
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
-    private int _score;
+    [SerializeField] private GameObject _thruster;
     [SerializeField] private int _maxLives = 3;
     [SerializeField] private TMP_Text _thrusterText;
+    private int _score;
     private TMP_Text _shield_Lives_Display;
-    private CameraShake _camShake;
-    [SerializeField] private GameObject _thruster;
-    private int _minLives = 0;
     [SerializeField] private int _currentLives;
-    private int _currentAmmo;
+    private CameraShake _camShake;
+    private int _minLives = 0;
     [SerializeField] private int _maxAmmo = 15;
+    private int _currentAmmo;
     private int _minAmmo = 0;
     [SerializeField] private int _missileMaxAmmo = 5;
+    private int _currentMissiles;
     [SerializeField] private GameObject _shield;
     private UIManager _uiManager;
 
@@ -193,15 +194,27 @@ public class Player : MonoBehaviour
 
     void FireMissile()
     {
+        FireMissileCoroutine();
 
-        _canMissileFire = Time.time + _missileFireRate;
+        //_canMissileFire = Time.time + _missileFireRate;
         Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
-        Vector3 _missilePos = transform.TransformPoint(_missileOffset);
-        GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
-        _missile.tag = "Player Missile";
 
     }
 
+
+    IEnumerator FireMissileCoroutine()
+    {
+        while (_canMissileFire == true)
+        {
+            Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
+            Vector3 _missilePos = transform.TransformPoint(_missileOffset);
+            GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
+            _missile.tag = "Player Missile";
+            yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 5f));
+
+        }
+
+    }
     public void Damage()
     {
 

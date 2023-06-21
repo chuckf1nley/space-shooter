@@ -50,7 +50,7 @@ public class Missile : MonoBehaviour
         }
 
     }
-
+    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)
     void Explode()
     {
         int numColliders = Physics2D.OverlapCircle(transform.position, _explosionRadius, contactFilter, affectedColliders);
@@ -58,26 +58,22 @@ public class Missile : MonoBehaviour
         {
             for (int i = 0; i < numColliders; i++)
             {
-                if (affectedColliders[i].TryGetComponent(out Rigidbody2D rb))
-                {
-                    //rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-                }
+                Destroy(affectedColliders[i].gameObject);
             }
         }
 
     }
 
     //explode range 7.5 to 8.5
-    //the player be able to detonate the missile at will (second click), or it detonates on own
     public void MoveUp()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
-        if (transform.position.y < 8.5f)
+        if (transform.position.y > 8.5f)
         {
             if (transform.parent != null)
             {
-                MissileExplosion();
+                Explode();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
@@ -94,7 +90,7 @@ public class Missile : MonoBehaviour
         {
             if (transform.parent != null)
             {
-                MissileExplosion();
+                Explode();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
@@ -120,15 +116,17 @@ public class Missile : MonoBehaviour
             {
                 player.Damage();
             }
+            else if (other.tag == "Enemy" && _isEnemyMissile == false)
+            {
+                Enemy enemy = other.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.Damage();
+                }
+            }
         }
 
     }
 
-    public void MissileExplosion()
-    {
-        
-
-        _missileCollider.edgeRadius += 3f;
-    }
 
 }
