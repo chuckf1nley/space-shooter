@@ -53,6 +53,7 @@ MonoBehaviour:
   _missilePrefab: {fileID: 0}
   _enemyID: 0
   _audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _enemyShield: {fileID: 5905899532380202443, guid: afe15ac314a129c4897cf6e07e4e48d7, type: 3}
   _laserOffset: {x: 0.041, y: -0.706, z: 0}
   _missileOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &4513636766571482674

@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
-    [SerializeField] private GameObject[] _powerups;      
+    [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
     private int _enemyID;
     private Vector3 _enemySpawnPos;
@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
     private float Range;
     private float Length;
 
-   
+
     private int currWave;
     private int _waveValue;
     private int _enemyCount;
@@ -31,17 +31,17 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    
+
     //set enemy spwnn couroutine have set numbr of enemies
     //wave value = currwave *10
     //in coroutine while currcount is less than wave value spanwn enemy
     //second system for enemy checking enemy count
     //when enemy count hits 0 start next wave
 
-   
+
     public void StartSpawning()
     {
         currWave = 1;
@@ -60,13 +60,14 @@ public class SpawnManager : MonoBehaviour
 
             while (_stopSpawning == false && _waveValue > 0)
             {
-                int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+                // int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 100));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
-                
+
 
                 _enemy.transform.parent = _enemyContainer.transform;
-                Enemy _enemyScript = _enemy.GetComponent<Enemy>();                
+                Enemy _enemyScript = _enemy.GetComponent<Enemy>();
 
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
@@ -74,7 +75,7 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(5.0f);
 
             }
-            if(_enemyCount <= 0)
+            if (_enemyCount <= 0)
             {
                 currWave++;
                 _waveValue = currWave * 10;
@@ -142,30 +143,44 @@ public class SpawnManager : MonoBehaviour
 
     public int GeneratePowerupIndex(int random)
     {
-        if (random >= 0 &&random <10)
+        if (random >= 0 && random < 10)
         {
             return 0; //tripleshot
         } else if (random >= 10 && random < 20)
         {
             return 1; //speed boost
-        }else if (random >= 20 && random < 30)
+        } else if (random >= 20 && random < 30)
         {
             return 2; // shield
-        }else if (random >= 30 && random < 40)
+        } else if (random >= 30 && random < 40)
         {
             return 3; //ammo
-        }else if (random >=40 && random < 50)
+        } else if (random >= 40 && random < 50)
         {
             return 4; //health
-        }else if (random >= 50  && random < 60)
+        } else if (random >= 50 && random < 60)
         {
             return 5; // altfire
-        }else if (random >= 60 && random > 70)
+        } else if (random >= 60 && random > 70)
         {
             return 6; // negspeed
-        }else 
+        } else
         {
             return 3;
+        }
+    }
+
+    public int GenerateEnemyIndex(int random)
+    {
+        if (random >= 0 && random > 10)
+        {
+            return 0;
+        }else if (random >= 20 && random > 30)
+        {
+            return 1;
+        }else
+        {
+            return 0;
         }
     }
 }

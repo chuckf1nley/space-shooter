@@ -11,20 +11,25 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private GameObject _enemyShield;
+    private SpriteRenderer _spriteRenderer;
     private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
     private float _startX;
     private int _enemyLives;
+    //[SerializeField] private int _enemyID;
     private Player _player;
     private Animator _enemyDeathAnim;
-    private GameObject _shield;    
+    private GameObject _shield;
+    private bool _isEnemyShield = true;
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
     private bool _canFire;
-    private bool _canFireMissile; 
+    private bool _canFireMissile;
     private int _direction;
+    private int _lives = 1;
     private SpawnManager _spawnManager;
 
     public Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
@@ -44,12 +49,12 @@ public class Enemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = GetComponent<Animator>();
-       
+
         _isEnemyRight = true;
         _isFastEnemy = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
-        
+
         if (_direction == 0)
             _direction = -1;
         if (_player == null)
@@ -77,18 +82,18 @@ public class Enemy : MonoBehaviour
     //use laser offset to decide which enemy is firinig laser, change accordingly
     void Update()
     {
-        
-            switch (_enemyID)
-            {
-                default:
-                    EnemyRight();
-                    break;
-                case 1:
-                    FastEnemy();
-                    return;
-            }
 
-        
+        switch (_enemyID)
+        {
+            default:
+                EnemyRight();
+                break;
+            case 1:
+                FastEnemy();
+                return;
+        }
+
+
     }
 
     private void FireLaser()
@@ -113,7 +118,7 @@ public class Enemy : MonoBehaviour
     {
         FireMissileCoroutine();
 
-        if (Time.time > _canMissileFire  && _isFastEnemy == true)
+        if (Time.time > _canMissileFire && _isFastEnemy == true)
         {
             _fireRate = Random.Range(2f, 5f);
             _canMissileFire = Time.time + _fireRate;
@@ -126,8 +131,8 @@ public class Enemy : MonoBehaviour
         }
     }
     void CalculateMovement()
-    { 
-        if(transform.position.y < -7.5f)
+    {
+        if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
@@ -156,18 +161,18 @@ public class Enemy : MonoBehaviour
             _direction = 1;
 
         transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
-        
+
     }
     public void EnemyRight()
     {
         _isEnemyRight = true;
         RegularEnemyMovement();
         CalculateMovement();
-        FireLaser();  
+        FireLaser();
     }
 
     public void FastEnemy()
-    {          
+    {
         _isFastEnemy = true;
         FastEnemyMovement();
         FireMissile();
@@ -234,7 +239,7 @@ public class Enemy : MonoBehaviour
             if (other.CompareTag("Missile"))
             {
                 Destroy(other.gameObject);
-                if (_player !=null)
+                if (_player != null)
                 {
                     _player.AddScore(10);
                 }
@@ -268,7 +273,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
 
         }
-      
+
     }
 
     IEnumerator FireMissileCoroutine()
@@ -280,50 +285,67 @@ public class Enemy : MonoBehaviour
             GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
             _missile.tag = "Enemy Missile";
             yield return new WaitForSeconds(Random.Range(2f, 5f));
-            
+
         }
 
     }
     public void Damage()
     {
+
         _enemyLives--;
     }
 
-    //public void Damage()
-    //{
+    public void ShieldDamage()
+    {
 
-    //    if (_isShieldActive == true)
-    //    {
-    //        _shieldVisualizer.Damage();
+    }
+    public void ShieldActive(bool state)
+    {
+        _spriteRenderer.enabled = state;
+        if (state == true)
+        {
+            _lives = 1;
+        }
 
-    //        if (_shieldVisualizer.ShieldStrength() <= 0)
-    //        {
-    //            _isShieldActive = false;
-    //            _shieldVisualizer.ShieldActive(false);
-    //        }
+    }
+    public void EnemyShield()
+    {
+        if (_isEnemyShield == true)
+        {
+            _enemyShield.ShieldDamage();
 
-    //        return;
-    //    }
-    //    _currentLives--;
+            if (_enemyShield.ShieldStrength() <= 0)
+            {
+                _isEnemyShield = false;
+                _enemyShield.ShieldActive(false);
+            }
+            return;
+        }
 
-    //    if (_currentLives == 2)
-    //    {
-    //        _leftengine.SetActive(true);
-    //        _camShake.ShakeCamera();
-    //    }
-    //    else if (_currentLives == 1)
-    //    {
-    //        _rightengine.SetActive(true);
-    //        _camShake.ShakeCamera();
-    //    }
+    }
+    public int GenerateShieldIndex(int random)
+    {
+        if (random >= 20 && random < 30)
+        {
+            return 0;
+        }
+        else if (random >= 30 && random < 40)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-    //    _uiManager.UpdateLives(_currentLives);
-    //    if (_currentLives <= 0)
-    //    {
-    //        _audioSource.Play();
-    //        _spawnManager.OnPlayerDeath();
-    //        Destroy(this.gameObject);
-    //    }
-
-    //}
+    public void ActivateEnemyShield()
+    {
+        _isEnemyShield = true;
+        _enemyShield.ShieldActive(true);
+    }
+    public void ShieldStrength()
+    {
+        return _lives;
+    }
 }
