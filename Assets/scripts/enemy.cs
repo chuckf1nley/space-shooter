@@ -19,11 +19,12 @@ public class Enemy : MonoBehaviour
     private float _canMissileFire = -1.5f;
     private float _startX;
     private int _enemyLives;
+    private float _shieldStrength = 1f;
     //[SerializeField] private int _enemyID;
     private Player _player;
     private Animator _enemyDeathAnim;
-    private GameObject _shield;
-    private bool _isEnemyShield = true;
+    private int _enemyShieldVisualizer;
+    private bool _isEnemyShieldActive = false;
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
     private bool _canFire;
@@ -169,6 +170,7 @@ public class Enemy : MonoBehaviour
         RegularEnemyMovement();
         CalculateMovement();
         FireLaser();
+       
     }
 
     public void FastEnemy()
@@ -177,6 +179,7 @@ public class Enemy : MonoBehaviour
         FastEnemyMovement();
         FireMissile();
         CalculateMovement();
+       
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -295,12 +298,32 @@ public class Enemy : MonoBehaviour
         _enemyLives--;
     }
 
-    public void ShieldDamage()
-    {
 
+    public void EnemyShield()
+    {
+        if(_isEnemyShieldActive == true)
+        {
+
+
+            //if (_enemyShieldVisualizer.ShieldStrength() <= 0)
+            //{
+            //    _isEnemyShieldActive = false;
+            //    _enemyShieldVisualizer.ShieldActive(false);
+            //    return;
+            //}
+            return;
+            
+        }
     }
+
+    public int ShieldStrength()
+    {
+        return _lives;
+    }
+
     public void ShieldActive(bool state)
     {
+       
         _spriteRenderer.enabled = state;
         if (state == true)
         {
@@ -308,23 +331,11 @@ public class Enemy : MonoBehaviour
         }
 
     }
-    public void EnemyShield()
-    {
-        if (_isEnemyShield == true)
-        {
-            _enemyShield.ShieldDamage();
 
-            if (_enemyShield.ShieldStrength() <= 0)
-            {
-                _isEnemyShield = false;
-                _enemyShield.ShieldActive(false);
-            }
-            return;
-        }
 
-    }
     public int GenerateShieldIndex(int random)
     {
+        EnemyShield();
         if (random >= 20 && random < 30)
         {
             return 0;
@@ -341,11 +352,8 @@ public class Enemy : MonoBehaviour
 
     public void ActivateEnemyShield()
     {
-        _isEnemyShield = true;
-        _enemyShield.ShieldActive(true);
+        _isEnemyShieldActive = true;
+        //_enemyShieldVisualizer.ShieldActive(true);
     }
-    public void ShieldStrength()
-    {
-        return _lives;
-    }
+   
 }

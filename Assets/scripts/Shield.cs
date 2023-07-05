@@ -30,10 +30,7 @@ public class Shield : MonoBehaviour
             Debug.LogError("The UI manager is null");
         }
     }
-    public void Update()
-    {
-        //_uiManager = GameObject.Find("Canvas").GetComponent<_shield_Lives_Display>;
-    }
+   
 
     public void Damage()
     {
