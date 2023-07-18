@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
     [SerializeField] private int _lives = 3;
+    [SerializeField] private int _enemyLives = 1;
     private SpriteRenderer _spriteRenderer;
     private UIManager _uiManager;
     private Color _auxColor;

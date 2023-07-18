@@ -253,11 +253,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void shieldLives(int shield)
-    {
-        _shield_Lives_Display.text = "shield lives";
-
-    }
 
     public void TripleShotActive()
     {
@@ -285,6 +280,11 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
+
+    }
+    public void shieldLives(int shield)
+    {
+        _shield_Lives_Display.text = "shield lives";
     }
     public void AddScore(int points)
     {

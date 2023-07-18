@@ -9,9 +9,9 @@ public class Enemy : MonoBehaviour
     private float _fastSpeed = 5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
+    [SerializeField] private GameObject _enemyShield;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private GameObject _enemyShield;
     private SpriteRenderer _spriteRenderer;
     private Missile _missile;
     private float _fireRate = 3f;
@@ -20,10 +20,9 @@ public class Enemy : MonoBehaviour
     private float _startX;
     private int _enemyLives;
     private float _shieldStrength = 1f;
-    //[SerializeField] private int _enemyID;
     private Player _player;
     private Animator _enemyDeathAnim;
-    private int _enemyShieldVisualizer;
+    [SerializeField] private Shield _enemyShieldVisualizer;
     private bool _isEnemyShieldActive = false;
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
@@ -296,6 +295,8 @@ public class Enemy : MonoBehaviour
     {
 
         _enemyLives--;
+        Destroy(GetComponent<EnemyLaser>());
+        Destroy(GetComponent<Collider2D>());
     }
 
 
@@ -305,14 +306,14 @@ public class Enemy : MonoBehaviour
         {
 
 
-            //if (_enemyShieldVisualizer.ShieldStrength() <= 0)
-            //{
-            //    _isEnemyShieldActive = false;
-            //    _enemyShieldVisualizer.ShieldActive(false);
-            //    return;
-            //}
+            if (_enemyShieldVisualizer.ShieldStrength() <= 0)
+            {
+                _isEnemyShieldActive = false;
+                _enemyShieldVisualizer.ShieldActive(false);
+                return;
+            }
             return;
-            
+
         }
     }
 
@@ -353,7 +354,7 @@ public class Enemy : MonoBehaviour
     public void ActivateEnemyShield()
     {
         _isEnemyShieldActive = true;
-        //_enemyShieldVisualizer.ShieldActive(true);
+        _enemyShieldVisualizer.ShieldActive(true);
     }
    
 }
