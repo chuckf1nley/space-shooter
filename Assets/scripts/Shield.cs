@@ -77,4 +77,8 @@ public class Shield : MonoBehaviour
 
     }
     
+    public int EnemyShieldStrength()
+    {
+        return _enemyLives;
+    }
 }

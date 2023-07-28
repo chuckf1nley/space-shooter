@@ -257,8 +257,8 @@ public class Enemy : MonoBehaviour
                 Destroy(GetComponent<Collider2D>());
                 Destroy(GetComponent<EnemyLaser>());
                 Destroy(this.gameObject, 2.6f);
+                Damage();
             }
-            Damage();
         }
 
     }
@@ -306,7 +306,7 @@ public class Enemy : MonoBehaviour
         {
 
 
-            if (_enemyShieldVisualizer.ShieldStrength() <= 0)
+            if (_enemyShieldVisualizer.EnemyShieldStrength() <= 0)
             {
                 _isEnemyShieldActive = false;
                 _enemyShieldVisualizer.ShieldActive(false);

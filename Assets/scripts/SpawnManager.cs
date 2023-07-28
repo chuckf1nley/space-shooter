@@ -16,17 +16,13 @@ public class SpawnManager : MonoBehaviour
     private float Range;
     private float Length;
 
-
     private int currWave;
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
 
     private Transform spawnLocation;
-    private int waveDuration;
-    private float waveTimer;
-    private float spawnInterval;
-    private float spawnTimer;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -164,8 +160,8 @@ public class SpawnManager : MonoBehaviour
         } else if (random >= 60 && random > 70)
         {
             return 6; // negspeed
-        } else
-        {
+        }
+        { 
             return 3;
         }
     }
@@ -174,10 +170,10 @@ public class SpawnManager : MonoBehaviour
     {
         if (random >= 0 && random > 10)
         {
-            return 0;
+            return 0; //normalEnemy
         }else if (random >= 20 && random > 30)
         {
-            return 1;
+            return 1; //fastEnemy
         }else
         {
             return 0;

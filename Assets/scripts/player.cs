@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
+        _currentMissiles = _missileMaxAmmo;
         _currentLives = _maxLives;
 
         if (_spawnManager == null)
@@ -295,6 +296,7 @@ public class Player : MonoBehaviour
     public void AmmooRefillActive()
     {
         _currentAmmo = _maxAmmo;
+        _currentMissiles = _missileMaxAmmo;
         int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
         _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
