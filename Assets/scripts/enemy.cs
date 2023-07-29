@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
-    private float _speed = 4f;
+   [SerializeField] private float _speed = 4f;
     private float _fastSpeed = 5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     private bool _isEnemyRight = true;
     private bool _canFire;
     private bool _canFireMissile;
+    private bool _isEnemyAlive = true;
     private int _direction;
     private int _lives = 1;
     private SpawnManager _spawnManager;
@@ -44,11 +45,10 @@ public class Enemy : MonoBehaviour
     {
 
         _player = GameObject.Find("Player").GetComponent<Player>();
-        _missile = GameObject.Find("Missile").GetComponent<Missile>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _enemyDeathAnim = GetComponent<Animator>();
+        _enemyDeathAnim = transform.GetComponent<Animator>();
 
         _isEnemyRight = true;
         _isFastEnemy = true;
@@ -80,6 +80,7 @@ public class Enemy : MonoBehaviour
 
     // Update is called once per frame
     //use laser offset to decide which enemy is firinig laser, change accordingly
+    //organize code from top to bottom, grouped by segment
     void Update()
     {
 
@@ -98,9 +99,8 @@ public class Enemy : MonoBehaviour
 
     private void FireLaser()
     {
-        FireLaserCoroutine();
-
-        if (Time.time > _canfire && _isEnemyRight == true)
+       
+        if (Time.time > _canfire && _isEnemyRight == true && _isEnemyAlive == true)
         {
             _fireRate = Random.Range(3f, 7f);
             _canfire = Time.time + _fireRate;
@@ -195,16 +195,17 @@ public class Enemy : MonoBehaviour
                 }
                 if (_enemyID == 0 && _enemyID == 1)
                     _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-
+//
                 _speed = 0;
                 _fastSpeed = 0;
                 _audioSource.Play();
                 _isEnemyRight = false;
                 _isFastEnemy = false;
+                _isEnemyAlive = false;
                 _spawnManager.EnemyDeath();
-                Destroy(this.gameObject, 2.6f);
-                Destroy(GetComponent<EnemyLaser>());
+                Destroy(this.gameObject, 2.6f);               
                 Destroy(GetComponent<Collider2D>());
+                //
             }
             if (other.CompareTag("Laser"))
             {
@@ -222,9 +223,9 @@ public class Enemy : MonoBehaviour
                 _audioSource.Play();
                 _isEnemyRight = false;
                 _isFastEnemy = false;
+                _isEnemyAlive = false;
                 _spawnManager.EnemyDeath();
                 Destroy(GetComponent<Collider2D>());
-                Destroy(GetComponent<EnemyLaser>());
                 Destroy(this.gameObject, 2.6f);
             }
             if (other.CompareTag("Shield"))
@@ -234,7 +235,6 @@ public class Enemy : MonoBehaviour
                 _audioSource.Play();
                 _isEnemyRight = false;
                 _isFastEnemy = false;
-                Destroy(GetComponent<EnemyLaser>());
                 Destroy(GetComponent<Collider2D>());
 
             }
@@ -255,7 +255,6 @@ public class Enemy : MonoBehaviour
                 _isFastEnemy = false;
                 _spawnManager.EnemyDeath();
                 Destroy(GetComponent<Collider2D>());
-                Destroy(GetComponent<EnemyLaser>());
                 Destroy(this.gameObject, 2.6f);
                 Damage();
             }

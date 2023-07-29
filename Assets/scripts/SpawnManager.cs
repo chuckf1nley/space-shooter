@@ -168,10 +168,10 @@ public class SpawnManager : MonoBehaviour
 
     public int GenerateEnemyIndex(int random)
     {
-        if (random >= 0 && random > 10)
+        if (random >= 0 && random < 10)
         {
             return 0; //normalEnemy
-        }else if (random >= 20 && random > 30)
+        }else if (random >= 20 && random < 30)
         {
             return 1; //fastEnemy
         }else
