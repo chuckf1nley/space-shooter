@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
-   [SerializeField] private float _speed = 4f;
+    [SerializeField] private float _speed = 4f;
     private float _fastSpeed = 5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
 
     private void FireLaser()
     {
-       
+
         if (Time.time > _canfire && _isEnemyRight == true && _isEnemyAlive == true)
         {
             _fireRate = Random.Range(3f, 7f);
@@ -169,7 +169,7 @@ public class Enemy : MonoBehaviour
         RegularEnemyMovement();
         CalculateMovement();
         FireLaser();
-       
+
     }
 
     public void FastEnemy()
@@ -178,89 +178,10 @@ public class Enemy : MonoBehaviour
         FastEnemyMovement();
         FireMissile();
         CalculateMovement();
-       
-    }
-
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (_isEnemyRight == true && _isFastEnemy == true)
-        {
-
-            if (other.CompareTag("Player"))
-            {
-                Player player = other.transform.GetComponent<Player>();
-                if (player != null)
-                {
-                    player.Damage();
-                }
-                if (_enemyID == 0 && _enemyID == 1)
-                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-//
-                _speed = 0;
-                _fastSpeed = 0;
-                _audioSource.Play();
-                _isEnemyRight = false;
-                _isFastEnemy = false;
-                _isEnemyAlive = false;
-                _spawnManager.EnemyDeath();
-                Destroy(this.gameObject, 2.6f);               
-                Destroy(GetComponent<Collider2D>());
-                //
-            }
-            if (other.CompareTag("Laser"))
-            {
-                Destroy(other.gameObject);
-                if (_player != null)
-                {
-                    _player.AddScore(10);
-                }
-                if (_enemyDeathAnim != null)
-                {
-                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-                }
-                _speed = 0;
-                _fastSpeed = 0;
-                _audioSource.Play();
-                _isEnemyRight = false;
-                _isFastEnemy = false;
-                _isEnemyAlive = false;
-                _spawnManager.EnemyDeath();
-                Destroy(GetComponent<Collider2D>());
-                Destroy(this.gameObject, 2.6f);
-            }
-            if (other.CompareTag("Shield"))
-            {
-                other.GetComponent<Shield>().Damage();
-                _player.AddScore(10);
-                _audioSource.Play();
-                _isEnemyRight = false;
-                _isFastEnemy = false;
-                Destroy(GetComponent<Collider2D>());
-
-            }
-            if (other.CompareTag("Missile"))
-            {
-                Destroy(other.gameObject);
-                if (_player != null)
-                {
-                    _player.AddScore(10);
-                }
-                if (_enemyDeathAnim != null)
-                {
-                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-                }
-                _speed = 0;
-                _fastSpeed = 0;
-                _isEnemyRight = false;
-                _isFastEnemy = false;
-                _spawnManager.EnemyDeath();
-                Destroy(GetComponent<Collider2D>());
-                Destroy(this.gameObject, 2.6f);
-                Damage();
-            }
-        }
 
     }
+
+
 
     IEnumerator FireLaserCoroutine()
     {
@@ -290,18 +211,11 @@ public class Enemy : MonoBehaviour
         }
 
     }
-    public void Damage()
-    {
-
-        _enemyLives--;
-        Destroy(GetComponent<EnemyLaser>());
-        Destroy(GetComponent<Collider2D>());
-    }
 
 
     public void EnemyShield()
     {
-        if(_isEnemyShieldActive == true)
+        if (_isEnemyShieldActive == true)
         {
 
 
@@ -323,7 +237,7 @@ public class Enemy : MonoBehaviour
 
     public void ShieldActive(bool state)
     {
-       
+
         _spriteRenderer.enabled = state;
         if (state == true)
         {
@@ -355,5 +269,77 @@ public class Enemy : MonoBehaviour
         _isEnemyShieldActive = true;
         _enemyShieldVisualizer.ShieldActive(true);
     }
-   
+
+    public void Damage()
+    {
+
+        _enemyLives--;
+        Destroy(GetComponent<Collider2D>());
+    }
+
+    public void EnemyDeathSequence()
+    {
+        if (_enemyDeathAnim != null)
+        {
+            _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+        }
+        _speed = 0;
+        _fastSpeed = 0;
+        _audioSource.Play();
+        _isEnemyRight = false;
+        _isFastEnemy = false;
+        _isEnemyAlive = false;
+        _spawnManager.EnemyDeath();
+        Destroy(this.gameObject, 2.6f);
+        Destroy(GetComponent<Collider2D>());
+    }
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_isEnemyRight == true && _isFastEnemy == true)
+        {
+
+            if (other.CompareTag("Player"))
+            {
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
+                if (_enemyID == 0 && _enemyID == 1)
+                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+
+                EnemyDeathSequence();
+                Damage();
+
+            }
+            if (other.CompareTag("Laser"))
+            {
+                Destroy(other.gameObject);
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+                EnemyDeathSequence();
+                Damage();
+            }
+            if (other.CompareTag("Shield"))
+            {
+                other.GetComponent<Shield>().Damage();
+                EnemyDeathSequence();
+                Damage();
+            }
+            if (other.CompareTag("Missile"))
+            {
+                Destroy(other.gameObject);
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+               
+                EnemyDeathSequence();
+                Damage();
+            }
+        }
+
+    }
 }
