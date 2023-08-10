@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     private float _canMissileFire = -1.5f;
     private float _startX;
     private int _enemyLives;
+    private float _enemyShieldActive = 1f;
     private float _shieldStrength = 1f;
     private Player _player;
     private Animator _enemyDeathAnim;
@@ -130,6 +131,20 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    IEnumerator FireMissileCoroutine()
+    {
+        while (_canFireMissile == true)
+        {
+            Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
+            Vector3 _missilePos = transform.TransformPoint(_missileOffset);
+            GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
+            _missile.tag = "Enemy Missile";
+            yield return new WaitForSeconds(Random.Range(2f, 5f));
+
+        }
+
+    }
+
     void CalculateMovement()
     {
         if (transform.position.y < -7.5f)
@@ -183,52 +198,23 @@ public class Enemy : MonoBehaviour
 
 
 
-    IEnumerator FireLaserCoroutine()
-    {
-        while (_canFire == true)
-        {
-            Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-            Vector3 _laserPos = transform.TransformPoint(_laserOffset);
-            GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-            _laser.tag = "Enemy Laser";
-            _audioSource.Play();
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+    //IEnumerator FireLaserCoroutine()
+    //{
+    //    while (_canFire == true)
+    //    {
+    //        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+    //        Vector3 _laserPos = transform.TransformPoint(_laserOffset);
+    //        GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
+    //        _laser.tag = "Enemy Laser";
+    //        _audioSource.Play();
+    //        yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
 
-        }
+    //    }
 
-    }
-
-    IEnumerator FireMissileCoroutine()
-    {
-        while (_canFireMissile == true)
-        {
-            Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
-            Vector3 _missilePos = transform.TransformPoint(_missileOffset);
-            GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
-            _missile.tag = "Enemy Missile";
-            yield return new WaitForSeconds(Random.Range(2f, 5f));
-
-        }
-
-    }
+    //}
 
 
-    public void EnemyShield()
-    {
-        if (_isEnemyShieldActive == true)
-        {
 
-
-            if (_enemyShieldVisualizer.EnemyShieldStrength() <= 0)
-            {
-                _isEnemyShieldActive = false;
-                _enemyShieldVisualizer.ShieldActive(false);
-                return;
-            }
-            return;
-
-        }
-    }
 
     public int ShieldStrength()
     {
@@ -263,6 +249,22 @@ public class Enemy : MonoBehaviour
             return 0;
         }
     }
+    public void EnemyShield()
+    {
+        if (_isEnemyShieldActive == true)
+        {
+
+
+            if (_enemyShieldVisualizer.EnemyShieldStrength() <= 0)
+            {
+                _isEnemyShieldActive = false;
+                _enemyShieldVisualizer.ShieldActive(false);
+                return;
+            }
+            return;
+
+        }
+    }
 
     public void ActivateEnemyShield()
     {
@@ -272,7 +274,7 @@ public class Enemy : MonoBehaviour
 
     public void Damage()
     {
-
+        _enemyShieldActive--;
         _enemyLives--;
         Destroy(GetComponent<Collider2D>());
     }
