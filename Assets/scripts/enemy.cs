@@ -76,7 +76,8 @@ public class Enemy : MonoBehaviour
         {
             _audioSource.clip = _audioClip;
         }
-
+        int rng = Random.Range(0, 100);
+        GenerateShieldIndex(rng);
     }
 
     // Update is called once per frame
@@ -196,26 +197,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-
-
-    //IEnumerator FireLaserCoroutine()
-    //{
-    //    while (_canFire == true)
-    //    {
-    //        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-    //        Vector3 _laserPos = transform.TransformPoint(_laserOffset);
-    //        GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-    //        _laser.tag = "Enemy Laser";
-    //        _audioSource.Play();
-    //        yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
-
-    //    }
-
-    //}
-
-
-
-
     public int ShieldStrength()
     {
         return _lives;
@@ -232,28 +213,24 @@ public class Enemy : MonoBehaviour
 
     }
 
-
-    public int GenerateShieldIndex(int random)
+    public void GenerateShieldIndex(int random)
     {
-        EnemyShield();
-        if (random >= 20 && random < 30)
+        if (_enemyID == 0)
         {
-            return 0;
+            if (random >= 20 && random < 80)
+                ActivateEnemyShield();
         }
-        else if (random >= 30 && random < 40)
+        else if (_enemyID == 1)
         {
-            return 1;
+            if (random >= 30 && random < 40)
+                ActivateEnemyShield();
         }
-        else
-        {
-            return 0;
-        }
+
     }
     public void EnemyShield()
     {
         if (_isEnemyShieldActive == true)
         {
-
 
             if (_enemyShieldVisualizer.EnemyShieldStrength() <= 0)
             {
@@ -297,6 +274,7 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
+       
         if (_isEnemyRight == true && _isFastEnemy == true)
         {
 

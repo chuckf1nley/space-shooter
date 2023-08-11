@@ -30,14 +30,6 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-
-    //set enemy spwnn couroutine have set numbr of enemies
-    //wave value = currwave *10
-    //in coroutine while currcount is less than wave value spanwn enemy
-    //second system for enemy checking enemy count
-    //when enemy count hits 0 start next wave
-
-
     public void StartSpawning()
     {
         currWave = 1;
@@ -61,7 +53,6 @@ public class SpawnManager : MonoBehaviour
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
-
                 _enemy.transform.parent = _enemyContainer.transform;
                 Enemy _enemyScript = _enemy.GetComponent<Enemy>();
 
@@ -75,7 +66,6 @@ public class SpawnManager : MonoBehaviour
             {
                 currWave++;
                 _waveValue = currWave * 10;
-
             }
         }
     }
@@ -86,7 +76,6 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-
 
         yield return new WaitForSeconds(3.0f);
 

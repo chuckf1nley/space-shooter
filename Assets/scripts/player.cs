@@ -149,10 +149,9 @@ public class Player : MonoBehaviour
 
     }
 
-    public void thruster(int _thruster)
+    public void thruster()
     {
         _thrusterText.text = "thruster active";
-
     }
 
 
