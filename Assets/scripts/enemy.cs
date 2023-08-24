@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShield;
     [SerializeField] private GameObject _enemyShieldVisualizer;
+    [SerializeField] private GameObject _enemyRight;
+    [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
     private SpriteRenderer _spriteRenderer;
@@ -33,8 +35,8 @@ public class Enemy : MonoBehaviour
     private int _direction;
     private SpawnManager _spawnManager;
 
-    public Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
-    public Vector3 _missileOffset = new Vector3(0f, 0f, 0);
+    private Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
+    private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
 
 
     //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
@@ -198,6 +200,7 @@ public class Enemy : MonoBehaviour
 
     public int ShieldStrength()
     {
+        GameObject.Instantiate(_enemyShield, transform.position, Quaternion.identity);
         _enemyShieldStrength = 1;
         return _enemyLives;
     }
@@ -249,6 +252,18 @@ public class Enemy : MonoBehaviour
     //    _enemyShieldVisualizer.ShieldActive(true);
     //    EnemyShield();
     //    ShieldStrength();
+    //}
+
+    //not this section
+    //public void ActivateShield()
+    //{
+    //    _isShieldActive = true;
+    //    _shieldVisualizer.ShieldActive(true);
+
+    //}
+    //public void shieldLives(int shield)
+    //{
+    //    _shield_Lives_Display.text = "shield lives";
     //}
 
     public void Damage()
