@@ -19,6 +19,7 @@ TagManager:
   - EnemyRight
   - EnemyMissile
   - PlayerMissile
+  - EnemyShield
   layers:
   - Default
   - TransparentFX

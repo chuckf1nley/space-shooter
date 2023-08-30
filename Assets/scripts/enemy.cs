@@ -9,19 +9,18 @@ public class Enemy : MonoBehaviour
     private float _fastSpeed = 5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
-    [SerializeField] private GameObject _enemyShield;
     [SerializeField] private GameObject _enemyShieldVisualizer;
     [SerializeField] private GameObject _enemyRight;
     [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private float _enemyShieldStrength = 1f;
     private SpriteRenderer _spriteRenderer;
     private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
     private float _startX;
-    private float _enemyShieldStrength = 1f;
     private Player _player;
     private Animator _enemyDeathAnim;
     private bool _isEnemyShieldActive = false;
@@ -78,7 +77,7 @@ public class Enemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
         int rng = Random.Range(0, 100);
-       // GenerateShieldIndex(rng);
+        GenerateShieldIndex(rng);
     }
 
     // Update is called once per frame
@@ -200,7 +199,7 @@ public class Enemy : MonoBehaviour
 
     public int ShieldStrength()
     {
-        GameObject.Instantiate(_enemyShield, transform.position, Quaternion.identity);
+        GameObject.Instantiate(_enemyShieldVisualizer, transform.position, Quaternion.identity);
         _enemyShieldStrength = 1;
         return _enemyLives;
     }
@@ -216,61 +215,49 @@ public class Enemy : MonoBehaviour
 
     }
 
-    //public void GenerateShieldIndex(int random)
-    //{
-    //    if (_enemyID == 0)
-    //    {
-    //        if (random >= 20 && random < 80)
-    //            ActivateEnemyShield();
-    //    }
-    //    else if (_enemyID == 1)
-    //    {
-    //        if (random >= 30 && random < 40)
-    //            ActivateEnemyShield();
-    //    }
+    public void GenerateShieldIndex(int random)
+    {
+        if (_enemyID == 0)
+        {
+            if (random >= 20 && random < 80)
+                ActivateEnemyShield();
+        }
+        else if (_enemyID == 1)
+        {
+            if (random >= 30 && random < 40)
+                ActivateEnemyShield();
+        }
 
-    //}
-    //public void EnemyShield()
-    //{
-    //    if (_isEnemyShieldActive == true)
-    //    {
+    }
+    public void EnemyShield()
+    {
+        if (_isEnemyShieldActive == true)
+        {
 
-    //        if (_enemyShieldVisualizer.ShieldStrength() <= 0)
-    //        {
-    //            _isEnemyShieldActive = false;
-    //            _enemyShieldVisualizer.ShieldActive(false);
-    //            return;
-    //        }
-    //        return;
+            if (_enemyShieldVisualizer)
+            {
+                _isEnemyShieldActive = false;
+                _enemyShieldVisualizer.SetActive(false);
+                return;
+            }
+            return;
 
-    //    }
-    //}
+        }
+    }
 
-    //public void ActivateEnemyShield()
-    //{
-    //    _isEnemyShieldActive = true;
-    //    _enemyShieldVisualizer.ShieldActive(true);
-    //    EnemyShield();
-    //    ShieldStrength();
-    //}
-
-    //not this section
-    //public void ActivateShield()
-    //{
-    //    _isShieldActive = true;
-    //    _shieldVisualizer.ShieldActive(true);
-
-    //}
-    //public void shieldLives(int shield)
-    //{
-    //    _shield_Lives_Display.text = "shield lives";
-    //}
+    public void ActivateEnemyShield()
+    {
+        _isEnemyShieldActive = true;
+        _enemyShieldVisualizer.SetActive(true);        
+        ShieldStrength();
+    }
 
     public void Damage()
     {
         _enemyShieldActive--;
         _enemyLives--;
         Destroy(GetComponent<Collider2D>());
+        EnemyShield();
     }
 
     public void EnemyDeathSequence()
