@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private bool _canFireMissile;
     private bool _isEnemyAlive = true;
     private int _enemyLives = 1;
-    private int _enemyShieldActive = 1;
+    private int _enemyShieldLives = 1;
     private int _direction;
     private SpawnManager _spawnManager;
 
@@ -85,7 +85,6 @@ public class Enemy : MonoBehaviour
     //organize code from top to bottom, grouped by segment
     void Update()
     {
-
         switch (_enemyID)
         {
             default:
@@ -95,7 +94,6 @@ public class Enemy : MonoBehaviour
                 FastEnemy();
                 return;
         }
-
 
     }
 
@@ -166,6 +164,14 @@ public class Enemy : MonoBehaviour
 
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
     }
+    public void EnemyRight()
+    {
+        _isEnemyRight = true;
+        RegularEnemyMovement();
+        CalculateMovement();
+        FireLaser();
+
+    }
 
     private void FastEnemyMovement()
     {
@@ -177,14 +183,6 @@ public class Enemy : MonoBehaviour
             _direction = 1;
 
         transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
-
-    }
-    public void EnemyRight()
-    {
-        _isEnemyRight = true;
-        RegularEnemyMovement();
-        CalculateMovement();
-        FireLaser();
 
     }
 
@@ -206,58 +204,44 @@ public class Enemy : MonoBehaviour
 
     public void ShieldActive(bool state)
     {
-        _enemyShieldActive --;
+        _enemyShieldLives--;
         _spriteRenderer.enabled = state;
+        EnemyShield();
         if (state == true)
         {
             _enemyLives = 1;
         }
-
     }
 
     public void GenerateShieldIndex(int random)
     {
         if (_enemyID == 0)
         {
-            if (random >= 20 && random < 80)
-                ActivateEnemyShield();
+            if (random >= 20 && random < 80) ;
         }
         else if (_enemyID == 1)
         {
-            if (random >= 30 && random < 40)
-                ActivateEnemyShield();
+            if (random >= 30 && random < 40) ;
         }
-
+        return;
     }
+    public int EnemyShieldStrength()
+    {
+        return _enemyShieldLives;
+    }
+
     public void EnemyShield()
     {
-        if (_isEnemyShieldActive == true)
-        {
-
-            if (_enemyShieldVisualizer)
-            {
-                _isEnemyShieldActive = false;
-                _enemyShieldVisualizer.SetActive(false);
-                return;
-            }
-            return;
-
-        }
-    }
-
-    public void ActivateEnemyShield()
-    {
         _isEnemyShieldActive = true;
-        _enemyShieldVisualizer.SetActive(true);        
+        _enemyShieldVisualizer.SetActive(true);
         ShieldStrength();
     }
 
     public void Damage()
     {
-        _enemyShieldActive--;
+        _enemyShieldLives--;
         _enemyLives--;
         Destroy(GetComponent<Collider2D>());
-        EnemyShield();
     }
 
     public void EnemyDeathSequence()
@@ -278,10 +262,19 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-       
         if (_isEnemyRight == true && _isFastEnemy == true)
         {
 
+            if (_isEnemyShieldActive == true)
+            {
+                if (EnemyShieldStrength() <= 0)
+                {
+                    _isEnemyShieldActive = false;
+                    ShieldActive(false);
+                }
+                Damage();
+                return;
+            }
             if (other.CompareTag("Player"))
             {
                 Player player = other.transform.GetComponent<Player>();
@@ -290,11 +283,11 @@ public class Enemy : MonoBehaviour
                     player.Damage();
                 }
                 if (_enemyID == 0 && _enemyID == 1)
+                {
                     _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-
+                }
                 EnemyDeathSequence();
                 Damage();
-
             }
             if (other.CompareTag("Laser"))
             {
@@ -319,11 +312,9 @@ public class Enemy : MonoBehaviour
                 {
                     _player.AddScore(10);
                 }
-               
                 EnemyDeathSequence();
                 Damage();
             }
         }
-
     }
 }

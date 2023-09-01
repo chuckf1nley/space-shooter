@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultiplier = 3f;
-    [SerializeField] private float _negSpeedMultiplier = .5f;
+    [SerializeField] private float _negSpeedMultiplier = 1f;
     public string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+        Thruster();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -149,7 +150,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void thruster()
+    public void Thruster()
     {
         _thrusterText.text = "thruster active";
     }
@@ -200,8 +201,6 @@ public class Player : MonoBehaviour
         Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
 
     }
-
-
     IEnumerator FireMissileCoroutine()
     {
         while (_canMissileFire == true)
@@ -215,6 +214,7 @@ public class Player : MonoBehaviour
         }
 
     }
+
     public void Damage()
     {
 
@@ -252,7 +252,16 @@ public class Player : MonoBehaviour
         }
 
     }
+    public void ActivateShield()
+    {
+        _isShieldActive = true;
+        _shieldVisualizer.ShieldActive(true);
 
+    }
+    public void shieldLives(int shield)
+    {
+        _shield_Lives_Display.text = "shield lives";
+    }
 
     public void TripleShotActive()
     {
@@ -276,16 +285,6 @@ public class Player : MonoBehaviour
         _speed /= _speedMultiplier;
     }
 
-    public void ActivateShield()
-    {
-        _isShieldActive = true;
-        _shieldVisualizer.ShieldActive(true);
-
-    }
-    public void shieldLives(int shield)
-    {
-        _shield_Lives_Display.text = "shield lives";
-    }
     public void AddScore(int points)
     {
         _score += points;
@@ -360,7 +359,5 @@ public class Player : MonoBehaviour
         _negSpeed = false;
         _speed /= _negSpeedMultiplier;
     }
-
-
 
 }

@@ -2631,7 +2631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
-  _negSpeedMultiplier: 0.5
+  _negSpeedMultiplier: 1
   _playerName: samaxe
   _fireRate: 0.5
   _missileFireRate: 2
