@@ -5,17 +5,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
-    [SerializeField] private float _speed = 4f;
-    private float _fastSpeed = 5f;
+    [SerializeField] private float _speed = 3f;
+    private float _fastSpeed = 4.5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
-    [SerializeField] private GameObject _enemyShieldVisualizer;
+    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private GameObject _enemyRight;
     [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _enemyShieldStrength = 1f;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
@@ -58,11 +58,11 @@ public class Enemy : MonoBehaviour
 
         if (_direction == 0)
             _direction = -1;
+
         if (_player == null)
         {
             Debug.LogError("player is null");
         }
-
 
         if (_enemyDeathAnim == null)
         {
@@ -76,6 +76,7 @@ public class Enemy : MonoBehaviour
         {
             _audioSource.clip = _audioClip;
         }
+
         int rng = Random.Range(0, 100);
         GenerateShieldIndex(rng);
     }
@@ -183,7 +184,6 @@ public class Enemy : MonoBehaviour
             _direction = 1;
 
         transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
-
     }
 
     public void FastEnemy()
@@ -197,19 +197,19 @@ public class Enemy : MonoBehaviour
 
     public int ShieldStrength()
     {
-        GameObject.Instantiate(_enemyShieldVisualizer, transform.position, Quaternion.identity);
+        EnemyShield();
+        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
         _enemyShieldStrength = 1;
         return _enemyLives;
     }
 
     public void ShieldActive(bool state)
     {
-        _enemyShieldLives--;
-        _spriteRenderer.enabled = state;
-        EnemyShield();
+        _spriteRenderer.gameObject.SetActive(state);
+        _isEnemyShieldActive = state;
         if (state == true)
         {
-            _enemyLives = 1;
+            _enemyShieldLives = 1;
         }
     }
 
@@ -217,13 +217,14 @@ public class Enemy : MonoBehaviour
     {
         if (_enemyID == 0)
         {
-            if (random >= 20 && random < 80) ;
+            if (random >= 20 && random < 80)
+                ShieldActive(true);
         }
         else if (_enemyID == 1)
         {
-            if (random >= 30 && random < 40) ;
+            if (random >= 30 && random < 40)
+                ShieldActive(true);
         }
-        return;
     }
     public int EnemyShieldStrength()
     {
@@ -233,15 +234,19 @@ public class Enemy : MonoBehaviour
     public void EnemyShield()
     {
         _isEnemyShieldActive = true;
-        _enemyShieldVisualizer.SetActive(true);
+        ShieldActive(true);
         ShieldStrength();
     }
 
     public void Damage()
     {
-        _enemyShieldLives--;
-        _enemyLives--;
-        Destroy(GetComponent<Collider2D>());
+        if (_isEnemyShieldActive == true)
+        {
+            _enemyShieldLives--;
+            ShieldActive(false);
+            return;
+        }
+        EnemyDeathSequence();
     }
 
     public void EnemyDeathSequence()
@@ -257,36 +262,22 @@ public class Enemy : MonoBehaviour
         _isFastEnemy = false;
         _isEnemyAlive = false;
         _spawnManager.EnemyDeath();
-        Destroy(this.gameObject, 2.6f);
+        Destroy(this.gameObject, 1.6f);
         Destroy(GetComponent<Collider2D>());
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyRight == true && _isFastEnemy == true)
+        if (_isEnemyRight == true || _isFastEnemy == true)
         {
 
-            if (_isEnemyShieldActive == true)
-            {
-                if (EnemyShieldStrength() <= 0)
-                {
-                    _isEnemyShieldActive = false;
-                    ShieldActive(false);
-                }
-                Damage();
-                return;
-            }
+           
             if (other.CompareTag("Player"))
             {
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
                     player.Damage();
-                }
-                if (_enemyID == 0 && _enemyID == 1)
-                {
-                    _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-                }
-                EnemyDeathSequence();
+                }                
                 Damage();
             }
             if (other.CompareTag("Laser"))
@@ -296,13 +287,11 @@ public class Enemy : MonoBehaviour
                 {
                     _player.AddScore(10);
                 }
-                EnemyDeathSequence();
                 Damage();
             }
             if (other.CompareTag("Shield"))
             {
                 other.GetComponent<Shield>().Damage();
-                EnemyDeathSequence();
                 Damage();
             }
             if (other.CompareTag("Missile"))
@@ -312,7 +301,6 @@ public class Enemy : MonoBehaviour
                 {
                     _player.AddScore(10);
                 }
-                EnemyDeathSequence();
                 Damage();
             }
         }
