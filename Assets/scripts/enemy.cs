@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _enemyShieldStrength = 1f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    public float _playerProx = 2f;
     private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
@@ -147,6 +148,7 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovement()
     {
+        EnemyAggro();
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
@@ -193,6 +195,16 @@ public class Enemy : MonoBehaviour
         FireMissile();
         CalculateMovement();
 
+    }
+
+    //make enemies move towards the player when they get close
+
+    public void EnemyAggro()
+    {
+        if (transform.position.x  > _playerProx + 2)
+        {
+            transform.Translate(Vector3.down * _fastSpeed * _playerProx * Time.deltaTime);
+        }
     }
 
     public int ShieldStrength()

@@ -246,6 +246,7 @@ public class Player : MonoBehaviour
         _uiManager.UpdateLives(_currentLives);
         if (_currentLives <= 0)
         {
+            _camShake.ShakeCamera();
             _audioSource.Play();
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
