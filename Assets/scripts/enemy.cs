@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private float _speed = 3f;
     private float _fastSpeed = 4.5f;
+    private float _chaseSpeed = 4f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShieldPrefab;
@@ -201,9 +202,10 @@ public class Enemy : MonoBehaviour
 
     public void EnemyAggro()
     {
-        if (transform.position.x  > _playerProx + 2)
+        if (transform.position.y  <= _playerProx + 2)
         {
-            transform.Translate(Vector3.down * _fastSpeed * _playerProx * Time.deltaTime);
+            Mathf.Abs(transform.position.x - _player.transform.position.x);
+           // transform.Translate(Vector3.right * _chaseSpeed * _direction);
         }
     }
 
