@@ -242,13 +242,14 @@ MonoBehaviour:
   _speed: 4
   _laserPrefab: {fileID: 0}
   _missilePrefab: {fileID: 4093342770479988480, guid: 769b05c4ba6287546a15633189fd1972, type: 3}
-  _enemyShieldPrefab: {fileID: 0}
+  _enemyShieldPrefab: {fileID: 1716696902119978974, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
   _enemyRight: {fileID: 0}
-  _fastEnemy: {fileID: 0}
+  _fastEnemy: {fileID: 6680074148033786096}
   _enemyID: 1
   _audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _enemyShieldStrength: 1
   _spriteRenderer: {fileID: 7530867059363163508}
+  _playerProx: 2
 --- !u!61 &6667723834124428593
 BoxCollider2D:
   m_ObjectHideFlags: 0

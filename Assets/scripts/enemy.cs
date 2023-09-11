@@ -40,8 +40,7 @@ public class Enemy : MonoBehaviour
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
 
 
-    //after 3 minutes increase enemy spawns/ create a second enemy so 2 spawn
-    // after 120 seconds decrease spawn timer from 5 seconds to 3 seconds
+   
 
     // Start is called before the first frame update
     void Start()
@@ -149,12 +148,13 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovement()
     {
-        EnemyAggro();
         if (transform.position.y < -7.5f)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
+        
+
     }
 
     private void RegularEnemyMovement()
@@ -174,7 +174,7 @@ public class Enemy : MonoBehaviour
         RegularEnemyMovement();
         CalculateMovement();
         FireLaser();
-
+        
     }
 
     private void FastEnemyMovement()
@@ -195,19 +195,12 @@ public class Enemy : MonoBehaviour
         FastEnemyMovement();
         FireMissile();
         CalculateMovement();
-
+      
     }
 
-    //make enemies move towards the player when they get close
+    //make enemies move towards the player when they get within two meters
 
-    public void EnemyAggro()
-    {
-        if (transform.position.y  <= _playerProx + 2)
-        {
-            Mathf.Abs(transform.position.x - _player.transform.position.x);
-           // transform.Translate(Vector3.right * _chaseSpeed * _direction);
-        }
-    }
+    
 
     public int ShieldStrength()
     {
@@ -231,7 +224,7 @@ public class Enemy : MonoBehaviour
     {
         if (_enemyID == 0)
         {
-            if (random >= 20 && random < 80)
+            if (random >= 20 && random < 30)
                 ShieldActive(true);
         }
         else if (_enemyID == 1)
