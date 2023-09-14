@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private float _speed = 3f;
     private float _fastSpeed = 4.5f;
-    private float _chaseSpeed = 4f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShieldPrefab;
@@ -38,9 +37,6 @@ public class Enemy : MonoBehaviour
 
     private Vector3 _laserOffset = new Vector3(.006f, -.04f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
-
-
-   
 
     // Start is called before the first frame update
     void Start()
