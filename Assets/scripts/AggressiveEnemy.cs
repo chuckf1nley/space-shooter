@@ -31,12 +31,12 @@ public class AggressiveEnemy : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
-        _isEnemyAlive = true; 
+        _isEnemyAlive = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
 
         if (_direction == 0)
-            _direction = -1;        
+            _direction = -1;
 
         if (_player == null)
         {
@@ -53,19 +53,36 @@ public class AggressiveEnemy : MonoBehaviour
             Debug.Log("AudioSource on aggro enemy is null");
         }
 
+        switch (_enemyID)
+        {
+            default:
+                AggroEnemy();
+                break;
 
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        AggroEnemy();
         CalculateMovement();
+    }
+
+    public void AggroEnemy()
+    {
+
+
+
+
     }
 
     public void CalculateMovement()
     {
-        
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+
 
     }
 

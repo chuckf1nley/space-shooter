@@ -113,6 +113,12 @@ public class SpawnManager : MonoBehaviour
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
+            case 3:
+                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
+                _ySpawnPos = UnityEngine.Random.Range(-18f, 18f);
+                _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
+                break;
+
             default:
                 _xSpawnPos = Mathf.Round(UnityEngine.Random.Range(-9.0f, 9.0f));
                 _enemySpawnPos = new Vector3(_xSpawnPos, 9.11f, 0f);
@@ -163,8 +169,13 @@ public class SpawnManager : MonoBehaviour
         }else if (random >= 20 && random < 30)
         {
             return 1; //fastEnemy
-        }else
+        }else if (random >= 30 && random <40)
         {
+            return 2; //aggroEnemy
+        }
+        else
+        {
+            
             return 0;
         }
     }
