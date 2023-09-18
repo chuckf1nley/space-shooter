@@ -14,6 +14,7 @@ public class AggressiveEnemy : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _startX;
+    private float _distance;
     private Player _player;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = true;
@@ -68,11 +69,21 @@ public class AggressiveEnemy : MonoBehaviour
     {
         AggroEnemy();
         CalculateMovement();
+
+       // transform.position += _direction * _speed * Time.deltaTime;
     }
 
     public void AggroEnemy()
     {
 
+        _distance = Vector3.Distance(transform.position, _player.transform.position);
+
+        if (_distance < 5)
+            _speed += 1;
+         //  float magnitude = ((_player.transform.position - transform.position).normalized _speed) / Time.deltaTime;
+
+        Vector3 direction = (_player.transform.position - transform.position).normalized;
+        GetComponent<Rigidbody2D>().velocity = new Vector3(_speed, Time.deltaTime, GetComponent<Rigidbody2D>().velocity.y);
 
 
 
