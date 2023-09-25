@@ -6,8 +6,8 @@ public class AggressiveEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private GameObject _enemy;
-    [SerializeField] private GameObject _enemyThruster;
     [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private float _chaseSpeed = 5f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _enemyID; // 3 aggro enemy
@@ -15,11 +15,14 @@ public class AggressiveEnemy : MonoBehaviour
     private AudioSource _audioSource;
     private float _startX;
     private float _distance;
+    private float _enemyShieldStrength = 1;
     private Player _player;
     private bool _isEnemyAlive = true;
-    private bool _isEnemyShieldActive = true;
+    private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
     private int _direction;
+    private int _enemyShieldLives = 1;
+    private int _enemyLives;
 
 
     //enemy needs to move towards and kamikaze the player
@@ -68,39 +71,138 @@ public class AggressiveEnemy : MonoBehaviour
     void Update()
     {
         AggroEnemy();
-        CalculateMovement();
 
-       // transform.position += _direction * _speed * Time.deltaTime;
     }
 
     public void AggroEnemy()
     {
 
         _distance = Vector3.Distance(transform.position, _player.transform.position);
+        transform.Translate(Vector3.down * _direction * _speed * Time.deltaTime);
+        if (transform.position.x > _startX + 4)
+            _direction = -1;
+        else if (transform.position.x < _startX - 4)
+            _direction = 1;
 
         if (_distance < 5)
-            _speed += 1;
-         //  float magnitude = ((_player.transform.position - transform.position).normalized _speed) / Time.deltaTime;
+            _chaseSpeed += 1;
 
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
+        Vector3 direction = (_player.transform.position - transform.position * _chaseSpeed * Time.deltaTime);
         GetComponent<Rigidbody2D>().velocity = new Vector3(_speed, Time.deltaTime, GetComponent<Rigidbody2D>().velocity.y);
 
+        if (transform.position.y < -7.5)
+        {
+            float randomx = Random.Range(-18f, 18f);
+            transform.position = new Vector3(randomx, 9f, 0);
 
-
+        }
     }
 
-    public void CalculateMovement()
+
+    public int ShieldStrength()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        EnemyShield();
+        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
+        _enemyShieldStrength = 1;
+        return _enemyLives;
+    }
 
+    public void ShieldActive(bool state)
+    {
+        _spriteRenderer.gameObject.SetActive(state);
+        _isEnemyShieldActive = state;
+        if (state == true)
+        {
+            _enemyShieldLives = 1;
+        }
+    }
+    
+    public void GenerateShieldIndex(int random)
+    {
 
-
+        if (_enemyID == 2)
+        {
+            if (random >= 50 && random < 60)
+                ShieldActive(true);
+        }
+    }
+    public int EnemyShieldStrength()
+    {
+        return _enemyShieldLives;
+    }
+    
+    public void EnemyShield()
+    {
+        _isEnemyShieldActive = true;
+        ShieldActive(true);
+        ShieldStrength();
     }
 
     public void Damage()
     {
-
-
+        if (_isEnemyShieldActive == true)
+        {
+            _enemyShieldLives--;
+            ShieldActive(false);
+            return;
+        }
+        EnemyDeathSequence();
     }
 
+   public void EnemyDeathSequence()
+    {
+       if (_enemyDeathAnim!=null)
+        {
+            _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+        }
+        _speed = 0;
+        _chaseSpeed = 0;
+        _audioSource.Play();
+        _isEnemyAlive = false;
+        _spawnManager.EnemyDeath();
+        Destroy(this.gameObject, 1.6f);
+        Destroy(GetComponent<Collider2D>());
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_isEnemyAlive == true)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
+                Damage();
+            }
+            if (other.CompareTag("Laser"))
+            {
+                if (_player != null)
+                {
+                    _player.Damage();
+                }
+                Damage();
+            }
+            if (other.CompareTag("Shield"))
+            {
+                if (_player != null)
+                {
+                    _player.Damage();
+                }
+                Damage();
+            }
+            if (other.CompareTag("Missile"))
+            {
+                if (_player != null)
+                {
+                    _player.Damage();
+                }
+                Damage();
+            }
+        }
+
+    }
+   
 }

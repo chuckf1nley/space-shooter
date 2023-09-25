@@ -7,6 +7,7 @@ using Random = System.Random;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
+    [SerializeField] private GameObject[] _AggroEnemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
@@ -47,14 +48,16 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3.0f);
 
             while (_stopSpawning == false && _waveValue > 0)
-            {
-                // int randomEnemy = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+            {               
                 int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 100));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
+                GameObject _AggroEnemy = Instantiate(_AggroEnemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
                 _enemy.transform.parent = _enemyContainer.transform;
+                _AggroEnemy.transform.parent = _enemyContainer.transform;
                 Enemy _enemyScript = _enemy.GetComponent<Enemy>();
+                AggressiveEnemy _AggressiveEnemyScript = _AggroEnemy.GetComponent<AggressiveEnemy>(); 
 
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
