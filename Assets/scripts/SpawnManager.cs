@@ -7,7 +7,7 @@ using Random = System.Random;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
-    [SerializeField] private GameObject[] _AggroEnemyPrefab;
+   // [SerializeField] private GameObject[] _AggroEnemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
@@ -49,15 +49,15 @@ public class SpawnManager : MonoBehaviour
 
             while (_stopSpawning == false && _waveValue > 0)
             {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 100));
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 30));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
-                GameObject _AggroEnemy = Instantiate(_AggroEnemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
+                //GameObject _AggroEnemy = Instantiate(_AggroEnemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
                 _enemy.transform.parent = _enemyContainer.transform;
-                _AggroEnemy.transform.parent = _enemyContainer.transform;
-                Enemy _enemyScript = _enemy.GetComponent<Enemy>();
-                AggressiveEnemy _AggressiveEnemyScript = _AggroEnemy.GetComponent<AggressiveEnemy>(); 
+                //_AggroEnemy.transform.parent = _enemyContainer.transform;
+                //Enemy _enemyScript = _enemy.GetComponent<Enemy>();
+                //AggressiveEnemy _AggressiveEnemyScript = _AggroEnemy.GetComponent<AggressiveEnemy>(); 
 
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
@@ -169,10 +169,10 @@ public class SpawnManager : MonoBehaviour
         if (random >= 0 && random < 10)
         {
             return 0; //normalEnemy
-        }else if (random >= 20 && random < 30)
+        }else if (random >= 10 && random < 20)
         {
             return 1; //fastEnemy
-        }else if (random >= 30 && random <40)
+        }else if (random >= 20 && random <30)
         {
             return 2; //aggroEnemy
         }

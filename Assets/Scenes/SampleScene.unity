@@ -149,7 +149,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101029988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -2.91, z: 0}
+  m_LocalPosition: {x: -0.09, y: -3.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1250,7 +1250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &884212051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2664,7 +2664,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500934015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.49, y: -0.43, z: 0}
+  m_LocalPosition: {x: -0, y: -3.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.4875, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3776,6 +3776,7 @@ MonoBehaviour:
   _enemyPrefab:
   - {fileID: 2322430216361035325, guid: 635b176533764fd438978e6e39ad8d3b, type: 3}
   - {fileID: 6680074148033786096, guid: 1f48cf8d0b5123743936bc187662e6b1, type: 3}
+  - {fileID: 5588369561425281493, guid: 447f07cd18ef4c347a783dd79cf12d90, type: 3}
   _enemyContainer: {fileID: 955404439}
   _powerups:
   - {fileID: 8430668821751775207, guid: 21fc8b9785d8cd54bb996c8890797da6, type: 3}

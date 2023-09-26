@@ -60,35 +60,46 @@ public class AggressiveEnemy : MonoBehaviour
         switch (_enemyID)
         {
             default:
-                AggroEnemy();
+                AggroEnemyMovement();
                 break;
 
         }
 
     }
-
+    //in update make method for determining which code to use, proximity to player, if statement
     // Update is called once per frame
     void Update()
     {
-        AggroEnemy();
+        
 
     }
 
-    public void AggroEnemy()
+    public void NormalMovement()
     {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        _distance = Vector3.Distance(transform.position, _player.transform.position);
-        transform.Translate(Vector3.down * _direction * _speed * Time.deltaTime);
         if (transform.position.x > _startX + 4)
             _direction = -1;
         else if (transform.position.x < _startX - 4)
             _direction = 1;
+        
+    }
+
+
+
+    public void AggroEnemyMovement()
+    {
+
+        _distance = Vector3.Distance(transform.position, _player.transform.position);
 
         if (_distance < 5)
             _chaseSpeed += 1;
 
-        Vector3 direction = (_player.transform.position - transform.position * _chaseSpeed * Time.deltaTime);
-        GetComponent<Rigidbody2D>().velocity = new Vector3(_speed, Time.deltaTime, GetComponent<Rigidbody2D>().velocity.y);
+        Vector3 direction = _player.transform.position - transform.position;
+        direction = direction.normalized;
+
+       transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+
 
         if (transform.position.y < -7.5)
         {
