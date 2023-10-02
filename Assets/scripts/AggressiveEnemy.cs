@@ -11,10 +11,11 @@ public class AggressiveEnemy : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _enemyID; // 3 aggro enemy
+    private Player player;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _startX;
-    private float _distance;
+    private float _interceptDistance;
     private float _enemyShieldStrength = 1;
     private Player _player;
     private bool _isEnemyAlive = true;
@@ -60,7 +61,7 @@ public class AggressiveEnemy : MonoBehaviour
         switch (_enemyID)
         {
             default:
-                AggroEnemyMovement();
+                AggroMovement();
                 break;
 
         }
@@ -70,8 +71,15 @@ public class AggressiveEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
+        float _distance = Vector3.Distance(transform.position,  player.transform.position);
+        if (_distance < 4)
+        { 
+          new Vector3(_chaseSpeed * Time.deltaTime, GetComponent<Rigidbody2D>().velocity.y);
+        }
+        else
+        {
+         new Vector3(_speed * Time.deltaTime, 0f, 0f);
+        }
     }
 
     public void NormalMovement()
@@ -87,12 +95,12 @@ public class AggressiveEnemy : MonoBehaviour
 
 
 
-    public void AggroEnemyMovement()
+    public void AggroMovement()
     {
 
-        _distance = Vector3.Distance(transform.position, _player.transform.position);
+        _interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
 
-        if (_distance < 5)
+        if (_interceptDistance < 5)
             _chaseSpeed += 1;
 
         Vector3 direction = _player.transform.position - transform.position;

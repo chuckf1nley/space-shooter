@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultiplier = 3f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
-    public string _playerName = "samaxe";
+    private string _playerName = "samaxe";
     private float _horizontal;
     private float _vertical;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        Thruster();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -114,8 +113,8 @@ public class Player : MonoBehaviour
     }
 
     void CalculateMovement()
-
     {
+        Thruster();
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
 
