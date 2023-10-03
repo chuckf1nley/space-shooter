@@ -15,7 +15,7 @@ public class AggressiveEnemy : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _startX;
-    private float _interceptDistance;
+    private float _interceptDistance = 4f;
     private float _enemyShieldStrength = 1;
     private Player _player;
     private bool _isEnemyAlive = true;
@@ -71,14 +71,15 @@ public class AggressiveEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float _distance = Vector3.Distance(transform.position,  player.transform.position);
-        if (_distance < 4)
-        { 
-          new Vector3(_chaseSpeed * Time.deltaTime, GetComponent<Rigidbody2D>().velocity.y);
+        // float _interceptDistance = Vector3.Distance(transform.position,  player.transform.position);
+        transform.Translate(Vector3.down * _interceptDistance * _speed * Time.deltaTime);
+        if (_interceptDistance > 4)
+        {
+          NormalMovement();
         }
         else
         {
-         new Vector3(_speed * Time.deltaTime, 0f, 0f);
+          AggroMovement();
         }
     }
 

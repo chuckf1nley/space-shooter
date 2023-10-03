@@ -36,4 +36,30 @@ public class SmartEnemy : MonoBehaviour
     {
         
     }
+
+    public void Movement()
+    {
+
+    }
+
+    public void Weapon()
+    {
+
+    }
+
+    public void GenerateShield()
+    {
+        
+    }
+    public void ShieldStrength()
+    {
+        
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        
+    }
+
+
 }

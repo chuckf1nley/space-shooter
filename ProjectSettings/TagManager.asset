@@ -21,6 +21,7 @@ TagManager:
   - PlayerMissile
   - EnemyShield
   - AggroEnemy
+  - SmartEnemy
   layers:
   - Default
   - TransparentFX
