@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
-        int rng = Random.Range(0, 100);
+        int rng = Random.Range(0, 60);
         GenerateShieldIndex(rng);
     }
 

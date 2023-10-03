@@ -63,16 +63,17 @@ public class AggressiveEnemy : MonoBehaviour
             default:
                 AggroMovement();
                 break;
-
         }
 
+        int rng = Random.Range(0, 60);
+        GenerateShieldIndex(rng);
     }
     //in update make method for determining which code to use, proximity to player, if statement
     // Update is called once per frame
     void Update()
     {
-        // float _interceptDistance = Vector3.Distance(transform.position,  player.transform.position);
-        transform.Translate(Vector3.down * _interceptDistance * _speed * Time.deltaTime);
+        _interceptDistance = Vector3.Distance(transform.position,  _player.transform.position);
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (_interceptDistance > 4)
         {
           NormalMovement();
@@ -91,15 +92,19 @@ public class AggressiveEnemy : MonoBehaviour
             _direction = -1;
         else if (transform.position.x < _startX - 4)
             _direction = 1;
-        
+
+        if (transform.position.y < -7.5)
+        {
+            float randomx = Random.Range(-18f, 18f);
+            transform.position = new Vector3(randomx, 9f, 0);
+
+        }
     }
-
-
 
     public void AggroMovement()
     {
 
-        _interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
+        //_interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
 
         if (_interceptDistance < 5)
             _chaseSpeed += 1;
@@ -110,14 +115,7 @@ public class AggressiveEnemy : MonoBehaviour
        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
 
 
-        if (transform.position.y < -7.5)
-        {
-            float randomx = Random.Range(-18f, 18f);
-            transform.position = new Vector3(randomx, 9f, 0);
-
-        }
     }
-
 
     public int ShieldStrength()
     {
@@ -126,7 +124,6 @@ public class AggressiveEnemy : MonoBehaviour
         _enemyShieldStrength = 1;
         return _enemyLives;
     }
-
     public void ShieldActive(bool state)
     {
         _spriteRenderer.gameObject.SetActive(state);
@@ -136,7 +133,6 @@ public class AggressiveEnemy : MonoBehaviour
             _enemyShieldLives = 1;
         }
     }
-    
     public void GenerateShieldIndex(int random)
     {
 
@@ -150,7 +146,6 @@ public class AggressiveEnemy : MonoBehaviour
     {
         return _enemyShieldLives;
     }
-    
     public void EnemyShield()
     {
         _isEnemyShieldActive = true;
@@ -193,7 +188,7 @@ public class AggressiveEnemy : MonoBehaviour
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
-                    player.Damage();
+                    _player.Damage();
                 }
                 Damage();
             }

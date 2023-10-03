@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(3.0f);
 
-            while (_stopSpawning == false && _waveValue > 0)
+            while (_waveValue > 0)
             {               
                 int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 30));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
