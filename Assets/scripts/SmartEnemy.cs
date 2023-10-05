@@ -56,6 +56,11 @@ public class SmartEnemy : MonoBehaviour
         
     }
 
+    public void EnemyDeathSequence()
+    {
+
+    }
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         

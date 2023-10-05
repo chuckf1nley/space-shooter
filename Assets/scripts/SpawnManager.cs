@@ -49,16 +49,11 @@ public class SpawnManager : MonoBehaviour
 
             while (_waveValue > 0)
             {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 30));
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 40));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
-                //GameObject _AggroEnemy = Instantiate(_AggroEnemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
                 _enemy.transform.parent = _enemyContainer.transform;
-                //_AggroEnemy.transform.parent = _enemyContainer.transform;
-                //Enemy _enemyScript = _enemy.GetComponent<Enemy>();
-                //AggressiveEnemy _AggressiveEnemyScript = _AggroEnemy.GetComponent<AggressiveEnemy>(); 
-
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
                 _enemyCount++;

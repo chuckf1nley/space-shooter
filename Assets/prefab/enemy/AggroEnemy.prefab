@@ -225,8 +225,8 @@ MonoBehaviour:
   _speed: 3.5
   _chaseSpeed: 5
   _spriteRenderer: {fileID: 0}
-  _audioClip: {fileID: 0}
-  _enemyID: 0
+  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _enemyID: 2
 --- !u!95 &-5309984209771858545
 Animator:
   serializedVersion: 4

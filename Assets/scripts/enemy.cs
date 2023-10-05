@@ -239,6 +239,7 @@ public class Enemy : MonoBehaviour
         _isEnemyShieldActive = true;
         ShieldActive(true);
         ShieldStrength();
+        EnemyShieldStrength();
     }
 
     public void Damage()

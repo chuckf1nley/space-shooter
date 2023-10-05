@@ -151,6 +151,7 @@ public class AggressiveEnemy : MonoBehaviour
         _isEnemyShieldActive = true;
         ShieldActive(true);
         ShieldStrength();
+        EnemyShieldStrength();
     }
 
     public void Damage()
