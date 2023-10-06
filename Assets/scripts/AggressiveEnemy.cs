@@ -11,7 +11,6 @@ public class AggressiveEnemy : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _enemyID; // 3 aggro enemy
-    private Player player;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _startX;
@@ -52,10 +51,13 @@ public class AggressiveEnemy : MonoBehaviour
         {
             Debug.Log("Animator is null");
         }
-
         if (_audioSource == null)
         {
             Debug.Log("AudioSource on aggro enemy is null");
+        }       
+        else
+        {
+            _audioSource.clip = _audioClip;
         }
 
         switch (_enemyID)
