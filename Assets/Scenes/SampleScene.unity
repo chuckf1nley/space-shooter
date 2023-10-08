@@ -2634,7 +2634,7 @@ MonoBehaviour:
   _negSpeedMultiplier: 1
   _fireRate: 0.5
   _missileFireRate: 2
-  _laserPrefab: {fileID: 6915159565038734937, guid: 354a78f6c350f6c47b198d4bb6cad6d5, type: 3}
+  _laserPrefab: {fileID: 6915159565038734937, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
   _tripleShotPrefab: {fileID: 2564166531905080966, guid: b9d37007e29879449a89ddba9d018acc, type: 3}
   _missilePrefab: {fileID: 0}
   _SpeedBoostPrefab: {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
