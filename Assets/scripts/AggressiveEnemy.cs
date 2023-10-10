@@ -167,7 +167,7 @@ public class AggressiveEnemy : MonoBehaviour
 
    public void EnemyDeathSequence()
     {
-       if (_enemyDeathAnim!=null)
+       if (_enemyDeathAnim != null)
         {
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
         }
