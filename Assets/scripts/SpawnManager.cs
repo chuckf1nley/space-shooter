@@ -53,7 +53,7 @@ public class SpawnManager : MonoBehaviour
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
-                _enemy.transform.parent = _enemyContainer.transform;
+               // _enemy.transform.parent = _enemyContainer.transform;
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
                 _enemyCount++;
@@ -113,7 +113,13 @@ public class SpawnManager : MonoBehaviour
 
             case 3:
                 _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(-18f, 18f);
+                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
+                break;
+
+            case 4:
+                _xSpawnPos = UnityEngine.Random.Range(18f, 18f);
+                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 

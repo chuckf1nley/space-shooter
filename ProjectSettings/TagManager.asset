@@ -22,6 +22,7 @@ TagManager:
   - EnemyShield
   - AggroEnemy
   - SmartEnemy
+  - SmartWeapon
   layers:
   - Default
   - TransparentFX

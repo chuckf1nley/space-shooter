@@ -193,11 +193,7 @@ public class Enemy : MonoBehaviour
         CalculateMovement();
       
     }
-
-    //make enemies move towards the player when they get within two meters
-
     
-
     public int ShieldStrength()
     {
         EnemyShield();

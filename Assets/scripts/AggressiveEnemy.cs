@@ -106,8 +106,6 @@ public class AggressiveEnemy : MonoBehaviour
     public void AggroMovement()
     {
 
-        //_interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
-
         if (_interceptDistance < 5)
             _chaseSpeed += 1;
 

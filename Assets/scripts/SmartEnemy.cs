@@ -5,11 +5,13 @@ using UnityEngine;
 public class SmartEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyShieldPrefab;
+    [SerializeField] private GameObject _smartWeaponPrefab;
     [SerializeField] private GameObject _smartEnemy;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] int _enemyID; // 4 smart enemy
+    private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _playerDistance = 2f;
@@ -37,6 +39,9 @@ public class SmartEnemy : MonoBehaviour
         _isEnemyAlive = true;
         _startx = transform.position.x;
         _direction = Random.Range(0, 2);
+
+        int rng = Random.Range( 0, 70);
+        GenerateShieldIndex(rng);
 
         if (_direction == 0)
             _direction = -1;
@@ -66,8 +71,6 @@ public class SmartEnemy : MonoBehaviour
                 Weapon();
                 return;
         }
-        int rng = Random.Range( 0, 70);
-        GenerateShieldIndex(rng);
     }
 
     // Update is called once per frame
@@ -107,6 +110,8 @@ public class SmartEnemy : MonoBehaviour
     public void Weapon()
     {
 
+
+
     }
     public void EnemyShield()
     {
@@ -128,8 +133,13 @@ public class SmartEnemy : MonoBehaviour
         GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
         _enemyShieldStrength = 1;
         return _enemyShieldLives;
+    }
+    private int EnemyShieldStrength()
+    {
+
         return _enemyLives;
     }
+
     public void ShieldActive(bool state)
     {
         _spriteRenderer.gameObject.SetActive(state);
@@ -148,6 +158,7 @@ public class SmartEnemy : MonoBehaviour
             ShieldActive(false);
             return;
         }
+        EnemyShieldStrength();
         EnemyDeathSequence();
     }
 
