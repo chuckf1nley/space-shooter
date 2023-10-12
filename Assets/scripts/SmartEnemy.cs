@@ -17,6 +17,8 @@ public class SmartEnemy : MonoBehaviour
     private float _playerDistance = 2f;
     private float _startx;
     private float _enemyShieldStrength = 1;
+    private float _canFire = -1f;
+    private float _fireRate = 2f;
     private Player _player;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
@@ -25,6 +27,7 @@ public class SmartEnemy : MonoBehaviour
     private int _enemyShieldLives = 1;
     private int _enemyLives;
 
+    private Vector3 _smartWeaponOffset = new Vector3(-0.004f, -0.05f, 0);
 
 
     // Start is called before the first frame update
@@ -109,12 +112,21 @@ public class SmartEnemy : MonoBehaviour
 
     public void Weapon()
     {
-
-
-
+        if (Time.time > _canFire && _isEnemyAlive == true)
+        {
+            _fireRate = Random.Range(2f, 4f);
+            _canFire = Time.time + _fireRate;
+            GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+            SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
+            for (int i = 0; i < smartWeapons.Length; i++)
+            {
+                smartWeapons[i].AssignSmartWeapon();
+            }
+        }
     }
     public void EnemyShield()
     {
+        EnemyShieldStrength();
         _isEnemyShieldActive = true;
         ShieldActive(true);
         ShieldStrength();
@@ -158,7 +170,6 @@ public class SmartEnemy : MonoBehaviour
             ShieldActive(false);
             return;
         }
-        EnemyShieldStrength();
         EnemyDeathSequence();
     }
 

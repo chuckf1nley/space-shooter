@@ -49,7 +49,7 @@ public class SpawnManager : MonoBehaviour
 
             while (_waveValue > 0)
             {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 40));
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 50));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
@@ -118,7 +118,7 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 4:
-                _xSpawnPos = UnityEngine.Random.Range(18f, 18f);
+                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
                 _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
@@ -176,7 +176,10 @@ public class SpawnManager : MonoBehaviour
         }else if (random >= 20 && random <30)
         {
             return 2; //aggroEnemy
-        }
+        }else if (random >= 30 && random <40)
+        {
+            return 3; //smartEnemy
+        }        
         else
         {
             

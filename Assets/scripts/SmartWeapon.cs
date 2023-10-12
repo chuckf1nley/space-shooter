@@ -17,11 +17,11 @@ public class SmartWeapon : MonoBehaviour
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
         if (_playerDistance <=0 )
         {
-            FireWeapon();
+            AssignSmartWeapon();
         }
     }
 
-    private void FireWeapon()
+    public void AssignSmartWeapon()
     {
 
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
