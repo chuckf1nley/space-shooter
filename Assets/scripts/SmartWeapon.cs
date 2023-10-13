@@ -4,35 +4,62 @@ using UnityEngine;
 
 public class SmartWeapon : MonoBehaviour
 {
-    [SerializeField]private float _speed = 4f;
+    [SerializeField] private float _speed = 4f;
     private Player _player;
-    private float _playerDistance;
+    private float _playerDistance = -1f;
+
+    void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
 
 
-   
+        if(_player != null)
+        {
+            Debug.Log("player is null on smartweapon");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        if (_playerDistance <=0 )
+        if (_playerDistance >= 0)
         {
-            AssignSmartWeapon();
+            Weapon();
         }
     }
 
-    public void AssignSmartWeapon()
+    public void Weapon()
     {
 
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        if (_playerDistance < 5)
+            _speed += 1;
 
-        if(transform.position.y >9f)
+        Vector3 direction = _player.transform.position - transform.position;
+        direction = direction.normalized;
+
+        transform.Translate(Vector3.up * Time.deltaTime);
+        
+        if (transform.position.y > 9f)
         {
-            if(transform.parent != null)
+            if (transform.parent != null)
             {
                 Destroy(transform.parent.gameObject);
             }
-            Destroy(this.gameObject); 
+            Destroy(this.gameObject);
         }
     }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage();
+            }
+        }
+    }
+
 }

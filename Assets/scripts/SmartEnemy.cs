@@ -27,7 +27,7 @@ public class SmartEnemy : MonoBehaviour
     private int _enemyShieldLives = 1;
     private int _enemyLives;
 
-    private Vector3 _smartWeaponOffset = new Vector3(-0.004f, -0.05f, 0);
+    private Vector3 _smartWeaponOffset = new Vector3(0.1f, 0.08f, 0);
 
 
     // Start is called before the first frame update
@@ -51,7 +51,7 @@ public class SmartEnemy : MonoBehaviour
 
         if (_player != null)
         {
-            Debug.Log("Playeer is null");
+            Debug.Log("Player is null");
         }
 
         if (_enemyDeathAnim != null)
@@ -120,7 +120,7 @@ public class SmartEnemy : MonoBehaviour
             SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
             for (int i = 0; i < smartWeapons.Length; i++)
             {
-                smartWeapons[i].AssignSmartWeapon();
+                smartWeapons[i].Weapon();
             }
         }
     }
@@ -144,12 +144,12 @@ public class SmartEnemy : MonoBehaviour
         EnemyShield();
         GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
         _enemyShieldStrength = 1;
-        return _enemyShieldLives;
+        return _enemyLives;
     }
-    private int EnemyShieldStrength()
+    public int EnemyShieldStrength()
     {
 
-        return _enemyLives;
+        return _enemyShieldLives;
     }
 
     public void ShieldActive(bool state)

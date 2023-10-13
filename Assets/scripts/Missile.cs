@@ -7,12 +7,12 @@ public class Missile : MonoBehaviour
 
     [SerializeField] private float _speed = 12f;
     private bool _isEnemyMissile;
-    BoxCollider2D _missileCollider;
     private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 7.5f;
     private Animator _missileExplosion;
-    private Player _player;
+    private BoxCollider2D _missileCollider;
     private Enemy _enemy;
+    private Player _player;
 
     [SerializeField] private float _explosionForce = 3.5f;
     [SerializeField] private float _explosionRadius = 3.5f;

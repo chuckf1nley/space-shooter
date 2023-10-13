@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private float _enemyShieldStrength = 1f;
+    [SerializeField] private float _enemyShieldStrength = 1;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public float _playerProx = 2f;
     private Missile _missile;
@@ -95,8 +95,9 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void FireLaser()
+    public void FireLaser()
     {
+        LaserOffSet();
 
         if (Time.time > _canfire && _isEnemyRight == true && _isEnemyAlive == true)
         {
@@ -110,9 +111,20 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    public void LaserOffSet()
+    {
+        if (_canFire == true)
+        {
+            Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+            Vector3 _laserPos = transform.TransformPoint(_laserOffset);
+            GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
+            _laser.tag = "Enemy Laser";
+        }
+
+    }
 
 
-    private void FireMissile()
+    public void FireMissile()
     {
         FireMissileCoroutine();
 
@@ -142,7 +154,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void CalculateMovement()
+    public void CalculateMovement()
     {
         if (transform.position.y < -7.5f)
         {
@@ -153,7 +165,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void RegularEnemyMovement()
+    public void RegularEnemyMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -173,7 +185,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    private void FastEnemyMovement()
+    public  void FastEnemyMovement()
     {
         transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
 
