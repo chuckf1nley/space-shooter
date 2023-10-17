@@ -197,7 +197,7 @@ public class AggressiveEnemy : MonoBehaviour
             {
                 if (_player != null)
                 {
-                    _player.Damage();
+                    _player.AddScore(10);
                 }
                 Damage();
             }
@@ -205,15 +205,15 @@ public class AggressiveEnemy : MonoBehaviour
             {
                 if (_player != null)
                 {
-                    _player.Damage();
+                    _player.AddScore(10);
                 }
                 Damage();
             }
-            if (other.CompareTag("Missile"))
+            if (other.CompareTag("PlayerMissile"))
             {
                 if (_player != null)
                 {
-                    _player.Damage();
+                    _player.AddScore(10);
                 }
                 Damage();
             }

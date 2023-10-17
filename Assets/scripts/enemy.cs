@@ -306,7 +306,7 @@ public class Enemy : MonoBehaviour
                 other.GetComponent<Shield>().Damage();
                 Damage();
             }
-            if (other.CompareTag("Missile"))
+            if (other.CompareTag("PlayerMissile"))
             {
                 Destroy(other.gameObject);
                 if (_player != null)

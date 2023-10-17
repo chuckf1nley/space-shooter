@@ -191,36 +191,39 @@ public class SmartEnemy : MonoBehaviour
     {
         if (_isEnemyAlive == true)
         {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+            if (other.CompareTag("Player"))
             {
-                _player.Damage();
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    _player.Damage();
+                }
+                Damage();
             }
-            Damage();
-        }
-        if (other.CompareTag("Laser"))
-        {
-            if (_player != null)
+            if (other.CompareTag("Laser"))
             {
-                _player.Damage();
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+                Damage();
             }
-            Damage();
-        }
-        if (other.CompareTag("Shield"))
-        {
-            if (_player != null)
+            if (other.CompareTag("Shield"))
             {
-                _player.Damage();
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+                Damage();
             }
-            Damage();
-        }
-        if (other.CompareTag("Missile"))
-        {
-            if (_player != null)
+            if (other.CompareTag("PlayerMissile"))
             {
-                _player.Damage();
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
+                Damage();
             }
-            Damage();
         }
     }
 }
