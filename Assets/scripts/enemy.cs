@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     private int _direction;
     private SpawnManager _spawnManager;
 
-    private Vector3 _laserOffset = new Vector3(.008f, -.06f, 0);
+    private Vector3 _laserOffset = new Vector3(.01f, -.08f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
 
     // Start is called before the first frame update
@@ -47,6 +47,8 @@ public class Enemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
+
+        Missile missile = GetComponent<Missile>();
 
         _isEnemyRight = true;
         _isFastEnemy = true;

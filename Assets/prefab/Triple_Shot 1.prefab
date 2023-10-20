@@ -49,7 +49,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.036806107, y: 0.24537441}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -60,7 +60,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.6930828, y: 1.687048}
   m_EdgeRadius: 0
 --- !u!50 &4839746921234294545
 Rigidbody2D:
@@ -95,12 +95,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.42
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.22
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -157,12 +169,24 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.43
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.22
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -219,12 +243,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.22
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2587265962172124626, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
       propertyPath: m_LocalPosition.z

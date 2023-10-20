@@ -38,6 +38,8 @@ public class SmartEnemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
+        Player player = GetComponent<Player>();
+        SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
 
         _isEnemyAlive = true;
         _startx = transform.position.x;
@@ -71,19 +73,28 @@ public class SmartEnemy : MonoBehaviour
         {
 
             default:
-                Weapon();
+                FireWeapon();
                 return;
         }
+
     }
 
     // Update is called once per frame
-    void Update()
+    void  Update()
     {
-        _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        var mc = new SmartEnemy();
+        Transform transform1 = mc._player.transform;
+        Vector3 direction = (transform1.position - transform.position).normalized * _speed;
+        if (direction.magnitude > transform1.position.magnitude + 2)
+        {
+            GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
+            _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        }
         if (_playerDistance > 0)
         {
-            Weapon();
+            FireWeapon();
             Movement();
         }
         else
@@ -110,13 +121,17 @@ public class SmartEnemy : MonoBehaviour
         }
     }
 
-    public void Weapon()
+    public void FireWeapon()
     {
+
+        GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+        Instantiate(_smartWeaponPrefab, transform.position, 0, 2);
+
+
         if (Time.time > _canFire && _isEnemyAlive == true)
         {
             _fireRate = Random.Range(2f, 4f);
             _canFire = Time.time + _fireRate;
-            GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
             SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
             for (int i = 0; i < smartWeapons.Length; i++)
             {
@@ -124,6 +139,12 @@ public class SmartEnemy : MonoBehaviour
             }
         }
     }
+
+    private void Instantiate(GameObject smartWeaponPrefab, Vector3 position, int v1, int v2)
+    {
+        
+    }
+
     public void EnemyShield()
     {
         EnemyShieldStrength();

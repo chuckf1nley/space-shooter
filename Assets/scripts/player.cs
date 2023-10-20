@@ -72,6 +72,8 @@ public class Player : MonoBehaviour
         _currentMissiles = _missileMaxAmmo;
         _currentLives = _maxLives;
 
+        Missile missile = GetComponent<Missile>();
+
         if (_spawnManager == null)
         {
             Debug.Log(" The Spawn Manager is NULL.");
