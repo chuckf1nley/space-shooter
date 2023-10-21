@@ -14,15 +14,16 @@ public class SmartEnemy : MonoBehaviour
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _playerDistance = 2f;
+    private float _playerVelocity = 2f;
     private float _startx;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
     private float _fireRate = 2f;
-    private Player _player;
+    private float _enemyDistance;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
+    private Player _player;
     private int _direction;
     private int _enemyShieldLives = 1;
     private int _enemyLives;
@@ -82,17 +83,7 @@ public class SmartEnemy : MonoBehaviour
     // Update is called once per frame
     void  Update()
     {
-        var mc = new SmartEnemy();
-        Transform transform1 = mc._player.transform;
-        Vector3 direction = (transform1.position - transform.position).normalized * _speed;
-        if (direction.magnitude > transform1.position.magnitude + 2)
-        {
-            GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
-            _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        }
-        if (_playerDistance > 0)
+        if (_playerVelocity > 0)
         {
             FireWeapon();
             Movement();
@@ -100,6 +91,16 @@ public class SmartEnemy : MonoBehaviour
         else
         {
             Movement();
+        }
+
+        var mc = new SmartEnemy();
+        Transform transform1 = mc._player.transform;
+        Vector3 direction = (transform1.position - transform.position).normalized * _speed;
+        if (direction.magnitude > transform1.position.magnitude + 2)
+        {
+            GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
+            _playerVelocity = Vector3.Distance(transform.position, _player.transform.position);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
     }
 
@@ -123,7 +124,13 @@ public class SmartEnemy : MonoBehaviour
 
     public void FireWeapon()
     {
+        //python def SmartWeapon(playerPosition, _playerVelocity, _enemyPosition);
+        //_enemyDistance = calculateDistance(_enemyPosition, playerPosition);
 
+        //if (_enemyDistance <= shootingRange: predictedPosition = calculatePredictedPosition(_playerPosition, _playerVelocity, _enemyDistance))
+        //{ 
+        // aimDirection = normalize(predictedPosition - _playerPosition) * -1 SmartEnemy.FireWeapon(aimDirection);
+        //}
         GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
         Instantiate(_smartWeaponPrefab, transform.position, 0, 2);
 

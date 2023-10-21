@@ -74,7 +74,7 @@ public class AggressiveEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _interceptDistance = Vector3.Distance(transform.position,  _player.transform.position);
+        _interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (_interceptDistance > 4)
         {

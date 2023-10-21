@@ -6,16 +6,21 @@ public class SmartWeapon : MonoBehaviour
 {
     [SerializeField] private float _speed = 4f;
     private Player _player;
+    private SmartEnemy _smartEnemy;
     private float _playerDistance = -1f;
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-
+        _smartEnemy = GameObject.Find("Smart Enemy").GetComponent<SmartEnemy>();
 
         if(_player != null)
         {
             Debug.Log("player is null on smartweapon");
+        }
+        if(_smartEnemy != null)
+        {
+            Debug.Log("Smart Enemy is null");
         }
     }
 
@@ -32,7 +37,7 @@ public class SmartWeapon : MonoBehaviour
     public void Weapon()
     {
 
-        if (_playerDistance < 5)
+        if (_playerDistance > 5)
             _speed += 1;
 
         Vector3 direction = _player.transform.position - transform.position;
