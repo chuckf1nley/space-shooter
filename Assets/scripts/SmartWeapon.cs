@@ -7,7 +7,7 @@ public class SmartWeapon : MonoBehaviour
     [SerializeField] private float _speed = 4f;
     private Player _player;
     private SmartEnemy _smartEnemy;
-    private float _playerDistance = -1f;
+    private float _playerDistance;
 
     void Start()
     {
@@ -43,7 +43,7 @@ public class SmartWeapon : MonoBehaviour
         Vector3 direction = _player.transform.position - transform.position;
         direction = direction.normalized;
 
-        transform.Translate(Vector3.up * Time.deltaTime);
+        transform.Translate(Vector3.up * _speed * Time.deltaTime);
         
         if (transform.position.y > 9f)
         {

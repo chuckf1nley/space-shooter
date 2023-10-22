@@ -19,6 +19,7 @@ public class SmartEnemy : MonoBehaviour
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
     private float _fireRate = 2f;
+    private float _playerDistance;
     private float _enemyDistance;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
@@ -83,7 +84,10 @@ public class SmartEnemy : MonoBehaviour
     // Update is called once per frame
     void  Update()
     {
-        if (_playerVelocity > 0)
+        _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
+        _enemyDistance = Vector3.Distance(transform.position, _player.transform.position);
+
+        if (_playerDistance < _enemyDistance)
         {
             FireWeapon();
             Movement();
@@ -93,10 +97,8 @@ public class SmartEnemy : MonoBehaviour
             Movement();
         }
 
-        var mc = new SmartEnemy();
-        Transform transform1 = mc._player.transform;
-        Vector3 direction = (transform1.position - transform.position).normalized * _speed;
-        if (direction.magnitude > transform1.position.magnitude + 2)
+        Vector3 direction = (transform.position - transform.position).normalized * _speed;
+        if (direction.magnitude > transform.position.magnitude + 2)
         {
             GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
             _playerVelocity = Vector3.Distance(transform.position, _player.transform.position);
@@ -124,16 +126,8 @@ public class SmartEnemy : MonoBehaviour
 
     public void FireWeapon()
     {
-        //python def SmartWeapon(playerPosition, _playerVelocity, _enemyPosition);
-        //_enemyDistance = calculateDistance(_enemyPosition, playerPosition);
-
-        //if (_enemyDistance <= shootingRange: predictedPosition = calculatePredictedPosition(_playerPosition, _playerVelocity, _enemyDistance))
-        //{ 
-        // aimDirection = normalize(predictedPosition - _playerPosition) * -1 SmartEnemy.FireWeapon(aimDirection);
-        //}
+       
         GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
-        Instantiate(_smartWeaponPrefab, transform.position, 0, 2);
-
 
         if (Time.time > _canFire && _isEnemyAlive == true)
         {
@@ -147,10 +141,6 @@ public class SmartEnemy : MonoBehaviour
         }
     }
 
-    private void Instantiate(GameObject smartWeaponPrefab, Vector3 position, int v1, int v2)
-    {
-        
-    }
 
     public void EnemyShield()
     {
