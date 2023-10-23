@@ -56,16 +56,16 @@ public class SmartEnemy : MonoBehaviour
         if (_direction == 0)
             _direction = -1;
 
-        if (_player != null)
+        if (_player == null)
         {
             Debug.Log("Player is null");
         }
 
-        if (_enemyDeathAnim != null)
+        if (_enemyDeathAnim == null)
         {
             Debug.Log("Animator is null");
         }
-        if (_audioSource != null)
+        if (_audioSource == null)
         {
             Debug.Log("AudioSource is null");
         }
@@ -74,35 +74,27 @@ public class SmartEnemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
-        switch (_enemyID)
-        {
-
-            default:
-                FacePlayer();
-                return;
-        }
 
     }
 
     // Update is called once per frame
     void  Update()
     {
+        CalculateMovement();
         _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-        _distanceFrom = Vector3.Distance(transform.position, _player.transform.position);
 
-            CalculateMovement();
         if (_playerDistance < _distanceFrom)
         {
             FacePlayer();
         }
-       
 
-        Vector3 direction = (transform.position - transform.position).normalized * _speed;
-        if (direction.magnitude > transform.position.magnitude + 2)
-        {
-            GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        }
+
+        //Vector3 direction = (transform.position - transform.position).normalized * _speed;
+        //if (direction.magnitude > transform.position.magnitude + 2)
+        //{
+        //    GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
+        //    transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        //}
     }
 
     public void CalculateMovement()
@@ -115,8 +107,6 @@ public class SmartEnemy : MonoBehaviour
             transform.position = new Vector3(random, 9f, 0);
         }
     }
-
-    
 
     public void FacePlayer()
     {
