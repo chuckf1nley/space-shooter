@@ -10,17 +10,19 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] int _enemyID; // 4 smart enemy
+    [SerializeField] private int _enemyID; // 4 smart enemy
+    [SerializeField] private float _fireRate = 2f;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _rotationModifier;
+    [SerializeField] private float _distanceFrom;
+    Quaternion _startRotaion;
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _playerVelocity = 2f;
     private float _startx;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
-    private float _fireRate = 2f;
     private float _playerDistance;
-    private float _enemyDistance;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
@@ -42,6 +44,7 @@ public class SmartEnemy : MonoBehaviour
         _enemyDeathAnim = transform.GetComponent<Animator>();
         Player player = GetComponent<Player>();
         SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
+        _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
         _startx = transform.position.x;
@@ -75,7 +78,7 @@ public class SmartEnemy : MonoBehaviour
         {
 
             default:
-                FireWeapon();
+                FacePlayer();
                 return;
         }
 
@@ -85,37 +88,26 @@ public class SmartEnemy : MonoBehaviour
     void  Update()
     {
         _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-        _enemyDistance = Vector3.Distance(transform.position, _player.transform.position);
+        _distanceFrom = Vector3.Distance(transform.position, _player.transform.position);
 
-        if (_playerDistance < _enemyDistance)
+            CalculateMovement();
+        if (_playerDistance < _distanceFrom)
         {
-            FireWeapon();
-            Movement();
+            FacePlayer();
         }
-        else
-        {
-            Movement();
-        }
+       
 
         Vector3 direction = (transform.position - transform.position).normalized * _speed;
         if (direction.magnitude > transform.position.magnitude + 2)
         {
             GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
-            _playerVelocity = Vector3.Distance(transform.position, _player.transform.position);
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
     }
 
-    public void Movement()
+    public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if (transform.position.x > _startx + 2)
-            _direction = -1;
-        else if (transform.position.x < _startx - 2)
-        {
-            _direction = 1;
-        }
 
         if (transform.position.y < -7.5)
         {
@@ -124,24 +116,51 @@ public class SmartEnemy : MonoBehaviour
         }
     }
 
-    public void FireWeapon()
-    {
-       
-        GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+    
 
-        if (Time.time > _canFire && _isEnemyAlive == true)
+    public void FacePlayer()
+    {
+
+
+        if (_player != null)
         {
-            _fireRate = Random.Range(2f, 4f);
-            _canFire = Time.time + _fireRate;
-            SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
-            for (int i = 0; i < smartWeapons.Length; i++)
+            if (transform.position.y < _player.transform.position.y - 3f)
+                _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
+
+            if (_playerDistance < _distanceFrom)
             {
-                smartWeapons[i].Weapon();
+                _speed = 0f;
+                Vector3 vectorToTarget = _player.transform.position - transform.position;
+                float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - _rotationModifier;
+                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                if (Time.time > _canFire)
+                {
+                    _canFire = Time.time + _fireRate;
+                    Instantiate(_smartWeaponPrefab, transform.position, quaternion);
+                    GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                    SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
+                    for (int i = 0; i < smartWeapons.Length; i++)
+                    {
+                        smartWeapons[i].Weapon();
+                    }
+
+                    if(_playerDistance > _distanceFrom)
+                    {
+                        transform.rotation = _startRotaion;
+                        _speed = 3f;
+                        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+                        if(transform.position.y <= -7f)
+                        {
+                            Destroy(this.gameObject);
+                        }
+                    }
+                }
+
             }
         }
     }
-
-
     public void EnemyShield()
     {
         EnemyShieldStrength();

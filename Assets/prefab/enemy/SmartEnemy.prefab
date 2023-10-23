@@ -143,6 +143,10 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 0}
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyID: 3
+  _rotationModifier: -90
+  _fireRate: 2
+  _rotationSpeed: 50
+  _distanceFrom: 6
 --- !u!61 &6073809635485648756
 BoxCollider2D:
   m_ObjectHideFlags: 0
