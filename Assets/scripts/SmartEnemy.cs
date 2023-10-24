@@ -19,7 +19,7 @@ public class SmartEnemy : MonoBehaviour
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _startx;
+    private float _playerx;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
     private float _playerDistance = -1f;
@@ -47,7 +47,7 @@ public class SmartEnemy : MonoBehaviour
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
-        _startx = transform.position.x;
+        _playerx = transform.position.x;
         _direction = Random.Range(0, 2);
 
         int rng = Random.Range( 0, 70);
@@ -83,17 +83,22 @@ public class SmartEnemy : MonoBehaviour
         CalculateMovement();
         
 
-        if (_playerDistance < _distanceFrom)
-        {
-            FacePlayer();
-        }
+        //if (_playerDistance < _distanceFrom)
+        //{
+        //    FacePlayer();
+        //}
         //_playerDistance = Vector3.Distance(transform.position, _player.transform.position);       
     }     
 
     public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
+        if(transform.position.x > _playerx)
+        {
+            FacePlayer();
+        }
+        //if (transform.position.x > _startX + 4)
+        //    _direction = -1;
         if (transform.position.y < -7.5)
         {
             float random = Random.Range(-18f, 18f);
