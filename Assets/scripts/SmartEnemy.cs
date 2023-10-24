@@ -10,7 +10,7 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private int _enemyID; // 4 smart enemy
+    [SerializeField] private int _enemyID; // 3 smart enemy
     [SerializeField] private float _fireRate = 2f;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationModifier;
@@ -22,7 +22,7 @@ public class SmartEnemy : MonoBehaviour
     private float _startx;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
-    private float _playerDistance;
+    private float _playerDistance = -1f;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
@@ -81,21 +81,14 @@ public class SmartEnemy : MonoBehaviour
     void  Update()
     {
         CalculateMovement();
-        _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
+        
 
         if (_playerDistance < _distanceFrom)
         {
             FacePlayer();
         }
-
-
-        //Vector3 direction = (transform.position - transform.position).normalized * _speed;
-        //if (direction.magnitude > transform.position.magnitude + 2)
-        //{
-        //    GetComponent<Rigidbody2D>().velocity = direction * Time.deltaTime;
-        //    transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        //}
-    }
+        //_playerDistance = Vector3.Distance(transform.position, _player.transform.position);       
+    }     
 
     public void CalculateMovement()
     {
@@ -112,7 +105,7 @@ public class SmartEnemy : MonoBehaviour
     {
 
 
-        if (_player != null)
+        if (_isEnemyAlive == true)
         {
             if (transform.position.y < _player.transform.position.y - 3f)
                 _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
@@ -126,22 +119,22 @@ public class SmartEnemy : MonoBehaviour
 
                 if (Time.time > _canFire)
                 {
-                    _canFire = Time.time + _fireRate;
                     Instantiate(_smartWeaponPrefab, transform.position, quaternion);
-                    GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
-                    SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
-                    for (int i = 0; i < smartWeapons.Length; i++)
-                    {
-                        smartWeapons[i].Weapon();
-                    }
+                    _canFire = Time.time + _fireRate;
+                    //GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                  //  SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
+                    //for (int i = 0; i < smartWeapons.Length; i++)
+                    //{
+                        //smartWeapons[i].Weapon();
+                    //}
 
-                    if(_playerDistance > _distanceFrom)
+                    if (_playerDistance > _distanceFrom)
                     {
                         transform.rotation = _startRotaion;
                         _speed = 3f;
                         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-                        if(transform.position.y <= -7f)
+                        if (transform.position.y <= -7f)
                         {
                             Destroy(this.gameObject);
                         }
@@ -160,7 +153,7 @@ public class SmartEnemy : MonoBehaviour
     }
     public void GenerateShieldIndex(int random)
     {
-        if (_enemyID == 4)
+        if (_enemyID == 3)
         {
             if (random >= 60 && random < 70)
                 ShieldActive(true);
