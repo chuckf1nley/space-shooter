@@ -19,7 +19,7 @@ public class SmartEnemy : MonoBehaviour
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _playerx;
+    private float _playerY;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
     private float _playerDistance = -1f;
@@ -47,7 +47,7 @@ public class SmartEnemy : MonoBehaviour
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
-        _playerx = transform.position.x;
+        _playerY = transform.position.y;
         _direction = Random.Range(0, 2);
 
         int rng = Random.Range( 0, 70);
@@ -81,24 +81,22 @@ public class SmartEnemy : MonoBehaviour
     void  Update()
     {
         CalculateMovement();
-        
 
-        //if (_playerDistance < _distanceFrom)
-        //{
-        //    FacePlayer();
-        //}
-        //_playerDistance = Vector3.Distance(transform.position, _player.transform.position);       
+
+        if (_playerY < _distanceFrom)
+        {
+            FacePlayer();
+        }
+       // _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
     }     
 
     public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if(transform.position.x > _playerx)
+        if(transform.position.y > _playerY + 2)
         {
             FacePlayer();
         }
-        //if (transform.position.x > _startX + 4)
-        //    _direction = -1;
         if (transform.position.y < -7.5)
         {
             float random = Random.Range(-18f, 18f);
@@ -108,16 +106,13 @@ public class SmartEnemy : MonoBehaviour
 
     public void FacePlayer()
     {
-
-
         if (_isEnemyAlive == true)
         {
             if (transform.position.y < _player.transform.position.y - 3f)
                 _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
 
-            if (_playerDistance < _distanceFrom)
+            if (_playerY < _distanceFrom)
             {
-                _speed = 0f;
                 Vector3 vectorToTarget = _player.transform.position - transform.position;
                 float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - _rotationModifier;
                 Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -126,23 +121,19 @@ public class SmartEnemy : MonoBehaviour
                 {
                     Instantiate(_smartWeaponPrefab, transform.position, quaternion);
                     _canFire = Time.time + _fireRate;
-                    //GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
-                  //  SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
-                    //for (int i = 0; i < smartWeapons.Length; i++)
-                    //{
-                        //smartWeapons[i].Weapon();
-                    //}
-
-                    if (_playerDistance > _distanceFrom)
+                    GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                    SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
+                    for (int i = 0; i < smartWeapons.Length; i++)
                     {
-                        transform.rotation = _startRotaion;
-                        _speed = 3f;
-                        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                        smartWeapons[i].Weapon();
+                    }
+                    transform.rotation = _startRotaion;
+                    _speed = 3f;
+                    transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-                        if (transform.position.y <= -7f)
-                        {
-                            Destroy(this.gameObject);
-                        }
+                    if (transform.position.y <= -7f)
+                    {
+                        Destroy(this.gameObject);
                     }
                 }
 

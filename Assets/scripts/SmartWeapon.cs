@@ -44,13 +44,13 @@ public class SmartWeapon : MonoBehaviour
     public void Weapon()
     {
             transform.Translate(Vector3.up * _speed * Time.deltaTime);
-            if (_interceptDistance <= 4)
-            {
-                Vector3 direction = _player.transform.position - transform.position;
-                direction = direction.normalized;
+        if (_interceptDistance <= 4)
+        {
+            Vector3 direction = _player.transform.position - transform.position;
+            direction = direction.normalized;
 
-                transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-            }
+            transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+        }
 
 
         if (transform.position.y > 9f)

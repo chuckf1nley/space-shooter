@@ -143,11 +143,8 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
-
         if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
         if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-
-
 
     }
 
@@ -155,7 +152,6 @@ public class Player : MonoBehaviour
     {
         _thrusterText.text = "thruster active";
     }
-
 
     IEnumerator thrusterPowerDownRoutine()
     {

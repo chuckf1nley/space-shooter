@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4505595831716607769}
   - component: {fileID: 813517602146589155}
   - component: {fileID: 7305564612788131461}
-  - component: {fileID: 25044732320059992}
   m_Layer: 0
   m_Name: EnemyShield
   m_TagString: EnemyShield
@@ -106,24 +105,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &25044732320059992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716696902119978974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79dc5d162489aec4ba294996831299b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 4
-  _laserPrefab: {fileID: 0}
-  _missilePrefab: {fileID: 0}
-  _enemyShield: {fileID: 0}
-  _enemyShieldVisualizer: {fileID: 1716696902119978974}
-  _enemyRight: {fileID: 0}
-  _fastEnemy: {fileID: 0}
-  _enemyID: 0
-  _audioClip: {fileID: 0}
