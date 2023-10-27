@@ -25,6 +25,7 @@ public class SmartEnemy : MonoBehaviour
     private float _playerDistance = -1f;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
+    private bool _canEnemyFire;
     private SpawnManager _spawnManager;
     private Player _player;
     private int _direction;
@@ -47,7 +48,7 @@ public class SmartEnemy : MonoBehaviour
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
-        _playerY = transform.position.y;
+        _playerY = _player.transform.position.y;
         _direction = Random.Range(0, 2);
 
         int rng = Random.Range( 0, 70);
@@ -82,18 +83,12 @@ public class SmartEnemy : MonoBehaviour
     {
         CalculateMovement();
 
-
-        if (_playerY < _distanceFrom)
-        {
-            FacePlayer();
-        }
-       // _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
     }     
 
     public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if(transform.position.y > _playerY + 2)
+        if(transform.position.y > _playerY -2)
         {
             FacePlayer();
         }
@@ -108,38 +103,43 @@ public class SmartEnemy : MonoBehaviour
     {
         if (_isEnemyAlive == true)
         {
-            if (transform.position.y < _player.transform.position.y - 3f)
-                _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
+            
 
-            if (_playerY < _distanceFrom)
+            if (Time.time > _canFire)
             {
-                Vector3 vectorToTarget = _player.transform.position - transform.position;
-                float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - _rotationModifier;
-                Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.forward);
-
-                if (Time.time > _canFire)
+                Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                _canFire = Time.time + _fireRate;
+                GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
+                for (int i = 0; i < smartWeapons.Length; i++)
                 {
-                    Instantiate(_smartWeaponPrefab, transform.position, quaternion);
-                    _canFire = Time.time + _fireRate;
-                    GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
-                    SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
-                    for (int i = 0; i < smartWeapons.Length; i++)
-                    {
-                        smartWeapons[i].Weapon();
-                    }
-                    transform.rotation = _startRotaion;
-                    _speed = 3f;
-                    transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-                    if (transform.position.y <= -7f)
-                    {
-                        Destroy(this.gameObject);
-                    }
+                    smartWeapons[i].Weapon();
                 }
+                transform.rotation = _startRotaion;
+                _speed = 3f;
+                transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
+                if (transform.position.y <= -7f)
+                {
+                    Destroy(this.gameObject);
+                }
+                FireSmartWeaponCoroutine();
             }
+
         }
     }
+    IEnumerator FireSmartWeaponCoroutine()
+    {
+        while (_canEnemyFire == true)
+        {
+            Instantiate(_smartWeaponPrefab, transform.position + _smartWeaponOffset, Quaternion.identity);
+            Vector3 _smartWeaponPos = transform.TransformPoint(_smartWeaponOffset);
+            GameObject _SmartWeapon = Instantiate(_smartWeaponPrefab, _smartWeaponPos, this.transform.rotation);
+            _smartWeapon.tag = "Smart Weapon";
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
+        }
+    }
+
     public void EnemyShield()
     {
         EnemyShieldStrength();

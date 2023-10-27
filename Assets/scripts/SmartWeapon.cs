@@ -28,15 +28,10 @@ public class SmartWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (_isBehindPlayer == true)
-        //{
             if (_playerDistance >= -1 )
             {
                 Weapon();
             }
-
-            // _playerDistance = Vector3.Distance(transform.position, _player.transform.position);
-        //}
     }
 
 
@@ -44,13 +39,10 @@ public class SmartWeapon : MonoBehaviour
     public void Weapon()
     {
             transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        if (_interceptDistance <= 4)
-        {
-            Vector3 direction = _player.transform.position - transform.position;
+            Vector3 direction = transform.position - _player.transform.position;
             direction = direction.normalized;
 
             transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-        }
 
 
         if (transform.position.y > 9f)
@@ -60,7 +52,6 @@ public class SmartWeapon : MonoBehaviour
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
-           // Destroy(GetComponent<Collider2D>());
         }
         if(transform.position.x > 18f)
         {
