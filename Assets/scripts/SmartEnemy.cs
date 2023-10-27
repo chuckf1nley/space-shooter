@@ -88,7 +88,7 @@ public class SmartEnemy : MonoBehaviour
     public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if(transform.position.y > _playerY -2)
+        if(transform.position.y > _playerY +0)
         {
             FacePlayer();
         }

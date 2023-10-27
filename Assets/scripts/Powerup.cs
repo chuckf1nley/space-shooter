@@ -43,14 +43,6 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-
-                //if (CompareTag("Laser"))
-                //{
-                //    Laser laser = other.transform.GetCompopnent<Laser>();
-                //    SmartWeapon smartWeapon = other.transform.GetComponent<SmartWeapon>();
-                //    Destroy(this.gameObject);
-
-
                     switch (_powerupID)
                     {
                         case 0:
@@ -83,10 +75,15 @@ public class Powerup : MonoBehaviour
 
                     Destroy(this.gameObject);
 
-                //}
             }
 
         }
+        if (other.CompareTag("Laser"))
+        {
+            Laser laser = other.transform.GetComponent<Laser>();
+            SmartWeapon _smartWeapon = other.transform.GetComponent<SmartWeapon>();
+            Destroy(this.gameObject);
 
+        }
     }
 }

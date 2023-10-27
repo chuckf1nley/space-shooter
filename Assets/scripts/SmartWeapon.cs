@@ -18,6 +18,7 @@ public class SmartWeapon : MonoBehaviour
         _isPlayerAlive = true;
         _isBehindPlayer = false;
 
+
         if(_player == null)
         {
             Debug.Log("player is null on smartweapon");
