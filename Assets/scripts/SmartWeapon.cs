@@ -10,13 +10,11 @@ public class SmartWeapon : MonoBehaviour
     private float _playerDistance;
     private float _interceptDistance;
     private bool _isPlayerAlive;
-    private bool _isBehindPlayer;
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _isPlayerAlive = true;
-        _isBehindPlayer = false;
 
 
         if(_player == null)

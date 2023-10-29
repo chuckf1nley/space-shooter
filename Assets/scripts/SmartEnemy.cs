@@ -15,6 +15,7 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationModifier;
     [SerializeField] private float _distanceFrom;
+    [SerializeField] private float rangeX = 1f;
     Quaternion _startRotaion;
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
@@ -25,12 +26,14 @@ public class SmartEnemy : MonoBehaviour
     private float _playerDistance = -1f;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
-    private bool _canEnemyFire;
+    private bool _canEnemyFire = true;
+    private bool _isBehindPlayer = false;
     private SpawnManager _spawnManager;
     private Player _player;
     private int _direction;
     private int _enemyShieldLives = 1;
     private int _enemyLives;
+    private Transform player;
 
     private Vector3 _smartWeaponOffset = new Vector3(0.1f, 0.08f, 0);
 
@@ -38,17 +41,17 @@ public class SmartEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-        Player player = GetComponent<Player>();
         SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
-        _playerY = _player.transform.position.y;
+        _isBehindPlayer = false;
         _direction = Random.Range(0, 2);
 
         int rng = Random.Range( 0, 70);
@@ -75,6 +78,7 @@ public class SmartEnemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
+        StartCoroutine(PlayerInRange());
 
     }
 
@@ -88,24 +92,22 @@ public class SmartEnemy : MonoBehaviour
     public void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if(transform.position.y > _playerY +0)
-        {
-            FacePlayer();
-        }
+       
         if (transform.position.y < -7.5)
         {
             float random = Random.Range(-18f, 18f);
             transform.position = new Vector3(random, 9f, 0);
         }
+
     }
 
-    public void FacePlayer()
+    public void FireWeapon()
     {
         if (_isEnemyAlive == true)
         {
             
 
-            if (Time.time > _canFire)
+            if (Time.time > _canFire && _isEnemyAlive && _isBehindPlayer)
             {
                 Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
                 _canFire = Time.time + _fireRate;
@@ -138,6 +140,30 @@ public class SmartEnemy : MonoBehaviour
             _smartWeapon.tag = "Smart Weapon";
             yield return new WaitForSeconds(Random.Range(2f, 4f));
         }
+    }
+
+    private IEnumerator PlayerInRange()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.5f);
+        while(true)
+        {
+            float distanceX = Mathf.Abs(player.position.x - transform.position.x);
+
+            if(distanceX <= rangeX && transform.position.y < player.position.y)
+            {
+                if(_isBehindPlayer)
+                {
+                    _isBehindPlayer = true;
+                    FireWeapon();
+                }
+            }
+            else 
+            {
+                if (_isBehindPlayer)
+                    _isBehindPlayer = false;
+            } yield return wait;
+        }
+
     }
 
     public void EnemyShield()

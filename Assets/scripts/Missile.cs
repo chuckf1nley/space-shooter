@@ -13,6 +13,8 @@ public class Missile : MonoBehaviour
     private BoxCollider2D _missileCollider;
     private Enemy _enemy;
     private Player _player;
+    private Transform Enemy;
+    private Transform Player;
 
     [SerializeField] private float _explosionForce = 3.5f;
     [SerializeField] private float _explosionRadius = 3.5f;
@@ -26,6 +28,9 @@ public class Missile : MonoBehaviour
         _missileExplosion = GetComponent<Animator>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
+
     }
 
 
