@@ -252,6 +252,7 @@ MonoBehaviour:
   _rotationSpeed: 50
   _rotationModifier: -90
   _distanceFrom: 3
+  rangeX: 10
 --- !u!61 &6073809635485648756
 BoxCollider2D:
   m_ObjectHideFlags: 0

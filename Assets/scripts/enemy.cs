@@ -35,20 +35,22 @@ public class Enemy : MonoBehaviour
     private int _direction;
     private SpawnManager _spawnManager;
 
-    private Vector3 _laserOffset = new Vector3(-.01f, -.04f, 0);
+    private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
 
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
-        Missile missile = GetComponent<Missile>();
 
         _isEnemyRight = true;
         _isFastEnemy = true;
@@ -124,7 +126,6 @@ public class Enemy : MonoBehaviour
         }
 
     }
-
 
     public void FireMissile()
     {

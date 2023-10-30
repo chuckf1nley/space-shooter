@@ -15,7 +15,7 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _rotationModifier;
     [SerializeField] private float _distanceFrom;
-    [SerializeField] private float rangeX = 1f;
+    [SerializeField] private float rangeX = 10f;
     Quaternion _startRotaion;
     private SmartWeapon _smartWeapon;
     private Animator _enemyDeathAnim;
@@ -86,7 +86,7 @@ public class SmartEnemy : MonoBehaviour
     void  Update()
     {
         CalculateMovement();
-
+        FireWeapon();
     }     
 
     public void CalculateMovement()
@@ -105,11 +105,11 @@ public class SmartEnemy : MonoBehaviour
     {
         if (_isEnemyAlive == true)
         {
-            
+            Debug.Log("Smart enemy is alive");
 
             if (Time.time > _canFire && _isEnemyAlive && _isBehindPlayer)
             {
-                Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                Debug.Log("Smart Enemy firing");
                 _canFire = Time.time + _fireRate;
                 GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
                 SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
@@ -125,7 +125,7 @@ public class SmartEnemy : MonoBehaviour
                 {
                     Destroy(this.gameObject);
                 }
-                FireSmartWeaponCoroutine();
+                //FireSmartWeaponCoroutine();
             }
 
         }
@@ -148,14 +148,12 @@ public class SmartEnemy : MonoBehaviour
         while(true)
         {
             float distanceX = Mathf.Abs(player.position.x - transform.position.x);
+                       
 
             if(distanceX <= rangeX && transform.position.y < player.position.y)
             {
-                if(_isBehindPlayer)
-                {
-                    _isBehindPlayer = true;
-                    FireWeapon();
-                }
+                Debug.Log("Behund Player");
+                _isBehindPlayer = true;
             }
             else 
             {

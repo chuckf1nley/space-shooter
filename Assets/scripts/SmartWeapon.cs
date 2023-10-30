@@ -33,7 +33,7 @@ public class SmartWeapon : MonoBehaviour
             }
     }
 
-
+    //google search for unity movetowards 2d
 
     public void Weapon()
     {
