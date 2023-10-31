@@ -11,16 +11,22 @@ public class SmartWeapon : MonoBehaviour
     private float _interceptDistance;
     private bool _isPlayerAlive;
 
+    private Vector2 target;
+    private Vector2 position;
+
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _isPlayerAlive = true;
-
+      
 
         if(_player == null)
         {
             Debug.Log("player is null on smartweapon");
         }
+    //    target = new Vector2(0.0f, 0.0f);
+    //    position = gameObject.transform.position;
+
        //Debug.Break();
     }
 
@@ -31,9 +37,29 @@ public class SmartWeapon : MonoBehaviour
             {
                 Weapon();
             }
+        //{
+        float step = _speed * Time.deltaTime;
+
+        // move sprite towards the target location
+        transform.position = Vector2.MoveTowards(transform.position, target, step);
     }
 
     //google search for unity movetowards 2d
+
+    void OnGUI()
+    {
+        Event currentEvent = Event.current;
+        Vector2 playerPos = new Vector2();
+        Vector2 point = new Vector2();
+
+        //// compute where the player is in world space
+        //playerPos.x = currentEvent.playerPostion.x;
+        //playerPos.y = cam.pixelHeight - currentEvent.playerPosition.y;
+        //point = cam.ScreenToWorldPoint(new Vector3(playerPos.x, playerPos.y, 0.0f));
+
+    }
+
+
 
     public void Weapon()
     {
