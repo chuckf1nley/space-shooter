@@ -24,23 +24,27 @@ public class Asteroid : MonoBehaviour
     {
         transform.Rotate(Vector3.forward * _rotateSpeed * Time.deltaTime);
     }
+    public void Damage()
+    {
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        _spawnManager.StartSpawning();
+        _audioSource.Play();
+        Destroy(this.gameObject, 0.15f);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.CompareTag("Laser"))
         {
-            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+         Destroy(other.gameObject);
+            Damage();
+        }
+        if (other.CompareTag("PlayerMissile"))
+        {
             Destroy(other.gameObject);
-            _spawnManager.StartSpawning();
-            _audioSource.Play();
-            Destroy(this.gameObject, 0.15f);
-            
-
+            Damage();
         }
     }
-
-
-
 
 }

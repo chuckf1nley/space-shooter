@@ -7,23 +7,9 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.5f;
-    private float _speedMultiplier = 3f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
-    private string _playerName = "samaxe";
-    private float _horizontal;
-    private float _vertical;
-    private Vector3 _laserOffset = new Vector3(0, .884f, 0);
-    private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private float _missileFireRate = 2f;
-    private float _canfire = -2f;
-    private bool _canMissileFire = false;
-    private SpawnManager _spawnManager;
-    private bool _isShieldActive = false;
-    private bool _isTriple_ShotActive = false;
-    private bool _isAltFireActive = false;
-    private bool _firingConstantly = false;
-    private bool _negSpeed = false;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -33,25 +19,45 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _altFirePrefab;
     [SerializeField] private GameObject _negSpeeedPrefab;
     [SerializeField] private GameObject _altFire;
-    [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private GameObject _rightengine;
     [SerializeField] private GameObject _leftengine;
     [SerializeField] private GameObject _thruster;
-    [SerializeField] private int _maxLives = 3;
-    [SerializeField] private TMP_Text _thrusterText;
-    private int _score;
-    private TMP_Text _shield_Lives_Display;
-    [SerializeField] private int _currentLives;
-    private CameraShake _camShake;
-    private int _minLives = 0;
-    [SerializeField] private int _maxAmmo = 15;
-    private int _currentAmmo;
-    private int _minAmmo = 0;
-    [SerializeField] private int _missileMaxAmmo = 5;
-    private int _currentMissiles;
     [SerializeField] private GameObject _shield;
+    [SerializeField] private Shield _shieldVisualizer;
+    [SerializeField] private TMP_Text _thrusterText;
+    [SerializeField] private int _maxLives = 3;
+    [SerializeField] private int _currentLives;
+    [SerializeField] private int _currentAmmo;
+    [SerializeField] private int _missileMaxAmmo = 5;
+    private string _playerName = "samaxe";
+    private float _speedMultiplier = 3f;
+    private float _horizontal;
+    private float _vertical;
+    private float _canfire = -2f;
+    private float _missileFire;
+    private float _powerupCollected;
+    private float _powerupsOnScreen;
+    private bool _powerupCollect;
+    private bool _canMissileFire = false;
+    private bool _isShieldActive = false;
+    private bool _isTriple_ShotActive = false;
+    private bool _isAltFireActive = false;
+    private bool _firingConstantly = false;
+    private bool _negSpeed = false;
+    private int _maxAmmo = 15;
+    private int _score;
+    private int _minLives = 0;
+    private int _minAmmo = 0;
+    private int _currentMissiles;
+    private SpawnManager _spawnManager;
+    private Missile _missile;
+    private Powerup _powerup;
+    private Vector3 _missileOffset = new Vector3(0, 1f, 0);
+    private TMP_Text _shield_Lives_Display;
+    private CameraShake _camShake;
+    private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     private UIManager _uiManager;
-
+    private Transform Powerup;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
@@ -67,12 +73,13 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        Powerup = GameObject.FindGameObjectWithTag("Powerup").transform;
+        // _missile =  GameObject.Find("Missile").GetComponent<Missile>();
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
         _currentMissiles = _missileMaxAmmo;
         _currentLives = _maxLives;
 
-        Missile missile = GetComponent<Missile>();
 
         if (_spawnManager == null)
         {
@@ -100,6 +107,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+        //CollectPowerups();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -111,6 +119,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
         {
             FireMissile();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.C) && Time.time > _powerupCollected)
+        {
+            PowerupCollected();
         }
     }
 
@@ -194,7 +207,7 @@ public class Player : MonoBehaviour
     {
         FireMissileCoroutine();
 
-        //_canMissileFire = Time.time + _missileFireRate;
+        _missileFire = Time.time + _missileFireRate;
         Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
 
     }
@@ -357,5 +370,44 @@ public class Player : MonoBehaviour
         _negSpeed = false;
         _speed /= _negSpeedMultiplier;
     }
+
+    public void PowerupCollected()
+    {
+
+        Vector3 direction = _powerup.transform.position - transform.position;
+        direction = direction.normalized;
+        transform.Translate(direction * _speed * Time.deltaTime);
+    }
+
+    //public void CollectPowerup(InputAction.CallbackContext context)
+    //{
+    //    if (context.performed)
+    //    {
+    //        _powerup = FindObjectsOfType<Powerup>();
+    //        _powerupCollect = true;
+    //    }
+
+    //    if (context.canceled)
+    //    {
+    //        _powerupCollect = false;
+    //        _powerupsOnScreen.ToList().ForEach(print => print.ResumeDefaultMovement());
+    //    }
+
+    //}
+
+    //public void CollectPowerups()
+    //{
+    //    if (_powerupCollect && _powerupsOnScreen.Any())
+    //    {
+    //        _powerupsOnScreen.ToList().ForEach(p =>
+    //        {
+    //            if (p != null)
+    //            {
+    //                p.MoveTowardsPosition(transform.position);
+    //            }
+
+    //        });
+    //    }
+    //}
 
 }

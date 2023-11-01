@@ -7,18 +7,16 @@ public class Powerup : MonoBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo 4 = health, 5= altfire, 6 = negspeed
     [SerializeField] private AudioClip _Clip;
+    private float _interceptSpeed = 5f;
+    private float _movementDirection;
+    private float _normalDirection;
+    private float _movementSpeed;
     private Player _player;
     private Laser _laser;
     private SmartWeapon _smartWeapon;
 
     // Update is called once per frame
     void Update()
-
-    //ideas for powerups: carry up to 3 of each, use numbers to activate
-    //create EMP to destroy radius for every 500 points
-    // create asset to destroy all enemies on screen for every 1000
-
-
     {
 
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -30,6 +28,19 @@ public class Powerup : MonoBehaviour
         }
 
     }
+
+    public void MoveTowardsPosition(Vector3 targetPosition)
+    {
+        //_movementDirection = (targetPosition - transform.position).normalized;
+        _interceptSpeed += .5f;
+    }
+
+    public void ResumeMovement()
+    {
+        _movementDirection = _normalDirection;
+        _movementSpeed = _speed;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
 

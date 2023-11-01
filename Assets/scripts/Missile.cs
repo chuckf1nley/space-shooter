@@ -26,8 +26,8 @@ public class Missile : MonoBehaviour
 
         _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        _enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
+       // _player = GameObject.Find("Player").GetComponent<Player>();
+       // _enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
 
@@ -121,15 +121,15 @@ public class Missile : MonoBehaviour
             {
                 player.Damage();
             }
-            else if (other.tag == "Enemy" && _isEnemyMissile == false)
-            {
+        }
+         if (other.tag == "Enemy" && _isEnemyMissile == false)
+         {
                 Enemy enemy = other.GetComponent<Enemy>();
                 if (enemy != null)
                 {
                     enemy.Damage();
                 }
-            }
-        }
+         }
 
     }
 
