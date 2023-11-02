@@ -31,7 +31,7 @@ public class Powerup : MonoBehaviour
 
     public void MoveTowardsPosition(Vector3 targetPosition)
     {
-        //_movementDirection = (targetPosition - transform.position).normalized;
+     //   _movementDirection = (targetPosition - transform.position).normalized;
         _interceptSpeed += .5f;
     }
 

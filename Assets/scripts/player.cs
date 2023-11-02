@@ -44,10 +44,10 @@ public class Player : MonoBehaviour
     private bool _isAltFireActive = false;
     private bool _firingConstantly = false;
     private bool _negSpeed = false;
-    private int _maxAmmo = 15;
     private int _score;
     private int _minLives = 0;
     private int _minAmmo = 0;
+    private int _maxAmmo = 15;
     private int _currentMissiles;
     private SpawnManager _spawnManager;
     private Missile _missile;
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         Powerup = GameObject.FindGameObjectWithTag("Powerup").transform;
-        // _missile =  GameObject.Find("Missile").GetComponent<Missile>();
+
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
         _currentMissiles = _missileMaxAmmo;
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-        //CollectPowerups();
+       // CollectPowerups();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -379,18 +379,18 @@ public class Player : MonoBehaviour
         transform.Translate(direction * _speed * Time.deltaTime);
     }
 
-    //public void CollectPowerup(InputAction.CallbackContext context)
+    //public void CollectPowerup()
     //{
-    //    if (context.performed)
+    //    if (performed)
     //    {
     //        _powerup = FindObjectsOfType<Powerup>();
     //        _powerupCollect = true;
     //    }
 
-    //    if (context.canceled)
+    //    if (canceled)
     //    {
     //        _powerupCollect = false;
-    //        _powerupsOnScreen.ToList().ForEach(print => print.ResumeDefaultMovement());
+    //        _powerupsOnScreen.ForEach(print => print.ResumeDefaultMovement());
     //    }
 
     //}
@@ -399,7 +399,7 @@ public class Player : MonoBehaviour
     //{
     //    if (_powerupCollect && _powerupsOnScreen.Any())
     //    {
-    //        _powerupsOnScreen.ToList().ForEach(p =>
+    //        _powerupsOnScreen.ForEach(p =>
     //        {
     //            if (p != null)
     //            {

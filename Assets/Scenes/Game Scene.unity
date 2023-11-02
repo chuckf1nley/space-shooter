@@ -2682,7 +2682,7 @@ MonoBehaviour:
   _thrusterText: {fileID: 930148502}
   _maxLives: 3
   _currentLives: 3
-  _currentAmmo: 0
+  _currentAmmo: 15
   _missileMaxAmmo: 5
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _playerDeathSoundClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
@@ -2694,7 +2694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500934015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0.02, y: -2.17, z: 0}
   m_LocalScale: {x: 0.5, y: 0.4875, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
