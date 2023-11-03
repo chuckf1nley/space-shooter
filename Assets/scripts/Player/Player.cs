@@ -379,21 +379,35 @@ public class Player : MonoBehaviour
         transform.Translate(direction * _speed * Time.deltaTime);
     }
 
-    //public void CollectPowerup()
-    //{
-    //    if (performed)
-    //    {
-    //        _powerup = FindObjectsOfType<Powerup>();
-    //        _powerupCollect = true;
-    //    }
 
-    //    if (canceled)
-    //    {
-    //        _powerupCollect = false;
-    //        _powerupsOnScreen.ForEach(print => print.ResumeDefaultMovement());
-    //    }
 
-    //}
+    public void CollectPowerup()
+    {
+      //static Collider2D OverlapCircle(Vector2 point, float radius, int LayerMask = DefaultRaycastLayers, float minDepth = Mathf.Infinity, float maxDepth = Mathf.Infinity);
+
+    //    //point = center of circle, radius = radius of circle, layerMask = filter to check objects on specific layers
+    //    //minDepth = only iclude objects with a Z depth <= this value, max depth only include objects with a Z depth >= this value
+
+
+    //    public static int OverlapCircle(Vector2 point, float radius, ContactFilter2D contactFilter, Collider2D[] results);
+
+
+    //    public static int OverlapCircle(Vector2 point, float radiius, ContactFilter2D contactFilter, List<Collider2D> results);
+
+
+        //    if (performed)
+        //    {
+        //        _powerup = FindObjectsOfType<Powerup>();
+        //        _powerupCollect = true;
+        //    }
+
+        //    if (canceled)
+        //    {
+        //        _powerupCollect = false;
+        //        _powerupsOnScreen.ForEach(print => print.ResumeDefaultMovement());
+        //    }
+
+    }
 
     //public void CollectPowerupsOnScreen()
     //{
