@@ -395,11 +395,11 @@ public class Player : MonoBehaviour
 
     //}
 
-    //public void CollectPowerups()
+    //public void CollectPowerupsOnScreen()
     //{
     //    if (_powerupCollect && _powerupsOnScreen.Any())
     //    {
-    //        _powerupsOnScreen.ForEach(p =>
+    //        _powerupsOnScreen.ToList().ForEach(p =>
     //        {
     //            if (p != null)
     //            {

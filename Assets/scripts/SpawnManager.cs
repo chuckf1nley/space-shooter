@@ -7,8 +7,8 @@ using Random = System.Random;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
-   // [SerializeField] private GameObject[] _AggroEnemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private GameObject _powerupContainer;
     [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
     private int _enemyID;
@@ -23,7 +23,6 @@ public class SpawnManager : MonoBehaviour
     private int _waveTotal;
 
     private Transform spawnLocation;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -41,36 +40,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerupRoutine());
     }
 
-    IEnumerator SpawnEnemyRoutine()
-    {
-        while (_stopSpawning == false)
-        {
-            yield return new WaitForSeconds(3.0f);
-
-            while (_waveValue > 0)
-            {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 50));
-                Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
-                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
-
-               // _enemy.transform.parent = _enemyContainer.transform;
-                _enemy.transform.parent = _enemyContainer.transform;
-                _waveValue--;
-                _enemyCount++;
-                yield return new WaitForSeconds(5.0f);
-
-            }
-            if (_enemyCount <= 0)
-            {
-                currWave++;
-                _waveValue = currWave * 10;
-            }
-        }
-    }
-    public void EnemyDeath()
-    {
-        _enemyCount--;
-    }
 
     IEnumerator SpawnPowerupRoutine()
     {
@@ -87,9 +56,46 @@ public class SpawnManager : MonoBehaviour
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = this.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
+
+            // _enemy.transform.parent = _enemyContainer.transform;
+            newPowerup.transform.parent = _powerupContainer.transform;
+        
         }
 
     }
+    public int GeneratePowerupIndex(int random)
+    {
+        if (random >= 0 && random < 10)
+        {
+            return 0; //tripleshot
+        } else if (random >= 10 && random < 20)
+        {
+            return 1; //speed boost
+        } else if (random >= 20 && random < 30)
+        {
+            return 2; // shield
+        } else if (random >= 30 && random < 40)
+        {
+            return 3; //ammo
+        } else if (random >= 40 && random < 50)
+        {
+            return 4; //health
+        } else if (random >= 50 && random < 60)
+        {
+            return 5; // altfire
+        } else if (random >= 60 && random > 70)
+        {
+            return 6; // negspeed
+        }
+        { 
+            return 3;
+        }
+    }
+    public void OnPowerupCollected()
+    {
+
+    }
+
 
     private Vector3 GetEnemySpawnPos(int EnemyID)
     {
@@ -131,40 +137,38 @@ public class SpawnManager : MonoBehaviour
         return _enemySpawnPos;
     }
 
-    public void OnPlayerDeath()
-    {
-        _stopSpawning = true;
-    }
 
-    public int GeneratePowerupIndex(int random)
+
+    IEnumerator SpawnEnemyRoutine()
     {
-        if (random >= 0 && random < 10)
+        while (_stopSpawning == false)
         {
-            return 0; //tripleshot
-        } else if (random >= 10 && random < 20)
-        {
-            return 1; //speed boost
-        } else if (random >= 20 && random < 30)
-        {
-            return 2; // shield
-        } else if (random >= 30 && random < 40)
-        {
-            return 3; //ammo
-        } else if (random >= 40 && random < 50)
-        {
-            return 4; //health
-        } else if (random >= 50 && random < 60)
-        {
-            return 5; // altfire
-        } else if (random >= 60 && random > 70)
-        {
-            return 6; // negspeed
-        }
-        { 
-            return 3;
+            yield return new WaitForSeconds(3.0f);
+
+            while (_waveValue > 0)
+            {               
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 50));
+                Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
+                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
+
+              
+                _enemy.transform.parent = _enemyContainer.transform;
+                _waveValue--;
+                _enemyCount++;
+                yield return new WaitForSeconds(5.0f);
+
+            }
+            if (_enemyCount <= 0)
+            {
+                currWave++;
+                _waveValue = currWave * 10;
+            }
         }
     }
-
+    public void EnemyDeath()
+    {
+        _enemyCount--;
+    }
     public int GenerateEnemyIndex(int random)
     {
         if (random >= 0 && random < 10)
@@ -185,6 +189,10 @@ public class SpawnManager : MonoBehaviour
             
             return 0;
         }
+    }
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
     }
    
 }

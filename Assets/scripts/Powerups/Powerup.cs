@@ -14,6 +14,13 @@ public class Powerup : MonoBehaviour
     private Player _player;
     private Laser _laser;
     private SmartWeapon _smartWeapon;
+    private SpawnManager _spawnManager;
+
+    void Start()
+    {
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -27,11 +34,13 @@ public class Powerup : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+
     }
 
-    public void MoveTowardsPosition(Vector3 targetPosition)
+    public void MoveTowardsPosition()
     {
-     //   _movementDirection = (targetPosition - transform.position).normalized;
+        //targetPosition = Player.transform.Translate;
+        //_movementDirection = (targetPosition - transform.position).normalized;
         _interceptSpeed += .5f;
     }
 
