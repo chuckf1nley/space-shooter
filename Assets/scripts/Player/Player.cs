@@ -6,6 +6,7 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    private int DefaultRaycastLayers;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
     [SerializeField] private float _fireRate = 0.25f;
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
+    // public static Collider2D OverlapCircle(Vector2 point, float radius, int LayerMask = DefaultRaycastLayers, float minDepth = Mathf.Infinity, float maxDepth = Mathf.Infinity);
 
     // Start is called before the first frame update
     void Start()
@@ -107,7 +109,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-       // CollectPowerups();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -120,9 +121,10 @@ public class Player : MonoBehaviour
         {
             FireMissile();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.C) && Time.time > _powerupCollected)
         {
+            CollectPowerup();
             PowerupCollected();
         }
     }
@@ -383,45 +385,19 @@ public class Player : MonoBehaviour
 
     public void CollectPowerup()
     {
-      //static Collider2D OverlapCircle(Vector2 point, float radius, int LayerMask = DefaultRaycastLayers, float minDepth = Mathf.Infinity, float maxDepth = Mathf.Infinity);
 
-    //    //point = center of circle, radius = radius of circle, layerMask = filter to check objects on specific layers
-    //    //minDepth = only iclude objects with a Z depth <= this value, max depth only include objects with a Z depth >= this value
-
-
-    //    public static int OverlapCircle(Vector2 point, float radius, ContactFilter2D contactFilter, Collider2D[] results);
+        //    //point = center of circle, radius = radius of circle, layerMask = filter to check objects on specific layers
+        //    //minDepth = only iclude objects with a Z depth <= this value, max depth only include objects with a Z depth >= this value
 
 
-    //    public static int OverlapCircle(Vector2 point, float radiius, ContactFilter2D contactFilter, List<Collider2D> results);
+        //static int OverlapCircle(Vector2 point, float radius, ContactFilter2D contactFilter, Collider2D[] results);
 
 
-        //    if (performed)
-        //    {
-        //        _powerup = FindObjectsOfType<Powerup>();
-        //        _powerupCollect = true;
-        //    }
+        //static int OverlapCircle(Vector2 point, float radiius, ContactFilter2D contactFilter, List<Collider2D> results);
 
-        //    if (canceled)
-        //    {
-        //        _powerupCollect = false;
-        //        _powerupsOnScreen.ForEach(print => print.ResumeDefaultMovement());
-        //    }
 
     }
 
-    //public void CollectPowerupsOnScreen()
-    //{
-    //    if (_powerupCollect && _powerupsOnScreen.Any())
-    //    {
-    //        _powerupsOnScreen.ToList().ForEach(p =>
-    //        {
-    //            if (p != null)
-    //            {
-    //                p.MoveTowardsPosition(transform.position);
-    //            }
 
-    //        });
-    //    }
-    //}
 
 }
