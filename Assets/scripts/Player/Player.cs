@@ -6,7 +6,6 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-    private int DefaultRaycastLayers;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
     [SerializeField] private float _fireRate = 0.25f;
@@ -36,9 +35,9 @@ public class Player : MonoBehaviour
     private float _vertical;
     private float _canfire = -2f;
     private float _missileFire;
-    private float _powerupCollected;
-    private float _powerupsOnScreen;
-    private bool _powerupCollect;
+    private float _playerCurrentDirection;
+    private float _powerupSpeed;
+    private bool _wAsCPressed = false;
     private bool _canMissileFire = false;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -52,7 +51,7 @@ public class Player : MonoBehaviour
     private int _currentMissiles;
     private SpawnManager _spawnManager;
     private Missile _missile;
-    private Powerup _powerup;
+    private GameObject _powerup;
     private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     private TMP_Text _shield_Lives_Display;
     private CameraShake _camShake;
@@ -62,7 +61,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
-    // public static Collider2D OverlapCircle(Vector2 point, float radius, int LayerMask = DefaultRaycastLayers, float minDepth = Mathf.Infinity, float maxDepth = Mathf.Infinity);
+    private Vector3 playerCurrentDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -108,6 +107,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         CalculateMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
@@ -122,10 +122,18 @@ public class Player : MonoBehaviour
             FireMissile();
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && Time.time > _powerupCollected)
+        _powerup = GameObject.FindWithTag("Powerup");
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            _wAsCPressed = true;
+        }
+        if (_wAsCPressed)
         {
             CollectPowerup();
-            PowerupCollected();
+            if (_powerup == null)
+            {
+                _wAsCPressed = false;
+            }
         }
     }
 
@@ -373,31 +381,15 @@ public class Player : MonoBehaviour
         _speed /= _negSpeedMultiplier;
     }
 
-    public void PowerupCollected()
-    {
-
-        Vector3 direction = _powerup.transform.position - transform.position;
-        direction = direction.normalized;
-        transform.Translate(direction * _speed * Time.deltaTime);
-    }
-
-
-
     public void CollectPowerup()
     {
+        if (_powerup != null)
+        {
+            playerCurrentDirection = transform.position - Powerup.transform.position;
+            playerCurrentDirection.Normalize();
 
-        //    //point = center of circle, radius = radius of circle, layerMask = filter to check objects on specific layers
-        //    //minDepth = only iclude objects with a Z depth <= this value, max depth only include objects with a Z depth >= this value
-
-
-        //static int OverlapCircle(Vector2 point, float radius, ContactFilter2D contactFilter, Collider2D[] results);
-
-
-        //static int OverlapCircle(Vector2 point, float radiius, ContactFilter2D contactFilter, List<Collider2D> results);
-
-
+            _powerup.transform.Translate(playerCurrentDirection * Time.deltaTime * _powerupSpeed);
+        }
     }
-
-
 
 }

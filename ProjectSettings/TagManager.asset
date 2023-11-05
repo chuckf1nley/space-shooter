@@ -23,6 +23,7 @@ TagManager:
   - AggroEnemy
   - SmartEnemy
   - SmartWeapon
+  - Powerup
   layers:
   - Default
   - TransparentFX

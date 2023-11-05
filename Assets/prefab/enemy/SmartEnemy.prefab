@@ -238,20 +238,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8658599246959589924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f059a20c79019be4d81c0d216ebfe2d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1988df4519472cb4e83b6f3c0a8225ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyShieldPrefab: {fileID: 1716696902119978974, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
-  _smartWeaponPrefab: {fileID: 6618980843449305480, guid: 02052a604cdcabd4da7f3dcffe59b51c, type: 3}
-  _smartEnemy: {fileID: 919132149155446097, guid: cde13254aa5fb2a40950f626fa4e9fac, type: 3}
+  _enemyShieldPrefab: {fileID: 0}
+  _smartWeaponPrefab: {fileID: 0}
+  _smartEnemy: {fileID: 0}
   _speed: 3.5
-  _spriteRenderer: {fileID: 8305430548135921385}
-  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-  _enemyID: 3
+  _spriteRenderer: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _enemyID: 0
   _fireRate: 2
-  _rotationSpeed: 50
-  _rotationModifier: -90
-  _distanceFrom: 3
+  _rotationSpeed: 0
+  _rotationModifier: 0
+  _distanceFrom: 0
   rangeX: 10
 --- !u!61 &6073809635485648756
 BoxCollider2D:

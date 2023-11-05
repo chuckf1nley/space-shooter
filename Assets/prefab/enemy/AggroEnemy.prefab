@@ -218,16 +218,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5588369561425281493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282bc30ee2695064e87aec6218d7eb45, type: 3}
+  m_Script: {fileID: 11500000, guid: 48d79c9052ff5674cb414a6eb06774bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyShieldPrefab: {fileID: 1716696902119978974, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
-  _enemy: {fileID: 5588369561425281493}
+  _enemyShieldPrefab: {fileID: 0}
+  _enemy: {fileID: 0}
   _speed: 3.5
   _chaseSpeed: 5
-  _spriteRenderer: {fileID: 1553192111979907501}
-  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-  _enemyID: 2
+  _spriteRenderer: {fileID: 0}
+  _audioClip: {fileID: 0}
+  _enemyID: 0
 --- !u!95 &-5309984209771858545
 Animator:
   serializedVersion: 4
