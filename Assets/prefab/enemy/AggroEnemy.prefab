@@ -221,13 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d79c9052ff5674cb414a6eb06774bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyShieldPrefab: {fileID: 0}
-  _enemy: {fileID: 0}
+  _enemyShieldPrefab: {fileID: 9105597657914134332}
+  _enemy: {fileID: 2191369157583232770}
   _speed: 3.5
   _chaseSpeed: 5
-  _spriteRenderer: {fileID: 0}
-  _audioClip: {fileID: 0}
-  _enemyID: 0
+  _spriteRenderer: {fileID: -6654040684040651905}
+  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _enemyID: 2
 --- !u!95 &-5309984209771858545
 Animator:
   serializedVersion: 4
@@ -603,5 +603,10 @@ PrefabInstance:
 --- !u!4 &2191369157582865186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 357107aeb96e84f91bf851985c6fe28a, type: 3}
+  m_PrefabInstance: {fileID: 2191369157583264162}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2191369157583232770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 357107aeb96e84f91bf851985c6fe28a, type: 3}
   m_PrefabInstance: {fileID: 2191369157583264162}
   m_PrefabAsset: {fileID: 0}

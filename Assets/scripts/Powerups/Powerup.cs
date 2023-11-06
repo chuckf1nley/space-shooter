@@ -6,27 +6,32 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _powerupID; // 0 = Triple Shot 1 = speed 2 = shield 3 = ammo 4 = health, 5= altfire, 6 = negspeed
-    [SerializeField] private AudioClip _Clip;
-    private float _interceptSpeed = 5f;
-    private float _movementDirection;
-    private float _normalDirection;
-    private float _movementSpeed;
+    [SerializeField] private AudioClip _Clip;   
     private Player _player;
-    private Laser _laser;
-    private SmartWeapon _smartWeapon;
-    private SpawnManager _spawnManager;
+    private Vector3 _direction;
+
 
     void Start()
     {
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-
+        _player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.C))
+        {
+            //MoveTowardsplayer 
+            _direction = _player.transform.position - transform.position;
+            _direction.Normalize();
+            transform.Translate(_direction * _speed * Time.deltaTime * 2);
 
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+
 
         if (transform.position.y < -7.5)
         {
@@ -37,18 +42,7 @@ public class Powerup : MonoBehaviour
 
     }
 
-    public void MoveTowardsPosition()
-    {
-        //targetPosition = Player.transform.Translate;
-        //_movementDirection = (targetPosition - transform.position).normalized;
-        _interceptSpeed += .5f;
-    }
-
-    public void ResumeMovement()
-    {
-        _movementDirection = _normalDirection;
-        _movementSpeed = _speed;
-    }
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {

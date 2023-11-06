@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     private CameraShake _camShake;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     private UIManager _uiManager;
-    private Transform Powerup;
+    //private Powerup _powerup;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
@@ -74,7 +74,6 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        Powerup = GameObject.FindGameObjectWithTag("Powerup").transform;
 
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
@@ -122,19 +121,7 @@ public class Player : MonoBehaviour
             FireMissile();
         }
 
-        _powerup = GameObject.FindWithTag("Powerup");
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            _wAsCPressed = true;
-        }
-        if (_wAsCPressed)
-        {
-            CollectPowerup();
-            if (_powerup == null)
-            {
-                _wAsCPressed = false;
-            }
-        }
+      
     }
 
     void CalculateMovement()
@@ -381,15 +368,5 @@ public class Player : MonoBehaviour
         _speed /= _negSpeedMultiplier;
     }
 
-    public void CollectPowerup()
-    {
-        if (_powerup != null)
-        {
-            playerCurrentDirection = transform.position - Powerup.transform.position;
-            playerCurrentDirection.Normalize();
-
-            _powerup.transform.Translate(playerCurrentDirection * Time.deltaTime * _powerupSpeed);
-        }
-    }
-
+   
 }

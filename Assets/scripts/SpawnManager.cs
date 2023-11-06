@@ -57,7 +57,6 @@ public class SpawnManager : MonoBehaviour
             newPowerup.transform.parent = this.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
 
-            // _enemy.transform.parent = _enemyContainer.transform;
             newPowerup.transform.parent = _powerupContainer.transform;
         
         }
@@ -91,11 +90,7 @@ public class SpawnManager : MonoBehaviour
             return 3;
         }
     }
-    public void OnPowerupCollected()
-    {
-
-    }
-
+  
 
     private Vector3 GetEnemySpawnPos(int EnemyID)
     {
