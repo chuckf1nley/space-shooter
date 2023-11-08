@@ -29,7 +29,7 @@ public class Missile : MonoBehaviour
        // _player = GameObject.Find("Player").GetComponent<Player>();
        // _enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
         Player = GameObject.FindGameObjectWithTag("Player").transform;
-        Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
+        Enemy = GameObject.FindGameObjectWithTag("FastEnemy").transform;
 
     }
 

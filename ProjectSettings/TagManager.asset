@@ -14,7 +14,7 @@ TagManager:
   - Ammo
   - Health
   - AltFire
-  - NegSpeed
+  - EnemyAvoidShot
   - FastEnemy
   - EnemyRight
   - EnemyMissile

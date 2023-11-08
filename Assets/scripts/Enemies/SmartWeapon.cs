@@ -34,28 +34,16 @@ public class SmartWeapon : MonoBehaviour
             {
                 Weapon();
             }
-        //{
+       
         float step = _speed * Time.deltaTime;
         Projectile.transform.position = Vector3.MoveTowards(Projectile.transform.position, Player.transform.position, _speed);
 
     }
 
-    //google search for unity movetowards 2d
-
-   
-
-
     public void Weapon()
     {
-        // move sprite towards the target location
-
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        //Vector3 direction = transform.position + _player.transform.position;
-        //direction = direction.normalized;
-
-        //transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-
-
+       
         if (transform.position.y > 9f)
         {            
             if (transform.parent != null)

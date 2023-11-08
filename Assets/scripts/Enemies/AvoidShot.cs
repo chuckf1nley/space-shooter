@@ -12,7 +12,10 @@ public class AvoidShot : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _enemyShieldStrength = 1;
+    private float _laserDistance = 2.5f;
+    private float _startX;
     private Player _player;
+    private Laser _laser;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
@@ -26,7 +29,7 @@ public class AvoidShot : MonoBehaviour
     {
         //if (_direction == 0)
         //    _direction = -1;
-
+        _laser = GameObject.Find("Laser").GetComponent<Laser>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
@@ -62,57 +65,50 @@ public class AvoidShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if ()
-        //{
-        //    _direction = _player.transform.position + transform.position;
-        //    _direction.Normalize();
-        //    transform.Translate(_direction * _speed * Time.deltaTime);
-        //}
-    }
 
-    /*
-      void Update()
-    {
-        _interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
+
+
+        _laserDistance = Vector3.Distance(transform.position, _laser.transform.position);
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (_interceptDistance > 4)
+        if (_laserDistance > 2.5f)
         {
-          NormalMovement();
+            Movement();
         }
         else
         {
-          AggroMovement();
+            AvoidLaser();
         }
+
     }
 
-    public void NormalMovement()
+
+    public void Movement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.x > _startX + 4)
-            _direction = -1;
-        else if (transform.position.x < _startX - 4)
             _direction = 1;
-
+        else if (transform.position.x < _startX - 4)        
+            _direction = -1;
+        
         if (transform.position.y < -7.5)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
+
     }
-
-    public void AggroMovement()
+    public void AvoidLaser()
     {
-
-        if (_interceptDistance < 5)
-            _chaseSpeed += 1;
-
-        Vector3 direction = _player.transform.position - transform.position;
+        if (_laserDistance < 2.5)
+            _speed += 2;
+    
+        Vector3 direction = _laser.transform.position + transform.position;
         direction = direction.normalized;
 
-       transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+        transform.Translate(direction * _speed * Time.deltaTime * 2);
     }
-    */
+
 
     public void EnemyShield()
     {

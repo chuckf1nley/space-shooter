@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private AudioSource _audioSource;
     [SerializeField] private float _speed = 3f;
-    private float _fastSpeed = 4.5f;
+    [SerializeField] private float _fastSpeed = 4.5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShieldPrefab;

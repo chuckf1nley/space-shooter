@@ -3823,6 +3823,7 @@ MonoBehaviour:
   - {fileID: 6680074148033786096, guid: 1f48cf8d0b5123743936bc187662e6b1, type: 3}
   - {fileID: 5588369561425281493, guid: 447f07cd18ef4c347a783dd79cf12d90, type: 3}
   - {fileID: 8658599246959589924, guid: 3edd13314d82c8b4794a1d104af958dd, type: 3}
+  - {fileID: 4259415385054587546, guid: 736402b5b68cfee46be62035ed9f9f49, type: 3}
   _enemyContainer: {fileID: 955404439}
   _powerupContainer: {fileID: 187086290}
   _powerups:

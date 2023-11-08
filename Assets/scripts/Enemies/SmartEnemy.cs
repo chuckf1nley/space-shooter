@@ -105,11 +105,11 @@ public class SmartEnemy : MonoBehaviour
     {
         if (_isEnemyAlive == true)
         {
-            Debug.Log("Smart enemy is alive");
+           // Debug.Log("Smart enemy is alive");
 
             if (Time.time > _canFire && _isEnemyAlive && _isBehindPlayer)
             {
-                Debug.Log("Smart Enemy firing");
+               // Debug.Log("Smart Enemy firing");
                 _canFire = Time.time + _fireRate;
                 GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
                 SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
