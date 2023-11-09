@@ -11,18 +11,14 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _powerupContainer;
     [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
-    private int _enemyID;
-    private Vector3 _enemySpawnPos;
     private float _spawnPowerupDelay = 3f;
-    private float Range;
-    private float Length;
 
+    private int _enemyID;
     private int currWave;
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
 
-    private Transform spawnLocation;
 
     // Start is called before the first frame update
     void Start()
@@ -143,7 +139,7 @@ public class SpawnManager : MonoBehaviour
 
             while (_waveValue > 0)
             {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 60));
+                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 50));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 

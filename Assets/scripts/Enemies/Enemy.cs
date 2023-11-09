@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private GameObject _enemyRight;
-    [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _enemyShieldStrength = 1;

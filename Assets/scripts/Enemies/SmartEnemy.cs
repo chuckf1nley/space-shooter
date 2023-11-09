@@ -152,7 +152,7 @@ public class SmartEnemy : MonoBehaviour
 
             if(distanceX <= rangeX && transform.position.y < player.position.y)
             {
-                Debug.Log("Behund Player");
+                //Debug.Log("Behind Player");
                 _isBehindPlayer = true;
             }
             else 

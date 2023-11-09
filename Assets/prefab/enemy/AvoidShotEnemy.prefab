@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _enemyShieldPrefab: {fileID: 0}
+  _enemyShieldPrefab: {fileID: 8000109773822327437}
   _enemyID: 4
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _spriteRenderer: {fileID: 2756903774566184395}
@@ -275,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7371173260902200498
 Transform:
   m_ObjectHideFlags: 0

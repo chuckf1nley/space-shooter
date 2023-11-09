@@ -58,13 +58,13 @@ public class UIManager : MonoBehaviour
         _laserAmmoText.text = $"Ammo:{currentAmmo}";
     }
 
-    
     void GameOverSequence()
     {
         _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         _takeTheL.gameObject.SetActive(true);
+        GameOverFlickerRoutine();
        
         
     }
@@ -79,8 +79,4 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    internal float SetActive(bool v)
-    {
-        throw new NotImplementedException();
-    }
 }

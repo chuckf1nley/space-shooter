@@ -36,7 +36,7 @@ public class SmartWeapon : MonoBehaviour
             }
        
         float step = _speed * Time.deltaTime;
-        Projectile.transform.position = Vector3.MoveTowards(Projectile.transform.position, Player.transform.position, _speed);
+        Projectile.transform.position = Vector3.MoveTowards(Projectile.transform.position, _player.transform.position, _speed);
 
     }
 
