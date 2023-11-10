@@ -264,9 +264,9 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-
+        ShieldLives();
     }
-    public void shieldLives(int shield)
+    public void ShieldLives()
     {
         _shield_Lives_Display.text = "shield lives";
     }

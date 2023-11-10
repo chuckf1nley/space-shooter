@@ -46,16 +46,14 @@ public class SpawnManager : MonoBehaviour
         {
             float randomXPosition = UnityEngine.Random.Range(-18f, 18f);
             Vector3 RandomPosition = new Vector3(randomXPosition, 8f, transform.position.z);
-
             int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 70));
 
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
-            newPowerup.transform.parent = this.transform;
+            newPowerup.transform.parent = _powerupContainer.transform;
+            //newPowerup.transform.parent = this.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
 
-            newPowerup.transform.parent = _powerupContainer.transform;
-            Debug.Log("powerpContainer null");
-        
+           
         }
 
     }

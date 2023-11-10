@@ -176,7 +176,7 @@ public class AggressiveEnemy : MonoBehaviour
         _audioSource.Play();
         _isEnemyAlive = false;
         _spawnManager.EnemyDeath();
-        Destroy(this.gameObject, .6f);
+        Destroy(this.gameObject, .2f);
         Destroy(GetComponent<Collider2D>());
     }
 

@@ -19,6 +19,7 @@ public class Shield : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _auxColor = _spriteRenderer.color;
+        _lives = 3;
 
         if (_spriteRenderer == null)
         {
