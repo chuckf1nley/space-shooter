@@ -5,7 +5,7 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
 
-    [SerializeField] private float _speed = 12f;
+    [SerializeField] private float _speed = 10f;
     private bool _isEnemyMissile;
     private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 7.5f;
@@ -16,8 +16,7 @@ public class Missile : MonoBehaviour
     private Transform Enemy;
     private Transform Player;
 
-    [SerializeField] private float _explosionForce = 3.5f;
-    [SerializeField] private float _explosionRadius = 3.5f;
+   
     [SerializeField] ContactFilter2D contactFilter;
     [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
 
@@ -26,8 +25,8 @@ public class Missile : MonoBehaviour
 
         _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
-        Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
+        //Player = GameObject.FindGameObjectWithTag("Player").transform;
+        //Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
 
     }
     // Update is called once per frame
@@ -42,26 +41,10 @@ public class Missile : MonoBehaviour
         {
             MoveDown();
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Explode();
-        }
-
+        
     }
     //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)
-    void Explode()
-    {
-        int numColliders = Physics2D.OverlapCircle(transform.position, _explosionRadius, contactFilter, affectedColliders);
-        if (numColliders > 0)
-        {
-            for (int i = 0; i < numColliders; i++)
-            {
-                Destroy(affectedColliders[i].gameObject);
-            }
-        }
-
-    }
+   
 
     //explode range 7.5 to 8.5
     public void MoveUp()
@@ -72,15 +55,13 @@ public class Missile : MonoBehaviour
         {
             if (transform.parent != null)
             {
-                Explode();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
         }
 
-    }
-    
-    //explode range -4 to -6.12
+    }    
+   
     public void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -89,7 +70,6 @@ public class Missile : MonoBehaviour
         {
             if (transform.parent != null)
             {
-                Explode();
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);

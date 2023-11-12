@@ -22,42 +22,44 @@ public class AvoidShot : MonoBehaviour
     private SpawnManager _spawnManager;
     private int _enemyLives;
     private int _enemyShieldLives = 1;
-    private int _directions;
+    private int _movement;
     private Vector3 _direction;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+       // _player = GameObject.Find("Player").GetComponent<Player>();
+        _laser = GameObject.Find( "Laser").GetComponent<Laser>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
         _startX = transform.position.x;
         _speed = 5;
+        _enemyLives = 1;
 
         _isEnemyAlive = true;
-        _directions = Random.Range(0, 3);
+        _movement = Random.Range(0, 3);
 
         if (_player == null)
         {
-            Debug.Log("player is null");
+            Debug.Log("player is null - avoidShot");
         }
 
         if (_enemyDeathAnim == null)
         {
-            Debug.Log("animator is null");
+            Debug.Log("animator is null- avoidShot");
         }
 
         if (_laser == null)
         {
-            Debug.Log("Laser is null");
+            Debug.Log("Laser is null - avoidShot");
         }
 
         if (_audioSource == null)
         {
-            Debug.Log("audiosource on avoid enemy is null");
+            Debug.Log("audiosource on avoidShot is null");
         }
         else
         {
@@ -71,6 +73,9 @@ public class AvoidShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _avoidDistance = Vector3.Distance(transform.position, _laser.transform.position);
+        Debug.Log("Laser not called avoidShot");
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (_avoidDistance > 2.5f)
         {
             Movement();
@@ -80,30 +85,29 @@ public class AvoidShot : MonoBehaviour
             AvoidLaser();
         }
 
-    }
-
-
-    public void Movement()
-    {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if (transform.position.x > _startX + 4)
-            _directions = -1;
-        else if (transform.position.x < _startX - 4)        
-            _directions = 1;
-        
         if (transform.position.y < -7.5)
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
+    }
+
+
+    public void Movement()
+    {
+
+        if (transform.position.x > _startX + 4)
+            _movement = -1;
+        else if (transform.position.x < _startX - 4)        
+            _movement = 1;
+        
 
     }
     public void AvoidLaser()
     {
         _direction = _laser.transform.position + transform.position;
          _direction.Normalize();
-        transform.Translate(_direction * _speed * Time.deltaTime);
+        transform.Translate(_direction * _avoidSpeed * Time.deltaTime);
 
     //    if (_avoidDistance < 2.5)
     //        _avoidSpeed += 2;

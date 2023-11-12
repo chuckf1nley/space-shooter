@@ -32,14 +32,11 @@ public class Powerup : MonoBehaviour
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
 
-
         if (transform.position.y < -7.5)
         {
 
             Destroy(this.gameObject);
         }
-
-
     }
 
    
@@ -66,6 +63,7 @@ public class Powerup : MonoBehaviour
                             player.SpeedBoostActive();
                             break;
                         case 2:
+                       // Debug.Log("shield powerup check");
                             player.ActivateShield();
                             break;
                         case 3:

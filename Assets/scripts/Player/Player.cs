@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shield;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private TMP_Text _thrusterText;
+    [SerializeField] private TMP_Text _thrusterInactive;
     [SerializeField] private int _maxLives = 3;
     [SerializeField] private int _currentLives;
     [SerializeField] private int _currentAmmo;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     private bool _isAltFireActive = false;
     private bool _firingConstantly = false;
     private bool _negSpeed = false;
+    private bool _isThrusterActive = true;
     private int _score;
     private int _minLives = 0;
     private int _minAmmo = 0;
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour
     private Missile _missile;
     private GameObject _powerup;
     private Vector3 _missileOffset = new Vector3(0, 1f, 0);
-    private TMP_Text _shield_Lives_Display;
+    private TMP_Text _shieldLivesDisplay;
     private CameraShake _camShake;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     private UIManager _uiManager;
@@ -101,6 +103,7 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
+        ShieldLives();
     }
 
     // Update is called once per frame
@@ -108,6 +111,7 @@ public class Player : MonoBehaviour
     {
 
         CalculateMovement();
+        Thruster();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Fired");
@@ -126,7 +130,6 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        Thruster();
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
 
@@ -153,16 +156,31 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
-        if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-
     }
 
     public void Thruster()
     {
-        _thrusterText.text = "thruster active";
-    }
 
+        //UIManager uiManager = GameObject.Find.GetCompnonent<UIManager>;
+
+        //if (_uiManager != null)
+        //{
+        if (_isThrusterActive == true)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
+            _uiManager.thruster();
+            thrusterPowerDownRoutine();
+            // _thrusterText.text = "thruster active";
+        }
+        else if (_isThrusterActive == false)
+        {
+            if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
+            _uiManager.thrusterInactive();
+            //_thrusterInactive.text = "thruster on cooldown";
+        }
+        // }
+
+    }
     IEnumerator thrusterPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -268,7 +286,7 @@ public class Player : MonoBehaviour
     }
     public void ShieldLives()
     {
-        _shield_Lives_Display.text = "shield lives";
+        _shieldLivesDisplay.text = "shield lives";
     }
 
     public void TripleShotActive()
@@ -358,7 +376,7 @@ public class Player : MonoBehaviour
             _speed *= _negSpeedMultiplier;
             StartCoroutine(NegSpeedPowerDownRoutine());
             StartCoroutine(thrusterPowerDownRoutine());
-            Debug.Log("debuff collected");
+           // Debug.Log("debuff collected");
         }
     }
     IEnumerator NegSpeedPowerDownRoutine()
