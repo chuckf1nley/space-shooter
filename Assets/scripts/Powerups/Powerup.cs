@@ -54,36 +54,39 @@ public class Powerup : MonoBehaviour
 
             if (player != null)
             {
-                    switch (_powerupID)
-                    {
-                        case 0:
-                            player.TripleShotActive();
-                            break;
-                        case 1:
-                            player.SpeedBoostActive();
-                            break;
-                        case 2:
-                       // Debug.Log("shield powerup check");
-                            player.ActivateShield();
-                            break;
-                        case 3:
-                            player.AmmooRefillActive();
-                            break;
-                        case 4:
-                            player.Heal();
-                            break;
-                        case 5:
-                            player.AltFire();
-                            break;
-                        case 6:
-                            player.NegSpeed();
-                            break;
+                switch (_powerupID)
+                {
+                    case 0:
+                        player.TripleShotActive();
+                        break;
+                    case 1:
+                        player.SpeedBoostActive();
+                        break;
+                    case 2:
+                        // Debug.Log("shield powerup check");
+                        player.ActivateShield();
+                        break;
+                    case 3:
+                        player.AmmooRefillActive();
+                        break;
+                    case 4:
+                        player.Heal();
+                        break;
+                    case 5:
+                        player.AltFire();
+                        break;
+                    case 6:
+                        player.NegSpeed();
+                        break;
+                    case 7:
+                        player.HomingMissile();
+                        break;
 
-                        default:
-                            Debug.Log("Default Value");
-                            break;
+                    default:
+                        Debug.Log("Default Value");
+                        break;
 
-                    }
+                }
 
                     Destroy(this.gameObject);
 

@@ -46,11 +46,10 @@ public class SpawnManager : MonoBehaviour
         {
             float randomXPosition = UnityEngine.Random.Range(-18f, 18f);
             Vector3 RandomPosition = new Vector3(randomXPosition, 8f, transform.position.z);
-            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 70));
+            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 90));
 
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
-            //newPowerup.transform.parent = this.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
 
            
@@ -80,10 +79,14 @@ public class SpawnManager : MonoBehaviour
         } else if (random >= 60 && random > 70)
         {
             return 6; // negspeed
+        } else if (random >= 70 && random > 80)
+        {
+            return 7; //homing Missile
         }
-        { 
-            return 3;
-        }
+                {
+                    return 3;
+                }
+
     }
   
 

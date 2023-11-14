@@ -88,10 +88,6 @@ public class Player : MonoBehaviour
             Debug.Log(" The Spawn Manager is null");
             return;
         }
-        if (_shieldLivesDisplay == null)
-        {
-            Debug.Log("Sheild lives diplay null");
-        }
 
         if (_uiManager == null)
         {
@@ -123,10 +119,6 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
-        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
-        {
-            FireMissile();
-        }
 
       
     }
@@ -221,6 +213,7 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmo(_currentAmmo);
     }
 
+
     void FireMissile()
     {
         FireMissileCoroutine();
@@ -283,6 +276,10 @@ public class Player : MonoBehaviour
     }
     public void ActivateShield()
     {
+        if (_shieldLivesDisplay == null)
+        {
+            Debug.Log("Shield lives diplay null");
+        }
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
         _shieldLivesDisplay.text = "shield lives";
@@ -323,6 +320,13 @@ public class Player : MonoBehaviour
         int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
         _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
+    }
+    public void HomingMissile()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+        {
+            FireMissile();
+        }
     }
 
     public void Heal()

@@ -7,32 +7,31 @@ public class Missile : MonoBehaviour
 
     [SerializeField] private float _speed = 10f;
     private bool _isEnemyMissile;
+    private bool _playerMissileRadar = false;
     private float _enemyMissileRange = -4f;
-    private float _playerMissileRange = 7.5f;
+    private float _playerMissileRange = 3.5f;
     private Animator _missileExplosion;
     private BoxCollider2D _missileCollider;
     private Enemy _enemy;
     private Player _player;
     private Transform Enemy;
     private Transform Player;
+    private SmartEnemy _smartEnemy;
+    private AggressiveEnemy _aggressiveEnemy;
+    private AvoidShot _avoidShot;
+    private Enemy _fastenemy;
 
-   
-    [SerializeField] ContactFilter2D contactFilter;
+
     [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
 
     void Start()
     {
-
         _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
-        //Player = GameObject.FindGameObjectWithTag("Player").transform;
-        //Enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
-
     }
     // Update is called once per frame
     void Update()
     {
-
         if (_isEnemyMissile == false)
         {
             MoveUp();
@@ -40,16 +39,28 @@ public class Missile : MonoBehaviour
         else
         {
             MoveDown();
-        }
-        
+        }        
     }
-    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)
-   
 
-    //explode range 7.5 to 8.5
+    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
     public void MoveUp()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        if (_playerMissileRadar == true)
+        {
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        }
+        else
+        {        
+            if (transform.position.x > _playerMissileRange)
+            {
+                transform.Translate(Vector3.left * _speed * Time.deltaTime);
+
+            }
+            else
+            {
+                transform.Translate(Vector3.right * _speed * Time.deltaTime);
+            }
+        }
 
         if (transform.position.y > 8.5f)
         {
@@ -59,9 +70,8 @@ public class Missile : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
 
-    }    
-   
     public void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -104,6 +114,38 @@ public class Missile : MonoBehaviour
                     enemy.Damage();
                 }
          }
+         if (other.tag == "FastEnemy" && _isEnemyMissile == false)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.Damage();
+            }
+        }
+         if (other.tag == "SmartEnemy" && _isEnemyMissile == false)
+        {
+            SmartEnemy smartEnemy = other.GetComponent<SmartEnemy>();
+            if (smartEnemy != null)
+            {
+                smartEnemy.Damage();
+            }
+        }
+         if (other.tag == "AggroEnemy" && _isEnemyMissile == false)
+        {
+            AggressiveEnemy aggressiveEnemy = other.GetComponent<AggressiveEnemy>();
+            if (aggressiveEnemy != null)
+            {
+                aggressiveEnemy.Damage();
+            }
+        }
+        if (other.tag == "AvoidShot" && _isEnemyMissile == false)
+        {
+            AvoidShot avoidShot = other.GetComponent<AvoidShot>();
+            if (avoidShot != null)
+            {
+                avoidShot.Damage();
+            }
+        }
 
     }
 

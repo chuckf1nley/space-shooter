@@ -158,11 +158,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
+  _fastSpeed: 4.5
   _laserPrefab: {fileID: 5522119868211626154, guid: 19711c8b4b30ca544a796680c4e302ff, type: 3}
-  _missilePrefab: {fileID: 6087997443609893141, guid: 1118acc4f766d5e47a675f9326c64740, type: 3}
+  _missilePrefab: {fileID: 4093342770479988480, guid: 769b05c4ba6287546a15633189fd1972, type: 3}
   _enemyShieldPrefab: {fileID: 1716696902119978974, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
   _enemyRight: {fileID: 2322430216361035325}
-  _fastEnemy: {fileID: 0}
   _enemyID: 0
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyShieldStrength: 1

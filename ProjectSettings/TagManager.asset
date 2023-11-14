@@ -10,13 +10,11 @@ TagManager:
   - Enemy
   - Laser
   - Spawnable
-  - laser
   - Ammo
   - Health
   - AltFire
   - EnemyAvoidShot
   - FastEnemy
-  - EnemyRight
   - EnemyMissile
   - PlayerMissile
   - EnemyShield
@@ -24,6 +22,9 @@ TagManager:
   - SmartEnemy
   - SmartWeapon
   - Powerup
+  - AvoidShot
+  - laser
+  - Homingmissile
   layers:
   - Default
   - TransparentFX

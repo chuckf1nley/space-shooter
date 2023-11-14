@@ -17,11 +17,13 @@ public class AvoidShot : MonoBehaviour
     private float _startX;
     private float _distanceX;
     private float _rangeX;
+    private float _laserX;
     private Player _player;
     private Laser _laser;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private bool _isLaserClose = false;
+    private bool _avoidShot = false;
     private SpawnManager _spawnManager;
     private int _enemyLives;
     private int _enemyShieldLives = 1;
@@ -32,10 +34,6 @@ public class AvoidShot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // _player = GameObject.Find("Player").GetComponent<Player>();
-        // player = GameObject.FindGameObjectWithTag("Player").transform;
-        laser = GameObject.FindGameObjectWithTag("Laser").transform;
-        _laser = GameObject.Find( "Laser").GetComponent<Laser>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
@@ -54,7 +52,7 @@ public class AvoidShot : MonoBehaviour
 
         if (_enemyDeathAnim == null)
         {
-            Debug.Log("animator is null- avoidShot");
+            Debug.Log("animator is null - avoidShot");
         }
 
         if (_laser == null)
@@ -78,18 +76,7 @@ public class AvoidShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        Debug.Log("Laser not called avoidShot");
-        LaserInRange();
-        //_avoidDistance = Vector3.Distance(transform.position, _laser.transform.position);
-        //if (_avoidDistance > 2.5f)
-        //{
-        //    Movement();
-        //}
-        //else
-        //{
-        //    AvoidLaser();
-        //}
+        Movement();
 
         if (transform.position.y < -7.5)
         {
@@ -98,40 +85,38 @@ public class AvoidShot : MonoBehaviour
         }
     }
 
+    public void AvoidShots()
+    {
+        //Debug.Log("AVoidShot");
+        _avoidShot = true;
+    }
 
     public void Movement()
     {
 
-        if (transform.position.x > _startX + 4)
-            _movement = -1;
-        else if (transform.position.x < _startX - 4)        
-            _movement = 1;
-        
+        if (_avoidShot == false)
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else
+        {
+           
+            if (transform.position.x > _laserX + 3)
+            {
+                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime);
 
-    }
-    public void AvoidLaser()
-    {
-        _direction = _laser.transform.position + transform.position;
-         _direction.Normalize();
-        transform.Translate(_direction * _avoidSpeed * Time.deltaTime);
-
-    //    if (_avoidDistance < 2.5)
-    //        _avoidSpeed += 2;
-
-    //     _avoidDistance = Vector3.Distance(transform.position, _laser.transform.position);
-    //    Vector3 direction = _laser.transform.position + transform.position;
-    //    if (direction == null)
-    //    {
-    //        Debug.Log("laser not found, avoidshot");
-    //    }
-
-
-
-    //    transform.Translate(direction *  _avoidSpeed * Time.deltaTime * 2);
-    }
+                LaserInRange();
+            }
+            else
+            {
+                _avoidShot = true;
+            }
+        }
+    }   
 
     private IEnumerator LaserInRange()
     {
+        Debug.Log("Laser in range called");
         WaitForSeconds wait = new WaitForSeconds(0.5f);
         while (true)
         {
@@ -192,6 +177,7 @@ public class AvoidShot : MonoBehaviour
 
     public void Damage()
     {
+        //Debug.Log("damage called - avoid shot");
         if (_isEnemyShieldActive == true)
         {
             _enemyShieldLives--;
@@ -202,6 +188,7 @@ public class AvoidShot : MonoBehaviour
     }
     public void EnemyDeathSequence()
     {
+        //Debug.Log("death sequence called - avoid shot");
         if (_enemyDeathAnim != null)
         {
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
@@ -229,6 +216,7 @@ public class AvoidShot : MonoBehaviour
             }
             if (other.CompareTag("Laser"))
             {
+                //Debug.Log("laser called avoid shot");
                 Destroy(other.gameObject);
                 if (_player != null)
                 {
