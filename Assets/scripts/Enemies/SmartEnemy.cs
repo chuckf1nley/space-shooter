@@ -47,7 +47,7 @@ public class SmartEnemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-        SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
+       // SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;
@@ -125,22 +125,11 @@ public class SmartEnemy : MonoBehaviour
                 {
                     Destroy(this.gameObject);
                 }
-                //FireSmartWeaponCoroutine();
             }
 
         }
     }
-    IEnumerator FireSmartWeaponCoroutine()
-    {
-        while (_canEnemyFire == true)
-        {
-            Instantiate(_smartWeaponPrefab, transform.position + _smartWeaponOffset, Quaternion.identity);
-            Vector3 _smartWeaponPos = transform.TransformPoint(_smartWeaponOffset);
-            GameObject _SmartWeapon = Instantiate(_smartWeaponPrefab, _smartWeaponPos, this.transform.rotation);
-            _smartWeapon.tag = "Smart Weapon";
-            yield return new WaitForSeconds(Random.Range(2f, 4f));
-        }
-    }
+   
 
     private IEnumerator PlayerInRange()
     {
@@ -152,7 +141,6 @@ public class SmartEnemy : MonoBehaviour
 
             if(distanceX <= rangeX && transform.position.y < player.position.y)
             {
-                //Debug.Log("Behind Player");
                 _isBehindPlayer = true;
             }
             else 

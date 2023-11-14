@@ -15,21 +15,26 @@ public class AvoidShot : MonoBehaviour
     private float _avoidDistance = 2.5f;
     private float _avoidSpeed = 4f;
     private float _startX;
+    private float _distanceX;
+    private float _rangeX;
     private Player _player;
     private Laser _laser;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
+    private bool _isLaserClose = false;
     private SpawnManager _spawnManager;
     private int _enemyLives;
     private int _enemyShieldLives = 1;
     private int _movement;
     private Vector3 _direction;
-
+    private Transform laser;
 
     // Start is called before the first frame update
     void Start()
     {
-       // _player = GameObject.Find("Player").GetComponent<Player>();
+        // _player = GameObject.Find("Player").GetComponent<Player>();
+        // player = GameObject.FindGameObjectWithTag("Player").transform;
+        laser = GameObject.FindGameObjectWithTag("Laser").transform;
         _laser = GameObject.Find( "Laser").GetComponent<Laser>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
@@ -66,24 +71,25 @@ public class AvoidShot : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
-        int rng = Random.Range(0, 60);
+        int rng = Random.Range(0, 70);
         GenerateShieldIndex(rng);
     }
 
     // Update is called once per frame
     void Update()
     {
-        _avoidDistance = Vector3.Distance(transform.position, _laser.transform.position);
-        Debug.Log("Laser not called avoidShot");
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (_avoidDistance > 2.5f)
-        {
-            Movement();
-        }
-        else
-        {
-            AvoidLaser();
-        }
+        Debug.Log("Laser not called avoidShot");
+        LaserInRange();
+        //_avoidDistance = Vector3.Distance(transform.position, _laser.transform.position);
+        //if (_avoidDistance > 2.5f)
+        //{
+        //    Movement();
+        //}
+        //else
+        //{
+        //    AvoidLaser();
+        //}
 
         if (transform.position.y < -7.5)
         {
@@ -122,6 +128,26 @@ public class AvoidShot : MonoBehaviour
 
 
     //    transform.Translate(direction *  _avoidSpeed * Time.deltaTime * 2);
+    }
+
+    private IEnumerator LaserInRange()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.5f);
+        while (true)
+        {
+            float distancex = Mathf.Abs(laser.position.x + transform.position.x);
+
+            if (_distanceX <= _rangeX && transform.position.y < laser.position.y)
+            {
+                _isLaserClose = true;
+            }
+            else
+            {
+                if (_isLaserClose)
+                    _isLaserClose = false;
+            }
+            yield return wait;
+        }
     }
 
 
@@ -203,6 +229,7 @@ public class AvoidShot : MonoBehaviour
             }
             if (other.CompareTag("Laser"))
             {
+                Destroy(other.gameObject);
                 if (_player != null)
                 {
                     _player.AddScore(10);
@@ -211,10 +238,7 @@ public class AvoidShot : MonoBehaviour
             }
             if (other.CompareTag("Shield"))
             {
-                if (_player != null)
-                {
-                    _player.AddScore(10);
-                }
+                other.GetComponent<Shield>().Damage();
                 Damage();
             }
             if (other.CompareTag("PlayerMissile"))

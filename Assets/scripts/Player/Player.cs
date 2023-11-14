@@ -85,8 +85,12 @@ public class Player : MonoBehaviour
 
         if (_spawnManager == null)
         {
-            Debug.Log(" The Spawn Manager is NULL.");
+            Debug.Log(" The Spawn Manager is null");
             return;
+        }
+        if (_shieldLivesDisplay == null)
+        {
+            Debug.Log("Sheild lives diplay null");
         }
 
         if (_uiManager == null)
@@ -103,7 +107,6 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
-        ShieldLives();
     }
 
     // Update is called once per frame
@@ -282,13 +285,9 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-        ShieldLives();
-    }
-    public void ShieldLives()
-    {
         _shieldLivesDisplay.text = "shield lives";
     }
-
+   
     public void TripleShotActive()
     {
         _isTriple_ShotActive = true;
