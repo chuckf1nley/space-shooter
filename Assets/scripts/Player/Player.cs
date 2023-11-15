@@ -36,9 +36,6 @@ public class Player : MonoBehaviour
     private float _vertical;
     private float _canfire = -2f;
     private float _missileFire;
-    private float _playerCurrentDirection;
-    private float _powerupSpeed;
-    private bool _wAsCPressed = false;
     private bool _canMissileFire = false;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -46,6 +43,7 @@ public class Player : MonoBehaviour
     private bool _firingConstantly = false;
     private bool _negSpeed = false;
     private bool _isThrusterActive = true;
+    private bool _isMissilePowerupActive = false;
     private int _score;
     private int _minLives = 0;
     private int _minAmmo = 0;
@@ -63,7 +61,6 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
-    private Vector3 playerCurrentDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +84,10 @@ public class Player : MonoBehaviour
         {
             Debug.Log(" The Spawn Manager is null");
             return;
+        }
+        if (_shieldLivesDisplay != null)
+        {
+            Debug.Log("shield display lives null");
         }
 
         if (_uiManager == null)
@@ -120,7 +121,11 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
 
-      
+        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+        {
+            HomingMissile();
+        }
+
     }
 
     void CalculateMovement()
@@ -216,8 +221,6 @@ public class Player : MonoBehaviour
 
     void FireMissile()
     {
-        FireMissileCoroutine();
-
         _missileFire = Time.time + _missileFireRate;
         Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
 
@@ -235,6 +238,13 @@ public class Player : MonoBehaviour
         }
 
     }
+    IEnumerator FireMissilePowerDownCoroutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _canMissileFire = false;
+    }
+
+     
 
     public void Damage()
     {
@@ -282,7 +292,7 @@ public class Player : MonoBehaviour
         }
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-        _shieldLivesDisplay.text = "shield lives";
+       // _shieldLivesDisplay.text = "shield lives";
     }
    
     public void TripleShotActive()
@@ -323,10 +333,18 @@ public class Player : MonoBehaviour
     }
     public void HomingMissile()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+       if (_isMissilePowerupActive == (true))
         {
-            FireMissile();
+
+        FireMissile();
+        FireMissileCoroutine();
         }
+        else
+        {
+            _isMissilePowerupActive = (false);
+            FireMissilePowerDownCoroutine();
+        }
+
     }
 
     public void Heal()

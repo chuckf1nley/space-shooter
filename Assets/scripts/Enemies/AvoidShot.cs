@@ -12,7 +12,7 @@ public class AvoidShot : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _enemyShieldStrength = 1;
-    private float _avoidDistance = 2.5f;
+    private float _avoidDistance = 5f;
     private float _avoidSpeed = 4f;
     private float _startX;
     private float _distanceX;
@@ -109,7 +109,7 @@ public class AvoidShot : MonoBehaviour
             }
             else
             {
-                _avoidShot = true;
+                AvoidShots();
             }
         }
     }   

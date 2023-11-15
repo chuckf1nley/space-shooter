@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
         _thrusterInactiveText.text = "thruster on cooldown";
     }
 
-    public void shieldLives(int shield)
+    public void  ShieldLives()
     {
         _shield_Lives_Display.text = "shield lives";
     }

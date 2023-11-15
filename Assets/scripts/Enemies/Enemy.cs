@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
     private int _enemyShieldLives = 1;
     private int _direction;
     private SpawnManager _spawnManager;
+    private Transform player;
 
     private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
@@ -43,8 +44,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+      //  _player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();

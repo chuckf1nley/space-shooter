@@ -8,6 +8,7 @@ public class Missile : MonoBehaviour
     [SerializeField] private float _speed = 10f;
     private bool _isEnemyMissile;
     private bool _playerMissileRadar = false;
+    private bool _isPowerupActive = false;
     private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 3.5f;
     private Animator _missileExplosion;
@@ -39,7 +40,7 @@ public class Missile : MonoBehaviour
         else
         {
             MoveDown();
-        }        
+        }
     }
 
     //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    

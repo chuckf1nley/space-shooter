@@ -2693,7 +2693,7 @@ MonoBehaviour:
   _missileFireRate: 2
   _laserPrefab: {fileID: 6915159565038734937, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
   _tripleShotPrefab: {fileID: 2564166531905080966, guid: b9d37007e29879449a89ddba9d018acc, type: 3}
-  _missilePrefab: {fileID: 6087997443609893141, guid: 1118acc4f766d5e47a675f9326c64740, type: 3}
+  _missilePrefab: {fileID: 6087997443609893141, guid: b8df9336eb1e4dc40ba265945169f532, type: 3}
   _SpeedBoostPrefab: {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
   _ammoRefillPrefab: {fileID: 5634565700187194058, guid: e5af0948f721cd246bfb08e28dce2302, type: 3}
   _healthPrefab: {fileID: 5783914751581226875, guid: 300f787aa4f94d24396ee6e6b00c4032, type: 3}
@@ -2706,7 +2706,7 @@ MonoBehaviour:
   _shield: {fileID: 2911204223339304364, guid: 293b1f86fde727f4d83b221a127b9a82, type: 3}
   _shieldVisualizer: {fileID: 1505447057}
   _thrusterText: {fileID: 930148502}
-  _thrusterInactive: {fileID: 0}
+  _thrusterInactive: {fileID: 942334386}
   _maxLives: 3
   _currentLives: 3
   _currentAmmo: 15

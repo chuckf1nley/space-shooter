@@ -12,10 +12,12 @@ public class SmartWeapon : MonoBehaviour
     private float _playerDistance;
     private float _interceptDistance;
     private bool _isPlayerAlive;
+    private Transform player;
 
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+       // _player = GameObject.Find("Player").GetComponent<Player>();
         _isPlayerAlive = true;
       
 
@@ -34,10 +36,6 @@ public class SmartWeapon : MonoBehaviour
             {
                 Weapon();
             }
-       
-        float step = _speed * Time.deltaTime;
-        Projectile.transform.position = Vector3.MoveTowards(Projectile.transform.position, _player.transform.position, _speed);
-
     }
 
     public void Weapon()
