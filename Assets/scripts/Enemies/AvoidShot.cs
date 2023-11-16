@@ -87,34 +87,29 @@ public class AvoidShot : MonoBehaviour
 
     public void AvoidShots()
     {
-        //Debug.Log("AVoidShot");
+        Debug.Log("AVoidShot");
         _avoidShot = true;
     }
 
     public void Movement()
     {
 
-        if (_avoidShot == false)
+        if (_avoidShot == true)
         {
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
         else
-        {
-           
+        {           
             if (transform.position.x > _laserX + 3)
             {
-                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime);
+                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * 2);
 
                 LaserInRange();
-            }
-            else
-            {
-                AvoidShots();
-            }
+            }            
         }
     }   
 
-    private IEnumerator LaserInRange()
+    IEnumerator LaserInRange()
     {
         Debug.Log("Laser in range called");
         WaitForSeconds wait = new WaitForSeconds(0.5f);
@@ -210,7 +205,7 @@ public class AvoidShot : MonoBehaviour
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
-                    _player.Damage();
+                    player.Damage();
                 }
                 Damage();
             }

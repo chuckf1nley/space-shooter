@@ -120,15 +120,13 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
-
-        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
-        {
-            HomingMissile();
-        }
-
+            if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+            {
+                HomingMissile();
+            }        
     }
 
-    void CalculateMovement()
+    public void CalculateMovement()
     {
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
@@ -187,7 +185,7 @@ public class Player : MonoBehaviour
         _thruster.SetActive(false);
     }
 
-    void FireLaser()
+    public void FireLaser()
     {
         _canfire = Time.time + _fireRate;
 
@@ -218,33 +216,31 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmo(_currentAmmo);
     }
 
-
-    void FireMissile()
+    public void HomingMissile()
     {
-        _missileFire = Time.time + _missileFireRate;
-        Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
+        FireMissile();
+        _isMissilePowerupActive = true;
+        _canMissileFire = true;
+        StartCoroutine(FireMissilePowerDownCoroutine());
 
     }
-    IEnumerator FireMissileCoroutine()
+    public void FireMissile()
     {
-        while (_canMissileFire == true)
+        if (_canMissileFire == true)
         {
+            _missileFire = Time.time + _missileFireRate;
             Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
             Vector3 _missilePos = transform.TransformPoint(_missileOffset);
             GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
-            _missile.tag = "Player Missile";
-            yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 5f));
-
+            _missile.tag = "PlayerMissile";
         }
-
     }
     IEnumerator FireMissilePowerDownCoroutine()
     {
         yield return new WaitForSeconds(5f);
+        _isMissilePowerupActive = false;
         _canMissileFire = false;
     }
-
-     
 
     public void Damage()
     {
@@ -330,21 +326,6 @@ public class Player : MonoBehaviour
         int _currentAmmoLaserAmmoClamp = Mathf.Clamp(_currentAmmo, _minAmmo, _maxAmmo);
         _currentAmmo = _currentAmmoLaserAmmoClamp;
         _uiManager.UpdateAmmo(_currentAmmo);
-    }
-    public void HomingMissile()
-    {
-       if (_isMissilePowerupActive == (true))
-        {
-
-        FireMissile();
-        FireMissileCoroutine();
-        }
-        else
-        {
-            _isMissilePowerupActive = (false);
-            FireMissilePowerDownCoroutine();
-        }
-
     }
 
     public void Heal()

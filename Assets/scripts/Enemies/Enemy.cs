@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     private bool _isEnemyShieldActive = false;
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
-    private bool _canFire;
+    //private bool _canFire;
     private bool _canFireMissile;
     private bool _isEnemyAlive = true;
     private int _enemyLives = 1;
@@ -38,14 +38,11 @@ public class Enemy : MonoBehaviour
     private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-      //  _player = GameObject.Find("Player").GetComponent<Player>();
+       //player = GameObject.FindGameObjectWithTag("Player").transform;
+       //_player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
@@ -62,7 +59,7 @@ public class Enemy : MonoBehaviour
 
         if (_player == null)
         {
-            Debug.LogError("player is null");
+            Debug.Log("player is null");
         }
 
         if (_enemyDeathAnim == null)
@@ -71,7 +68,7 @@ public class Enemy : MonoBehaviour
         }
         if (_audioSource == null)
         {
-            Debug.LogError("AudioSource on Enemy is null!");
+            Debug.Log("AudioSource on Enemy is null!");
         }
         else
         {
@@ -101,7 +98,7 @@ public class Enemy : MonoBehaviour
 
     public void FireLaser()
     {
-        LaserOffSet();
+        //LaserOffSet();
 
         if (Time.time > _canfire && _isEnemyRight == true && _isEnemyAlive == true)
         {
@@ -115,17 +112,17 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    public void LaserOffSet()
-    {
-        if (_canFire == true)
-        {
-            Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-            Vector3 _laserPos = transform.TransformPoint(_laserOffset);
-            GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-            _laser.tag = "Enemy Laser";
-        }
+    //public void LaserOffSet()
+    //{
+    //    if (_canFire == true)
+    //    {
+    //        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
+    //        Vector3 _laserPos = transform.TransformPoint(_laserOffset);
+    //        GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
+    //        _laser.tag = "Enemy Laser";
+    //    }
 
-    }
+    //}
 
     public void FireMissile()
     {

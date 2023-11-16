@@ -224,7 +224,7 @@ public class SmartEnemy : MonoBehaviour
                 Player player = other.transform.GetComponent<Player>();
                 if (player != null)
                 {
-                    _player.Damage();
+                    player.Damage();
                 }
                 Damage();
             }

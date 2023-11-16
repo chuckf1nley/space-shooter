@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         {
             float randomXPosition = UnityEngine.Random.Range(-18f, 18f);
             Vector3 RandomPosition = new Vector3(randomXPosition, 8f, transform.position.z);
-            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 90));
+            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 85));
 
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
@@ -61,31 +61,38 @@ public class SpawnManager : MonoBehaviour
         if (random >= 0 && random < 10)
         {
             return 0; //tripleshot
-        } else if (random >= 10 && random < 20)
+        }
+        else if (random >= 10 && random < 20)
         {
             return 1; //speed boost
-        } else if (random >= 20 && random < 30)
+        }
+        else if (random >= 20 && random < 30)
         {
             return 2; // shield
-        } else if (random >= 30 && random < 40)
+        }
+        else if (random >= 30 && random < 40)
         {
             return 3; //ammo
-        } else if (random >= 40 && random < 50)
+        }
+        else if (random >= 40 && random < 50)
         {
             return 4; //health
-        } else if (random >= 50 && random < 60)
+        }
+        else if (random >= 50 && random < 60)
         {
             return 5; // altfire
-        } else if (random >= 60 && random > 70)
+        }
+        else if (random >= 60 && random > 70)
         {
             return 6; // negspeed
-        } else if (random >= 70 && random > 80)
+        }
+        else if (random >= 70 && random > 80)
         {
             return 7; //homing Missile
         }
-                {
-                    return 3;
-                }
+        {
+            return 3;
+        }
 
     }
   

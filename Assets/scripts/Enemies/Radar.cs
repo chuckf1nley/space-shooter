@@ -6,8 +6,6 @@ public class Radar : MonoBehaviour
 {
     [SerializeField] private AvoidShot _parent;
 
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Laser")

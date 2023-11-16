@@ -48,28 +48,33 @@ public class Missile : MonoBehaviour
     {
         if (_playerMissileRadar == true)
         {
-            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            HomingActive();
         }
         else
-        {        
-            if (transform.position.x > _playerMissileRange)
-            {
-                transform.Translate(Vector3.left * _speed * Time.deltaTime);
-
-            }
-            else
-            {
-                transform.Translate(Vector3.right * _speed * Time.deltaTime);
-            }
+        {
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
         }
 
-        if (transform.position.y > 8.5f)
+         if (transform.position.y > 8.5f)
         {
             if (transform.parent != null)
             {
                 Destroy(transform.parent.gameObject);
             }
             Destroy(this.gameObject);
+        }
+    }
+
+    public void HomingActive()
+    {
+        if (_isPowerupActive && _playerMissileRange < 4)
+        {
+            _speed += 1;
+
+            Vector3 direction = _enemy.transform.position - transform.position;
+            direction = direction.normalized;
+
+            transform.Translate(direction * _speed * Time.deltaTime);
         }
     }
 
