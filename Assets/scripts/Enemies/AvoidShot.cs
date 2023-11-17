@@ -12,7 +12,6 @@ public class AvoidShot : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _enemyShieldStrength = 1;
-    private float _avoidDistance = 5f;
     private float _avoidSpeed = 4f;
     private float _startX;
     private float _distanceX;
@@ -87,7 +86,7 @@ public class AvoidShot : MonoBehaviour
 
     public void AvoidShots()
     {
-        Debug.Log("AVoidShot");
+        Debug.Log("AvoidShot - parent of radar");
         _avoidShot = true;
     }
 

@@ -5,12 +5,13 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
 
-    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _speed = 8f;
     private bool _isEnemyMissile;
     private bool _playerMissileRadar = false;
     private bool _isPowerupActive = false;
     private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 3.5f;
+    private float _interceptDistance = 2.5f;
     private Animator _missileExplosion;
     private BoxCollider2D _missileCollider;
     private Enemy _enemy;
@@ -35,27 +36,29 @@ public class Missile : MonoBehaviour
     {
         if (_isEnemyMissile == false)
         {
-            MoveUp();
+            if (_interceptDistance > 4)
+            { // _interceptDistance = Vector3.Distance(transform.position, _enemy.transform.position);
+                MoveUp();
+            }
+            else if (_interceptDistance < 4)
+            {
+                HomingActive();
+            }
         }
         else
         {
             MoveDown();
         }
-    }
 
-    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
-    public void MoveUp()
-    {
-        if (_playerMissileRadar == true)
+        if (transform.position.y > 9.5f)
         {
-            HomingActive();
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
         }
-        else
-        {
-            transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        }
-
-         if (transform.position.y > 8.5f)
+        if (transform.position.y < -6.5)
         {
             if (transform.parent != null)
             {
@@ -65,16 +68,23 @@ public class Missile : MonoBehaviour
         }
     }
 
+    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
+    public void MoveUp()
+    {
+        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+    }
+
     public void HomingActive()
     {
-        if (_isPowerupActive && _playerMissileRange < 4)
+        if (_isPowerupActive && _interceptDistance < 4)
         {
+            _playerMissileRadar = true;
             _speed += 1;
 
             Vector3 direction = _enemy.transform.position - transform.position;
             direction = direction.normalized;
 
-            transform.Translate(direction * _speed * Time.deltaTime);
+            transform.Translate(direction * _speed * Time.deltaTime * 2);
         }
     }
 
@@ -112,15 +122,7 @@ public class Missile : MonoBehaviour
                 player.Damage();
             }
         }
-         if (other.tag == "Enemy" && _isEnemyMissile == false)
-         {
-                Enemy enemy = other.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.Damage();
-                }
-         }
-         if (other.tag == "FastEnemy" && _isEnemyMissile == false)
+        if (other.tag == "Enemy" && _isEnemyMissile == false)
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
@@ -128,7 +130,15 @@ public class Missile : MonoBehaviour
                 enemy.Damage();
             }
         }
-         if (other.tag == "SmartEnemy" && _isEnemyMissile == false)
+        if (other.tag == "FastEnemy" && _isEnemyMissile == false)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.Damage();
+            }
+        }
+        if (other.tag == "SmartEnemy" && _isEnemyMissile == false)
         {
             SmartEnemy smartEnemy = other.GetComponent<SmartEnemy>();
             if (smartEnemy != null)
@@ -136,7 +146,7 @@ public class Missile : MonoBehaviour
                 smartEnemy.Damage();
             }
         }
-         if (other.tag == "AggroEnemy" && _isEnemyMissile == false)
+        if (other.tag == "AggroEnemy" && _isEnemyMissile == false)
         {
             AggressiveEnemy aggressiveEnemy = other.GetComponent<AggressiveEnemy>();
             if (aggressiveEnemy != null)
@@ -154,6 +164,5 @@ public class Missile : MonoBehaviour
         }
 
     }
-
 
 }
