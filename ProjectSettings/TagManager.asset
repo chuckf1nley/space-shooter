@@ -23,7 +23,6 @@ TagManager:
   - SmartWeapon
   - Powerup
   - AvoidShot
-  - laser
   - Homingmissile
   layers:
   - Default

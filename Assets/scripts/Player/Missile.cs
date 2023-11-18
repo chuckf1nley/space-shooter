@@ -6,10 +6,8 @@ public class Missile : MonoBehaviour
 {
 
     [SerializeField] private float _speed = 8f;
-    private bool _isEnemyMissile;
     private bool _playerMissileRadar = false;
     private bool _isPowerupActive = false;
-    private float _enemyMissileRange = -4f;
     private float _playerMissileRange = 3.5f;
     private float _interceptDistance = 2.5f;
     private Animator _missileExplosion;
@@ -28,26 +26,27 @@ public class Missile : MonoBehaviour
 
     void Start()
     {
+        if (_enemy != null)
+        {
+            Debug.Log("Enemy is null on missile");
+        }
+
         _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
-        if (_isEnemyMissile == false)
+            _interceptDistance = Vector3.Distance(transform.position, _enemy.transform.position);
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+
+        if (_interceptDistance > 4)
         {
-            if (_interceptDistance > 4)
-            { // _interceptDistance = Vector3.Distance(transform.position, _enemy.transform.position);
-                MoveUp();
-            }
-            else if (_interceptDistance < 4)
-            {
-                HomingActive();
-            }
+            MoveUp();
         }
-        else
+        else if (_interceptDistance < 4)
         {
-            MoveDown();
+            HomingActive();
         }
 
         if (transform.position.y > 9.5f)
@@ -58,14 +57,7 @@ public class Missile : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-        if (transform.position.y < -6.5)
-        {
-            if (transform.parent != null)
-            {
-                Destroy(transform.parent.gameObject);
-            }
-            Destroy(this.gameObject);
-        }
+
     }
 
     //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
@@ -88,41 +80,9 @@ public class Missile : MonoBehaviour
         }
     }
 
-    public void MoveDown()
-    {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if (transform.position.y < -3.5f)
-        {
-            if (transform.parent != null)
-            {
-                Destroy(transform.parent.gameObject);
-            }
-            Destroy(this.gameObject);
-        }
-    }
-
-    public void AssignPlayerMissile()
-    {
-        _isEnemyMissile = false;
-    }
-
-    public void AssignEnemyMissile()
-    {
-        _isEnemyMissile = true;
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player" && _isEnemyMissile == true)
-        {
-            Player player = other.GetComponent<Player>();
-            if (player != null)
-            {
-                player.Damage();
-            }
-        }
-        if (other.tag == "Enemy" && _isEnemyMissile == false)
+    {        
+        if (other.tag == "Enemy")
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
@@ -130,7 +90,7 @@ public class Missile : MonoBehaviour
                 enemy.Damage();
             }
         }
-        if (other.tag == "FastEnemy" && _isEnemyMissile == false)
+        if (other.tag == "FastEnemy")
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
@@ -138,7 +98,7 @@ public class Missile : MonoBehaviour
                 enemy.Damage();
             }
         }
-        if (other.tag == "SmartEnemy" && _isEnemyMissile == false)
+        if (other.tag == "SmartEnemy")
         {
             SmartEnemy smartEnemy = other.GetComponent<SmartEnemy>();
             if (smartEnemy != null)
@@ -146,7 +106,7 @@ public class Missile : MonoBehaviour
                 smartEnemy.Damage();
             }
         }
-        if (other.tag == "AggroEnemy" && _isEnemyMissile == false)
+        if (other.tag == "AggroEnemy")
         {
             AggressiveEnemy aggressiveEnemy = other.GetComponent<AggressiveEnemy>();
             if (aggressiveEnemy != null)
@@ -154,7 +114,7 @@ public class Missile : MonoBehaviour
                 aggressiveEnemy.Damage();
             }
         }
-        if (other.tag == "AvoidShot" && _isEnemyMissile == false)
+        if (other.tag == "AvoidShot")
         {
             AvoidShot avoidShot = other.GetComponent<AvoidShot>();
             if (avoidShot != null)

@@ -115,9 +115,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3365287887360371896}
   - component: {fileID: 2442897397957159598}
-  - component: {fileID: 4364468939931442515}
   - component: {fileID: 4441145486299617923}
   - component: {fileID: 3290950438605392359}
+  - component: {fileID: 9054895605417396669}
   m_Layer: 0
   m_Name: EnemyMissile
   m_TagString: EnemyMissile
@@ -163,56 +163,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4364468939931442515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093342770479988480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c927c7cd59e13894da3341b4a1aade84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _explosionForce: 3.5
-  _explosionRadius: 3.5
-  contactFilter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  affectedColliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!95 &4441145486299617923
 Animator:
   serializedVersion: 4
@@ -259,6 +209,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24635637, y: 1.2752079}
   m_EdgeRadius: 0
+--- !u!114 &9054895605417396669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4093342770479988480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d055a8231e4807a46b4101a01b644df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 8
 --- !u!1001 &6057000800556305609
 PrefabInstance:
   m_ObjectHideFlags: 0

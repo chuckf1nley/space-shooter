@@ -13,6 +13,4 @@ public class Radar : MonoBehaviour
             _parent.AvoidShots();
         }
     }
-
-
 }

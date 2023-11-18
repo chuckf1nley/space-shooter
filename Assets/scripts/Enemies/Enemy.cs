@@ -112,18 +112,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    //public void LaserOffSet()
-    //{
-    //    if (_canFire == true)
-    //    {
-    //        Instantiate(_laserPrefab, transform.position + _laserOffset, Quaternion.identity);
-    //        Vector3 _laserPos = transform.TransformPoint(_laserOffset);
-    //        GameObject _laser = Instantiate(_laserPrefab, _laserPos, this.transform.rotation);
-    //        _laser.tag = "Enemy Laser";
-    //    }
-
-    //}
-
+    
     public void FireMissile()
     {
         FireMissileCoroutine();
@@ -133,10 +122,10 @@ public class Enemy : MonoBehaviour
             _fireRate = Random.Range(2f, 5f);
             _canMissileFire = Time.time + _fireRate;
             GameObject fireMissile = Instantiate(_missilePrefab, transform.position, Quaternion.identity);
-            Missile[] missile = fireMissile.GetComponentsInChildren<Missile>();
-            for (int i = 0; i < missile.Length; i++)
+            FastEnemyMissile[] fastenemymissile = fireMissile.GetComponentsInChildren<FastEnemyMissile>();
+            for (int i = 0; i < fastenemymissile.Length; i++)
             {
-                missile[i].AssignEnemyMissile();
+                fastenemymissile[i].AssignEnemyMissile();
             }
         }
     }
