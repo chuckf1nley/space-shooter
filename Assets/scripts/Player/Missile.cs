@@ -6,9 +6,8 @@ public class Missile : MonoBehaviour
 {
 
     [SerializeField] private float _speed = 8f;
-    private bool _playerMissileRadar = false;
+    private bool _playerMissileRadar = true;
     private bool _isPowerupActive = false;
-    private float _playerMissileRange = 3.5f;
     private float _interceptDistance = 2.5f;
     private Animator _missileExplosion;
     private BoxCollider2D _missileCollider;
@@ -21,8 +20,7 @@ public class Missile : MonoBehaviour
     private AvoidShot _avoidShot;
     private Enemy _fastenemy;
 
-
-    [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
+   // [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
 
     void Start()
     {
@@ -31,15 +29,15 @@ public class Missile : MonoBehaviour
             Debug.Log("Enemy is null on missile");
         }
 
+        _playerMissileRadar = true;
         _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
-            _interceptDistance = Vector3.Distance(transform.position, _enemy.transform.position);
-            transform.Translate(Vector3.up * _speed * Time.deltaTime);
-
+        _interceptDistance = Vector3.Distance(transform.position, Enemy.transform.position);
+        transform.Translate(Vector3.up * _speed * Time.deltaTime);
         if (_interceptDistance > 4)
         {
             MoveUp();
@@ -57,7 +55,6 @@ public class Missile : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-
     }
 
     //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
@@ -70,9 +67,8 @@ public class Missile : MonoBehaviour
     {
         if (_isPowerupActive && _interceptDistance < 4)
         {
-            _playerMissileRadar = true;
             _speed += 1;
-
+            _playerMissileRadar = true;
             Vector3 direction = _enemy.transform.position - transform.position;
             direction = direction.normalized;
 
