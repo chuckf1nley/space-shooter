@@ -10,43 +10,43 @@ public class Missile : MonoBehaviour
     private bool _isPowerupActive = false;
     private float _interceptDistance = 2.5f;
     private Animator _missileExplosion;
-    private BoxCollider2D _missileCollider;
-    private Enemy _enemy;
-    private Player _player;
-    private Transform Enemy;
-    private Transform Player;
-    private SmartEnemy _smartEnemy;
-    private AggressiveEnemy _aggressiveEnemy;
-    private AvoidShot _avoidShot;
-    private Enemy _fastenemy;
-
-   // [SerializeField] Collider2D[] affectedColliders = new Collider2D[20];
+    private GameObject _enemy;    
+    private Vector3 _direction;
 
     void Start()
     {
-        if (_enemy != null)
+        //nrf lines 25, 43
+        _enemy = GameObject.FindGameObjectWithTag("Enemy");
+        
+
+        if (_enemy == null)
         {
             Debug.Log("Enemy is null on missile");
         }
 
         _playerMissileRadar = true;
-        _missileCollider = GetComponent<BoxCollider2D>();
         _missileExplosion = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
-        _interceptDistance = Vector3.Distance(transform.position, Enemy.transform.position);
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
-        if (_interceptDistance > 4)
+        if (_enemy != null)
+        {
+            _interceptDistance = Vector3.Distance(transform.position, _enemy.transform.position);
+            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            if (_interceptDistance > 4)
+            {
+                MoveUp();
+            }
+            else if (_interceptDistance < 4)
+            {
+                HomingActive();
+            }
+        }
+        else
         {
             MoveUp();
         }
-        else if (_interceptDistance < 4)
-        {
-            HomingActive();
-        }
-
         if (transform.position.y > 9.5f)
         {
             if (transform.parent != null)
@@ -65,15 +65,13 @@ public class Missile : MonoBehaviour
 
     public void HomingActive()
     {
+       
         if (_isPowerupActive && _interceptDistance < 4)
-        {
-            _speed += 1;
-            _playerMissileRadar = true;
-            Vector3 direction = _enemy.transform.position - transform.position;
-            direction = direction.normalized;
+        _direction = _enemy.transform.position - transform.position;
+        _direction.Normalize();
+        transform.Translate(_direction * _speed * Time.deltaTime);
+        _playerMissileRadar = true;
 
-            transform.Translate(direction * _speed * Time.deltaTime * 2);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -5,7 +5,6 @@ using UnityEngine;
 public class AggressiveEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyShieldPrefab;
-    [SerializeField] private GameObject _enemy;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _chaseSpeed = 5f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -24,8 +23,6 @@ public class AggressiveEnemy : MonoBehaviour
     private int _enemyShieldLives = 1;
     private int _enemyLives;
 
-
-    //enemy needs to move towards and kamikaze the player
     // Start is called before the first frame update
     void Start()
     {

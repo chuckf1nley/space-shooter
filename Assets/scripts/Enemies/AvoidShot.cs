@@ -33,10 +33,10 @@ public class AvoidShot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _enemyDeathAnim = transform.GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _enemyDeathAnim = transform.GetComponent<Animator>();
         _startX = transform.position.x;
         _speed = 5;
         _enemyLives = 1;

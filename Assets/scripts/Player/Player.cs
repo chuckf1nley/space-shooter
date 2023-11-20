@@ -388,5 +388,4 @@ public class Player : MonoBehaviour
         _speed /= _negSpeedMultiplier;
     }
 
-   
 }

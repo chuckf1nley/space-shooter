@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _enemyShieldStrength = 1;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     public float _playerProx = 2f;
-    private Missile _missile;
     private float _fireRate = 3f;
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
@@ -26,14 +25,12 @@ public class Enemy : MonoBehaviour
     private bool _isEnemyShieldActive = false;
     private bool _isFastEnemy = true;
     private bool _isEnemyRight = true;
-    //private bool _canFire;
     private bool _canFireMissile;
     private bool _isEnemyAlive = true;
     private int _enemyLives = 1;
     private int _enemyShieldLives = 1;
     private int _direction;
     private SpawnManager _spawnManager;
-    private Transform player;
 
     private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);
     private Vector3 _missileOffset = new Vector3(0f, 0f, 0);
@@ -47,7 +44,6 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-
 
         _isEnemyRight = true;
         _isFastEnemy = true;

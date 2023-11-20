@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: -6654040684040651905}
   m_Layer: 0
   m_Name: AggroEnemy
-  m_TagString: AggroEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

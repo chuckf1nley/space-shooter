@@ -20,12 +20,6 @@ public class SpawnManager : MonoBehaviour
     private int _waveTotal;
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     public void StartSpawning()
     {
         currWave = 1;
@@ -46,7 +40,7 @@ public class SpawnManager : MonoBehaviour
         {
             float randomXPosition = UnityEngine.Random.Range(-18f, 18f);
             Vector3 RandomPosition = new Vector3(randomXPosition, 8f, transform.position.z);
-            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 85));
+            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 80));
 
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
@@ -124,6 +118,12 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 4:
+                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
+                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
+                break;
+
+            case 5:
                 _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
                 _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
