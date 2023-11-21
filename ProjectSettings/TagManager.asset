@@ -13,17 +13,15 @@ TagManager:
   - Ammo
   - Health
   - AltFire
-  - EnemyAvoidShot
-  - FastEnemy
   - EnemyMissile
   - PlayerMissile
   - EnemyShield
-  - AggroEnemy
-  - SmartEnemy
   - SmartWeapon
   - Powerup
-  - AvoidShot
   - Homingmissile
+  - laser
+  - FastEnemy
+  - BossWeapon
   layers:
   - Default
   - TransparentFX

@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             Debug.Log(" The Spawn Manager is null");
             return;
         }
-        if (_shieldLivesDisplay != null)
+        if (_shieldLivesDisplay == null)
         {
             Debug.Log("shield display lives null");
         }
@@ -159,24 +159,24 @@ public class Player : MonoBehaviour
     public void Thruster()
     {
 
-        //UIManager uiManager = GameObject.Find.GetCompnonent<UIManager>;
+        UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
-        //if (_uiManager != null)
-        //{
-        if (_isThrusterActive == true)
+        if (_uiManager != null)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
-            _uiManager.thruster();
-            thrusterPowerDownRoutine();
-            // _thrusterText.text = "thruster active";
+            if (_isThrusterActive == true)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
+                _uiManager.thruster();
+                thrusterPowerDownRoutine();
+                _thrusterText.text = "thruster active";
+            }
+            else if (_isThrusterActive == false)
+            {
+                if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
+                _uiManager.thrusterInactive();
+                _thrusterInactive.text = "thruster on cooldown";
+            }
         }
-        else if (_isThrusterActive == false)
-        {
-            if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-            _uiManager.thrusterInactive();
-            //_thrusterInactive.text = "thruster on cooldown";
-        }
-        // }
 
     }
     IEnumerator thrusterPowerDownRoutine()

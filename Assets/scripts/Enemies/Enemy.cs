@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private GameObject _enemyShieldPrefab;
-    [SerializeField] private GameObject _enemyRight;
+    [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _enemyShieldStrength = 1;
@@ -20,11 +20,12 @@ public class Enemy : MonoBehaviour
     private float _canfire = -1f;
     private float _canMissileFire = -1.5f;
     private float _startX;
+    private float _positionX;
     private Player _player;
     private Animator _enemyDeathAnim;
     private bool _isEnemyShieldActive = false;
     private bool _isFastEnemy = true;
-    private bool _isEnemyRight = true;
+    private bool _isEnemy = true;
     private bool _canFireMissile;
     private bool _isEnemyAlive = true;
     private int _enemyLives = 1;
@@ -38,16 +39,15 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       //player = GameObject.FindGameObjectWithTag("Player").transform;
-       //_player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
-        _isEnemyRight = true;
+        _isEnemy = true;
         _isFastEnemy = true;
         _startX = transform.position.x;
+        _positionX = transform.position.x;
         _direction = Random.Range(0, 2);
 
         if (_direction == 0)
@@ -76,8 +76,6 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    //use laser offset to decide which enemy is firinig laser, change accordingly
-    //organize code from top to bottom, grouped by segment
     void Update()
     {
         switch (_enemyID)
@@ -94,9 +92,8 @@ public class Enemy : MonoBehaviour
 
     public void FireLaser()
     {
-        //LaserOffSet();
 
-        if (Time.time > _canfire && _isEnemyRight == true && _isEnemyAlive == true)
+        if (Time.time > _canfire && _isEnemy == true && _isEnemyAlive == true)
         {
             _fireRate = Random.Range(3f, 7f);
             _canfire = Time.time + _fireRate;
@@ -113,7 +110,7 @@ public class Enemy : MonoBehaviour
     {
         FireMissileCoroutine();
 
-        if (Time.time > _canMissileFire && _isFastEnemy == true)
+        if (Time.time > _canMissileFire && _isFastEnemy == true && _isEnemyAlive == true)
         {
             _fireRate = Random.Range(2f, 5f);
             _canMissileFire = Time.time + _fireRate;
@@ -132,7 +129,7 @@ public class Enemy : MonoBehaviour
             Instantiate(_missilePrefab, transform.position + _missileOffset, Quaternion.identity);
             Vector3 _missilePos = transform.TransformPoint(_missileOffset);
             GameObject _missile = Instantiate(_missilePrefab, _missilePos, this.transform.rotation);
-            _missile.tag = "Enemy Missile";
+            _missile.tag = "EnemyMissile";
             yield return new WaitForSeconds(Random.Range(2f, 5f));
 
         }
@@ -146,8 +143,6 @@ public class Enemy : MonoBehaviour
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
         }
-        
-
     }
 
     public void RegularEnemyMovement()
@@ -163,14 +158,14 @@ public class Enemy : MonoBehaviour
     }
     public void EnemyRight()
     {
-        _isEnemyRight = true;
+        _isEnemy = true;
         RegularEnemyMovement();
         CalculateMovement();
         FireLaser();
         
     }
 
-    public  void FastEnemyMovement()
+    public void FastEnemyMovement()
     {
         transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
 
@@ -179,7 +174,8 @@ public class Enemy : MonoBehaviour
         else if (transform.position.x < _startX - 8)
             _direction = 1;
 
-        transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);      
+        
     }
 
     public void FastEnemy()
@@ -187,8 +183,7 @@ public class Enemy : MonoBehaviour
         _isFastEnemy = true;
         FastEnemyMovement();
         FireMissile();
-        CalculateMovement();
-      
+        CalculateMovement();      
     }
     
     public int ShieldStrength()
@@ -255,8 +250,8 @@ public class Enemy : MonoBehaviour
         _speed = 0;
         _fastSpeed = 0;
         _audioSource.Play();
-        _isEnemyRight = false;
         _isFastEnemy = false;
+        _isEnemy = false;
         _isEnemyAlive = false;
         _spawnManager.EnemyDeath();
         Destroy(this.gameObject, 1.6f);
@@ -264,10 +259,8 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isEnemyRight == true || _isFastEnemy == true)
-        {
-
-           
+        if ( _isFastEnemy == true || _isEnemy == true)
+        {           
             if (other.CompareTag("Player"))
             {
                 Player player = other.transform.GetComponent<Player>();

@@ -15,9 +15,7 @@ public class Missile : MonoBehaviour
 
     void Start()
     {
-        //nrf lines 25, 43
-        _enemy = GameObject.FindGameObjectWithTag("Enemy");
-        
+        _enemy = GameObject.FindGameObjectWithTag("Enemy");        
 
         if (_enemy == null)
         {
@@ -57,7 +55,6 @@ public class Missile : MonoBehaviour
         }
     }
 
-    //check which object its hitting, add score, damage, change to homing for player and enemy (section requirement)    
     public void MoveUp()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
@@ -83,39 +80,7 @@ public class Missile : MonoBehaviour
             {
                 enemy.Damage();
             }
-        }
-        if (other.tag == "FastEnemy")
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.Damage();
-            }
-        }
-        if (other.tag == "SmartEnemy")
-        {
-            SmartEnemy smartEnemy = other.GetComponent<SmartEnemy>();
-            if (smartEnemy != null)
-            {
-                smartEnemy.Damage();
-            }
-        }
-        if (other.tag == "AggroEnemy")
-        {
-            AggressiveEnemy aggressiveEnemy = other.GetComponent<AggressiveEnemy>();
-            if (aggressiveEnemy != null)
-            {
-                aggressiveEnemy.Damage();
-            }
-        }
-        if (other.tag == "AvoidShot")
-        {
-            AvoidShot avoidShot = other.GetComponent<AvoidShot>();
-            if (avoidShot != null)
-            {
-                avoidShot.Damage();
-            }
-        }
+        }        
 
     }
 

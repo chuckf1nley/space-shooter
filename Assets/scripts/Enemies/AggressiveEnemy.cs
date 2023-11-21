@@ -32,7 +32,7 @@ public class AggressiveEnemy : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
-        _isEnemyAlive = true;
+       // _isEnemyAlive = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
 
@@ -41,12 +41,12 @@ public class AggressiveEnemy : MonoBehaviour
 
         if (_player == null)
         {
-            Debug.Log("Player is null");
+            Debug.Log("Player is null - aggro enemy");
         }
 
         if (_enemyDeathAnim == null)
         {
-            Debug.Log("Animator is null");
+            Debug.Log("Animator is null - aggro enemy");
         }
         if (_audioSource == null)
         {
@@ -67,7 +67,6 @@ public class AggressiveEnemy : MonoBehaviour
         int rng = Random.Range(0, 60);
         GenerateShieldIndex(rng);
     }
-    //in update make method for determining which code to use, proximity to player, if statement
     // Update is called once per frame
     void Update()
     {
@@ -102,7 +101,6 @@ public class AggressiveEnemy : MonoBehaviour
 
     public void AggroMovement()
     {
-
         if (_interceptDistance < 5)
             _chaseSpeed += 1;
 
@@ -110,8 +108,6 @@ public class AggressiveEnemy : MonoBehaviour
         direction = direction.normalized;
 
        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-
-
     }
 
     public int ShieldStrength()
@@ -132,7 +128,6 @@ public class AggressiveEnemy : MonoBehaviour
     }
     public void GenerateShieldIndex(int random)
     {
-
         if (_enemyID == 2)
         {
             if (random >= 50 && random < 60)
@@ -215,7 +210,6 @@ public class AggressiveEnemy : MonoBehaviour
                 Damage();
             }
         }
-
     }
    
 }

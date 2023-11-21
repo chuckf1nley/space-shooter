@@ -8,7 +8,7 @@ public class AvoidShot : MonoBehaviour
     [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private int _enemyID; // 5 avoid shot
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _enemyShieldStrength = 1;
@@ -27,7 +27,7 @@ public class AvoidShot : MonoBehaviour
     private int _enemyLives;
     private int _enemyShieldLives = 1;
     private int _movement;
-    private Vector3 _direction;
+    //private Vector3 _direction;
     private Transform laser;
 
     // Start is called before the first frame update
@@ -93,19 +93,17 @@ public class AvoidShot : MonoBehaviour
     public void Movement()
     {
 
-        if (_avoidShot == true)
-        {
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        }
-        else
-        {           
+        
+            transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);
+        
+                  
             if (transform.position.x > _laserX + 3)
             {
-                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * 2);
+                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
 
                 LaserInRange();
             }            
-        }
+        
     }   
 
     IEnumerator LaserInRange()

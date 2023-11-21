@@ -13,22 +13,7 @@ public class MissileRadar : MonoBehaviour
         {
             _parent.MoveUp();
         }
-        else if (other.tag == "FastEnemy")
-        {
-            _parent.MoveUp();
-        }
-        else if (other.tag == "SmartEnemy")
-        {
-            _parent.MoveUp();
-        }
-        else if (other.tag == "AggressiveEnemy")
-        {
-            _parent.MoveUp();
-        }
-        else if (other.tag == "AvoidShot")
-        {
-            _parent.MoveUp();
-        }
+       
     }
 
 

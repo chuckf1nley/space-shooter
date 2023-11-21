@@ -62,16 +62,16 @@ public class SmartEnemy : MonoBehaviour
 
         if (_player == null)
         {
-            Debug.Log("Player is null");
+            Debug.Log("Player is null = smart enemy");
         }
 
         if (_enemyDeathAnim == null)
         {
-            Debug.Log("Animator is null");
+            Debug.Log("Animator is null - smart enemy");
         }
         if (_audioSource == null)
         {
-            Debug.Log("AudioSource is null");
+            Debug.Log("AudioSource is null - smart enemy");
         }
         else
         {
