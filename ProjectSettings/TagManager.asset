@@ -22,6 +22,7 @@ TagManager:
   - laser
   - FastEnemy
   - BossWeapon
+  - Boss
   layers:
   - Default
   - TransparentFX
