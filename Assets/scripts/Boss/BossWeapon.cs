@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class BossWeapon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float _speed = 3f;
+    private float _fireRate = 2f;
+
 
     // Update is called once per frame
     void Update()

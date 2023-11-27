@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2878425417956104795}
   - component: {fileID: 6811339499150878881}
   m_Layer: 0
-  m_Name: Boss Weapon
+  m_Name: BossWeapon
   m_TagString: BossWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

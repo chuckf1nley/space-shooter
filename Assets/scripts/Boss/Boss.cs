@@ -7,6 +7,8 @@ public class Boss : MonoBehaviour
     [SerializeField] private GameObject _weapon;    
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID;
+    [SerializeField] private GameObject _bossWeaponPrefab;
+    [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _bossSpawn;
     [SerializeField] private AudioClip _audioDeathClip;
@@ -14,6 +16,7 @@ public class Boss : MonoBehaviour
     private float _fireRate = 2f;
     private float _startX;
     private float _direction;
+    private float _canfire = 1f;
     private int _bossHealth;
     private bool _isBossAlive = true;
     private Player _player;
@@ -74,8 +77,78 @@ public class Boss : MonoBehaviour
     public void BossMovement()
     {
         //move to -4 and stay there, move left to right
+
+
+        if (transform.position.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, 0);
+        }
+        else if (transform.position.y <= -4f)
+        {
+            transform.position = new Vector3(transform.position.x, -4f, 0);
+        }
+       
+        if (transform.position.x > _startX + 3)
+        {
+            _direction = -1;
+        }
+        else if (transform.position.x < _startX - 4)
+        {
+            _direction = 1;
+        }
+        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
+
+    }
+
+    public void BossMovementBelow50()
+    {
+
+    }
+
+    public void BossWeaponA()
+    {
+        //if (Time.time > _canfire && _isBossAlive == true)
+        //{
+        //    _fireRate = Random.Range(3f, 5f);
+        //    _canfire = Time.time + _fireRate;
+        //    GameObject bossweapon = Instantiate(_bossWeaponPrefab, transform.position, Quaternion.identity);
+        //    BossWeapon[] bossWeapons = bossweapon.GetComponentInChildren<BossWeapon>();
+        //}for (int i = 0; i < bossWeapons.Length; i++)
+        //{
+        //    bossWeapons[i].AssignBossWeaponA();
+        //}
     }
 
 
+    public void BossWeaponB()
+    {
+        /*
+        
+        if (Time.time > _canfire && _isEnemy == true && _isEnemyAlive == true)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+        */
 
+        if (Time.time > _canfire && _isBossAlive == true)
+        {
+            _fireRate = Random.Range(2f, 7f);
+            _canfire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+           // Laser[] lasers = bossLaser.GetComponentInChildren<Laser>();
+            //for (int i = 0; i < lasers.Length; i++)
+            //{
+            //    lasers[i].AssignBossLaser();
+            //}
+        }
+
+
+    }
 }
