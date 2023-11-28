@@ -55,9 +55,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015c5dca567802f47a44076693d798a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 2628944221914753156, guid: df3a354e7ad95e7409cffa36cb3b8d6e, type: 3}
+  _weapon: {fileID: 0}
   _speed: 3
   _enemyID: 6
+  _bossWeaponPrefab: {fileID: 2628944221914753156, guid: df3a354e7ad95e7409cffa36cb3b8d6e, type: 3}
+  _laserPrefab: {fileID: 6915159565038734937, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
   _spriteRenderer: {fileID: 0}
   _bossSpawn: {fileID: 8300000, guid: 35179bf9103834dcca7ed39c9d5f58e5, type: 3}
   _audioDeathClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
@@ -308,11 +310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -148.3
+      value: -149.1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 177.3
+      value: 186.6
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -530,11 +532,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -206.2
+      value: -205.4
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -56.4
+      value: -48.7
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -783,11 +785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 84.6
+      value: 76.2
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a7ec6dac968604cc5bba8213d2b1be3d, type: 3}
       propertyPath: m_LocalRotation.w

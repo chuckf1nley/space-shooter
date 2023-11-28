@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    [SerializeField] private GameObject _weapon;    
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID;
     [SerializeField] private GameObject _bossWeaponPrefab;
@@ -105,22 +104,23 @@ public class Boss : MonoBehaviour
 
     }
 
-    public void BossWeaponA()
+    public void BossFlameThrower()
     {
-        //if (Time.time > _canfire && _isBossAlive == true)
-        //{
-        //    _fireRate = Random.Range(3f, 5f);
-        //    _canfire = Time.time + _fireRate;
-        //    GameObject bossweapon = Instantiate(_bossWeaponPrefab, transform.position, Quaternion.identity);
-        //    BossWeapon[] bossWeapons = bossweapon.GetComponentInChildren<BossWeapon>();
-        //}for (int i = 0; i < bossWeapons.Length; i++)
+        if (Time.time > _canfire && _isBossAlive == true)
+        {
+            _fireRate = Random.Range(3f, 5f);
+            _canfire = Time.time + _fireRate;
+            GameObject bossWeapon = Instantiate(_bossWeaponPrefab, transform.position, Quaternion.identity);
+            BossWeapon[] bossWeapons = bossWeapon.GetComponentsInChildren<BossWeapon>();
+        }
+        //for (int i = 0; i < bossWeapons.Length; i++)
         //{
         //    bossWeapons[i].AssignBossWeaponA();
         //}
     }
 
 
-    public void BossWeaponB()
+    public void BossLaser()
     {
         /*
         
@@ -142,11 +142,11 @@ public class Boss : MonoBehaviour
             _fireRate = Random.Range(2f, 7f);
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-           // Laser[] lasers = bossLaser.GetComponentInChildren<Laser>();
-            //for (int i = 0; i < lasers.Length; i++)
-            //{
-            //    lasers[i].AssignBossLaser();
-            //}
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignBossLaser();
+            }
         }
 
 

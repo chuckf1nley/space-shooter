@@ -830,18 +830,6 @@ PrefabInstance:
       propertyPath: _weapon
       value: 
       objectReference: {fileID: 589965645}
-    - target: {fileID: 4372885721338518150, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
-      propertyPath: _bossSpawn
-      value: 
-      objectReference: {fileID: 8300000, guid: 35179bf9103834dcca7ed39c9d5f58e5, type: 3}
-    - target: {fileID: 4372885721338518150, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
-      propertyPath: _audioDeathClip
-      value: 
-      objectReference: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-    - target: {fileID: 4372885721338518150, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
-      propertyPath: _spriteRenderer
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7328555711310806805, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
       propertyPath: m_RootOrder
       value: 12
