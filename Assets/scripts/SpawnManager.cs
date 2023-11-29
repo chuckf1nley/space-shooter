@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
-
+    private object Boss;
 
     public void StartSpawning()
     {
@@ -203,4 +203,38 @@ public class SpawnManager : MonoBehaviour
         _stopSpawning = true;
     }
    
+    //public IEnumerator WaitToStartNewWaveCouroutine()
+    //{
+    //    WaitForSeconds wait = new WaitForSeconds(3);
+    //    while (_enemyContainer.transform.childCount > 0)
+    //    {
+    //        yield return null;
+    //    }
+    //    NewWaveDisplay.ShowWaveText();
+    //    yield return wait;
+    //    if (IsRegularWave)
+    //    {
+    //        StartCoroutine(SpawnEnemyRoutine());
+    //    }
+    //    else if (IsBossWave)
+    //    {
+    //        StartCoroutine(SpawnBossCoroutine());
+    //    }
+    //}
+
+    //public IEnumerator SpawnBossCoroutine()
+    //{
+    //    WaitForSeconds wait = new WaitForSeconds(3);
+    //    Vector3 _startPos = new Vector3(0, 12, 0);
+        //Boss = Instantiate(_bossPrefab, _startPos, Quaternion.identity);
+        //boss.transform.parent = _enemyContainer.transform;
+        //Boss boss = Boss.GetComponent<Boss>();
+        //boss.HealthBar.HideHealthBar();
+        //yield return wait;
+        //boss.HealthBar.DisplayHealthBar();
+        //foreach (BoxCollider2D- c - in - boss.GetComponents<BoxCollider2D>());
+        //c.enabled = true;
+    //}
+
+
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4372885721338518150}
   - component: {fileID: 4527874154672201285}
   - component: {fileID: 4162638540199860761}
+  - component: {fileID: 5849107076615165893}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -55,7 +56,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015c5dca567802f47a44076693d798a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 0}
   _speed: 3
   _enemyID: 6
   _bossWeaponPrefab: {fileID: 2628944221914753156, guid: df3a354e7ad95e7409cffa36cb3b8d6e, type: 3}
@@ -63,6 +63,9 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 0}
   _bossSpawn: {fileID: 8300000, guid: 35179bf9103834dcca7ed39c9d5f58e5, type: 3}
   _audioDeathClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _currentBossHealth: 0
+  _maxBossHealth: 40
+  _healthBar: {fileID: 0}
 --- !u!61 &4527874154672201285
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -110,6 +113,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5849107076615165893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3375372802884827895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023ed0708edc34f4ca22fbed5204a07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 0}
 --- !u!1001 &2601708088309993895
 PrefabInstance:
   m_ObjectHideFlags: 0

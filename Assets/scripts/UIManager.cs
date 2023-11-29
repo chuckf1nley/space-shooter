@@ -12,13 +12,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _livesImage;
     [SerializeField] private Sprite[] _liveSprites;
     [SerializeField] private TMP_Text _gameOverText;
+    [SerializeField] private TMP_Text _exitGame; 
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
     [SerializeField] private TMP_Text _thrusterText;
     [SerializeField] private TMP_Text _thrusterInactiveText;
     [SerializeField] private TMP_Text _shield_Lives_Display;
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private TMP_Text _bossDefatedPrefab;
+
+    private TMP_Text bossDefeated;
+    private GameManager _gameManager;
   
     public void UpdateScore(int playerscore)
     {
@@ -67,7 +71,8 @@ public class UIManager : MonoBehaviour
         _restartText.gameObject.SetActive(true);
         _takeTheL.gameObject.SetActive(true);
         GameOverFlickerRoutine();
-       
+        RestartDisplay();
+        ExitDisplay();
         
     }
     IEnumerator GameOverFlickerRoutine()
@@ -78,6 +83,29 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
         }
+    }
+
+    public IEnumerator GameWonSequence()
+    {
+        yield return new WaitForSeconds(3);
+        bossDefeated = Component.Instantiate(_bossDefatedPrefab);
+        bossDefeated.enabled = true;
+        _gameManager.GameOver();
+        RestartDisplay();
+        ExitDisplay();
+        yield break;
+    }
+
+    private void RestartDisplay()
+    {
+        _restartText.enabled = true;
+       // Assert.IsTrue(_restartText.isActiveAndEnabled, "The Restart Game Text Must Be both " + "active and enabled for the text to show");
+    }
+
+        private void ExitDisplay()
+    {
+        _exitGame.enabled = true;
+       // Assert.IsTrue(_exitGame.isActiveAndEnabled, " the exit game text must be both" + "active and enabled fpr the text to show");
     }
 
 }
