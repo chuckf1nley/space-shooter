@@ -99,13 +99,13 @@ public class UIManager : MonoBehaviour
     private void RestartDisplay()
     {
         _restartText.enabled = true;
-       // Assert.IsTrue(_restartText.isActiveAndEnabled, "The Restart Game Text Must Be both " + "active and enabled for the text to show");
+       //Assert.IsTrue(_restartText.isActiveAndEnabled, "The Restart Game Text Must Be both " + "active and enabled for the text to show");
     }
 
-        private void ExitDisplay()
+    private void ExitDisplay()
     {
         _exitGame.enabled = true;
-       // Assert.IsTrue(_exitGame.isActiveAndEnabled, " the exit game text must be both" + "active and enabled fpr the text to show");
+        //Assert.IsTrue(_exitGame.isActiveAndEnabled, " the exit game text must be both" + "active and enabled fpr the text to show");
     }
 
 }

@@ -1,16 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
+    [SerializeField] private GameObject _bossPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject _powerupContainer;
     [SerializeField] private GameObject[] _powerups;
     private bool _stopSpawning = false;
+    private bool _isRegularWave = false;
     private float _spawnPowerupDelay = 3f;
 
     private int _enemyID;
@@ -18,7 +18,6 @@ public class SpawnManager : MonoBehaviour
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
-    private object Boss;
 
     public void StartSpawning()
     {
@@ -162,6 +161,7 @@ public class SpawnManager : MonoBehaviour
             {
                 currWave++;
                 _waveValue = currWave * 10;
+                StartCoroutine(WaitToStartNewWaveCouroutine());
             }
         }
     }
@@ -202,39 +202,44 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
     }
-   
-    //public IEnumerator WaitToStartNewWaveCouroutine()
-    //{
-    //    WaitForSeconds wait = new WaitForSeconds(3);
-    //    while (_enemyContainer.transform.childCount > 0)
-    //    {
-    //        yield return null;
-    //    }
-    //    NewWaveDisplay.ShowWaveText();
-    //    yield return wait;
-    //    if (IsRegularWave)
-    //    {
-    //        StartCoroutine(SpawnEnemyRoutine());
-    //    }
-    //    else if (IsBossWave)
-    //    {
-    //        StartCoroutine(SpawnBossCoroutine());
-    //    }
-    //}
 
-    //public IEnumerator SpawnBossCoroutine()
-    //{
-    //    WaitForSeconds wait = new WaitForSeconds(3);
-    //    Vector3 _startPos = new Vector3(0, 12, 0);
-        //Boss = Instantiate(_bossPrefab, _startPos, Quaternion.identity);
-        //boss.transform.parent = _enemyContainer.transform;
-        //Boss boss = Boss.GetComponent<Boss>();
-        //boss.HealthBar.HideHealthBar();
-        //yield return wait;
-        //boss.HealthBar.DisplayHealthBar();
-        //foreach (BoxCollider2D- c - in - boss.GetComponents<BoxCollider2D>());
+    public IEnumerator WaitToStartNewWaveCouroutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(3);
+        while (_enemyContainer.transform.childCount > 0)
+        {
+            yield return null;
+        }
+        //check wave number if wave 10 boss wave
+            yield return wait;
+        if (currWave == 10)
+        {
+            //NewWaveDisplay.ShowWaveText();
+            if (_isRegularWave == true)
+            {
+                StartCoroutine(SpawnEnemyRoutine());
+            }
+            else if (_isRegularWave == false)
+            {
+                StartCoroutine(SpawnBossCoroutine());
+            }
+        }
+    }
+
+    public IEnumerator SpawnBossCoroutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(3);
+        Vector3 _startPos = new Vector3(0, 12, 0);
+       
+        GameObject bossSpawn = Instantiate(_bossPrefab, _startPos, Quaternion.identity);
+        BossHealthBar bosshealthbar = bossSpawn.GetComponent<BossHealthBar>();
+        bosshealthbar.transform.parent = _enemyContainer.transform;
+        bosshealthbar.HideHealthBar();
+        yield return wait;
+        bosshealthbar.DisplayHealthBar();
+        //foreach (BoxCollider2D - c - in -boss.GetComponents<BoxCollider2D>()) ;
         //c.enabled = true;
-    //}
+    }
 
 
 }

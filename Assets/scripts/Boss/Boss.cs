@@ -43,8 +43,8 @@ public class Boss : MonoBehaviour
     void Start()
     {
         _currentBossHealth = _maxBossHealth;
-        //_healthBar.SetMaxHealth(_maxBossHealth);
-        //_healthBar.SetHealth(_currentBossHealth);
+        _healthBar.SetMaxHealth(_maxBossHealth);
+        _healthBar.SetHealth(_currentBossHealth);
         cols = GetComponents<BoxCollider2D>();
         ui = Object.FindObjectOfType<UIManager>();
 
@@ -142,11 +142,11 @@ public class Boss : MonoBehaviour
             _canfire = Time.time + _fireRate;
             GameObject bossWeapon = Instantiate(_bossWeaponPrefab, transform.position, Quaternion.identity);
             BossWeapon[] bossWeapons = bossWeapon.GetComponentsInChildren<BossWeapon>();
+            for (int i = 0; i < bossWeapons.Length; i++)
+            {
+                bossWeapons[i].AssignBossWeaponA();
+            }
         }
-        //for (int i = 0; i < bossWeapons.Length; i++)
-        //{
-        //    bossWeapons[i].AssignBossWeaponA();
-        //}
     }
 
 
@@ -170,7 +170,7 @@ public class Boss : MonoBehaviour
     public void Damage(int damage)
     {
         _currentBossHealth -= damage;
-        //_healthBar.SetHealth(_currentBossHealth);
+        _healthBar.SetHealth(_currentBossHealth);
     }
 
    

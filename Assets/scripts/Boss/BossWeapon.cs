@@ -13,13 +13,23 @@ public class BossWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _isWeaponActive = true;
 
     }
 
 
     public void AssignBossWeaponA()
     {
-        _isWeaponActive = true;
+        
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (transform.position.y < -9f)
+        {
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+        }
+        Destroy(this.gameObject);
     }
 
 }
