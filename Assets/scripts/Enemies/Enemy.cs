@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     private int _enemyLives = 1;
     private int _enemyShieldLives = 1;
     private int _direction;
+    private int _enemy;
+  //  private int _fastEnemy;
     private SpawnManager _spawnManager;
 
     private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
+        _isEnemyAlive = true;
         _isEnemy = true;
         _isFastEnemy = true;
         _startX = transform.position.x;
@@ -181,6 +184,7 @@ public class Enemy : MonoBehaviour
     public void FastEnemy()
     {
         _isFastEnemy = true;
+       // _isFastEnemy.SetActive(true);
         FastEnemyMovement();
         FireMissile();
         CalculateMovement();      

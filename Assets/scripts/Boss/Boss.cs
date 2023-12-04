@@ -87,16 +87,16 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_currentBossHealth <= 0 && bossDefeatedCoroutineStarted)
+        {
+            EnemyDeathSequence();
+            bossDefeatedCoroutineStarted = true;
+        }
         switch (_enemyID)
         {
             default:
                 BossMovement();
                 return;
-        }
-        if(_currentBossHealth <= 0 && bossDefeatedCoroutineStarted)
-        {
-            EnemyDeathSequence();
-            bossDefeatedCoroutineStarted = true;
         }
     }
 

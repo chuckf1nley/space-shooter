@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void thruster() //the text should appear only when the shift key is pressed
+    public void thruster() //the text should appear only when the left shift key is pressed
     {
         _thrusterText.text = "thruster active";
         
@@ -66,6 +66,11 @@ public class UIManager : MonoBehaviour
 
     void GameOverSequence()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        /*
+         * _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        //UIManager _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+         */
         _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);

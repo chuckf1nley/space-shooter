@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool _isGameOver;
     public UIManager uIManager;
-    private readonly UIManager uiManager;
 
     void Start()
     {

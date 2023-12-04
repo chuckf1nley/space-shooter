@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private CameraShake _camShake;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     private UIManager _uiManager;
+    private GameManager _gameManager;
     //private Powerup _powerup;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
         }
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+       // _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;
@@ -158,8 +159,8 @@ public class Player : MonoBehaviour
 
     public void Thruster()
     {
-
-        UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        //UIManager _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
         if (_uiManager != null)
         {
@@ -276,6 +277,7 @@ public class Player : MonoBehaviour
             _camShake.ShakeCamera();
             _audioSource.Play();
             _spawnManager.OnPlayerDeath();
+            _gameManager.GameOver();
             Destroy(this.gameObject);
         }
 
