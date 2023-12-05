@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     
-    [SerializeField]
-    private bool _isGameOver;
+    [SerializeField] private bool _isGameOver;
+    private bool _isPlayerVictorious;
     public UIManager uIManager;
 
     void Start()
@@ -38,5 +38,8 @@ public class GameManager : MonoBehaviour
         _isGameOver = true;
     }
 
-   
+   public void YouWin()
+    {
+        _isPlayerVictorious = true;
+    }
 }

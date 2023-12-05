@@ -60,7 +60,7 @@ public class Boss : MonoBehaviour
 
         if (_direction == 0)
             _direction = -1;
-       
+
         if (_player == null)
         {
             Debug.Log("Player is null - boss");
@@ -74,10 +74,10 @@ public class Boss : MonoBehaviour
         {
             Debug.Log("AudioSource is null - boss");
         }
-        if(_isBossAlive == true)
-            {
+        if (_isBossAlive == true)
+        {
             _audioSource.clip = _bossSpawn;
-            }
+        }
         else
         {
             _audioSource.clip = _audioDeathClip;
@@ -87,7 +87,11 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_currentBossHealth <= 0 && bossDefeatedCoroutineStarted)
+        if (_currentBossHealth >= 20)
+        {
+            BossMovementBelow50();
+        }
+        if (_currentBossHealth <= 0 && bossDefeatedCoroutineStarted)
         {
             EnemyDeathSequence();
             bossDefeatedCoroutineStarted = true;
@@ -108,29 +112,31 @@ public class Boss : MonoBehaviour
         if (transform.position.y < _endPos.y)
             transform.position = _endPos;
 
-        //if (transform.position.y >= 0)
-        //{
-        //    transform.position = new Vector3(transform.position.x, 0, 0);
-        //}
-        //else if (transform.position.y <= -4f)
-        //{
-        //    transform.position = new Vector3(transform.position.x, -4f, 0);
-        //}
-       
-        //if (transform.position.x > _startX + 3)
-        //{
-        //    _direction = -1;
-        //}
-        //else if (transform.position.x < _startX - 4)
-        //{
-        //    _direction = 1;
-        //}
-        //transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
-
+        BossLaser();
     }
 
     public void BossMovementBelow50()
     {
+        if (transform.position.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, 0);
+        }
+        else if (transform.position.y <= -4f)
+        {
+            transform.position = new Vector3(transform.position.x, -4f, 0);
+        }
+
+        if (transform.position.x > _startX + 3)
+        {
+            _direction = -1;
+        }
+        else if (transform.position.x < _startX - 4)
+        {
+            _direction = 1;
+        }
+        transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
+
+        BossFlameThrower();
 
     }
 
@@ -151,7 +157,7 @@ public class Boss : MonoBehaviour
 
 
     public void BossLaser()
-    {      
+    {
 
         if (Time.time > _canfire && _isBossAlive == true)
         {
@@ -173,7 +179,7 @@ public class Boss : MonoBehaviour
         _healthBar.SetHealth(_currentBossHealth);
     }
 
-   
+
     public void EnemyDeathSequence()
     {
         if (_enemyDeathAnim != null)
@@ -185,9 +191,9 @@ public class Boss : MonoBehaviour
         ui.StartCoroutine(ui.GameWonSequence());
         Destroy(this.gameObject, -3);
         Destroy(GetComponent<Collider2D>());
-        
-    }   
-    
+
+    }
+
     private void OnDestroy()
     {
         if (_healthBar != null)
@@ -195,17 +201,17 @@ public class Boss : MonoBehaviour
     }
 
     public void OnTriggerEnter2D(Collider2D other)
-    {       
+    {
         if (_isBossAlive == true)
 
-        if (other.CompareTag("Player"))
-        {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+            if (other.CompareTag("Player"))
             {
-                player.Damage();
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
             }
-        }
 
         if (other.CompareTag("Laser"))
         {
@@ -222,6 +228,5 @@ public class Boss : MonoBehaviour
         }
 
     }
-
 
 }

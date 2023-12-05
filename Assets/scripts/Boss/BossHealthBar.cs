@@ -5,7 +5,29 @@ using UnityEngine.UI;
 
 public class BossHealthBar : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
+    [SerializeField] private Slider _slider;
+    private UIManager _uimanager;
+    private Image _healthBar;
+    private float _healthTotal = 40f;
+    private Laser _laser;
+    private Missile _missile;
+
+    void Update()
+    {
+        if (_healthTotal <= 0)
+        {
+            _uimanager.GameWonSequence();
+        }
+        if (_laser)
+        {
+            TakeDamage(1);
+        }
+        if (_missile)
+        {
+            TakeDamage(5);
+        }
+
+    }
 
     public void DisplayHealthBar()
     {
@@ -22,12 +44,21 @@ public class BossHealthBar : MonoBehaviour
 
     public void SetMaxHealth(int health)
     {
-        slider.maxValue = health;
-        slider.value = health;
+        _slider.maxValue = health;
+        _slider.value = health;
     }
 
     public void SetHealth(int health)
     {
-        slider.value = health;
+        _slider.value = health;
     }
+
+    public void TakeDamage(float damage)
+    {
+        _healthTotal -= damage;
+        _healthBar.fillAmount = _healthTotal / 40f;
+    }
+
+
+
 }

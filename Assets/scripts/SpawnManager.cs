@@ -12,12 +12,15 @@ public class SpawnManager : MonoBehaviour
     private bool _stopSpawning = false;
     private bool _isRegularWave = false;
     private float _spawnPowerupDelay = 3f;
+    private UIManager _uiManager;
 
     private int _enemyID;
     private int currWave;
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
+
+    //private object NewWaveDisplay ShowWaveText;
 
     public void StartSpawning()
     {
@@ -214,7 +217,7 @@ public class SpawnManager : MonoBehaviour
             yield return wait;
         if (currWave == 10)
         {
-            //NewWaveDisplay.ShowWaveText();
+           _uiManager.UpdateWave();
             if (_isRegularWave == true)
             {
                 StartCoroutine(SpawnEnemyRoutine());

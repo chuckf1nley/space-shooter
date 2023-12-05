@@ -321,7 +321,7 @@ public class Player : MonoBehaviour
         _uiManager.UpdateScore(_score);
     }
 
-    public void AmmooRefillActive()
+    public void AmmoRefillActive()
     {
         _currentAmmo = _maxAmmo;
         _currentMissiles = _missileMaxAmmo;
