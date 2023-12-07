@@ -155,13 +155,13 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 6221227307314456214}
   m_FillRect: {fileID: 6566199771475134012}
   m_HandleRect: {fileID: 0}
   m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 40
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023ed0708edc34f4ca22fbed5204a07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 6629413780394806482}
+  _slider: {fileID: 6629413780394806482}
 --- !u!1 &7098613804713633685
 GameObject:
   m_ObjectHideFlags: 0

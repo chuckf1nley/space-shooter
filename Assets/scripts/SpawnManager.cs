@@ -208,6 +208,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator WaitToStartNewWaveCouroutine()
     {
+           //_uiManager.UpdateWave();
         WaitForSeconds wait = new WaitForSeconds(3);
         while (_enemyContainer.transform.childCount > 0)
         {
@@ -215,9 +216,8 @@ public class SpawnManager : MonoBehaviour
         }
         //check wave number if wave 10 boss wave
             yield return wait;
-        if (currWave == 10)
+        if (currWave == 2)
         {
-           _uiManager.UpdateWave();
             if (_isRegularWave == true)
             {
                 StartCoroutine(SpawnEnemyRoutine());

@@ -32,7 +32,7 @@ public class AggressiveEnemy : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
 
-       // _isEnemyAlive = true;
+        _isEnemyAlive = true;
         _startX = transform.position.x;
         _direction = Random.Range(0, 2);
 
