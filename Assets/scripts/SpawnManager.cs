@@ -20,7 +20,13 @@ public class SpawnManager : MonoBehaviour
     private int _enemyCount;
     private int _waveTotal;
 
-    //private object NewWaveDisplay ShowWaveText;
+    //private object NewWaveDisplay ShowWaveText();
+
+    void Start()
+    {
+        _uiManager = Object.FindObjectOfType<UIManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    }
 
     public void StartSpawning()
     {
@@ -40,9 +46,9 @@ public class SpawnManager : MonoBehaviour
 
         while (_stopSpawning == false)
         {
-            float randomXPosition = UnityEngine.Random.Range(-18f, 18f);
+            float randomXPosition = Random.Range(-18f, 18f);
             Vector3 RandomPosition = new Vector3(randomXPosition, 8f, transform.position.z);
-            int randomPowerup = GeneratePowerupIndex(UnityEngine.Random.Range(0, 80));
+            int randomPowerup = GeneratePowerupIndex(Random.Range(0, 80));
 
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
@@ -102,37 +108,37 @@ public class SpawnManager : MonoBehaviour
         switch (_enemyID)
         {
             case 1:
-                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _xSpawnPos = Random.Range(-18f, 18f);
+                _ySpawnPos = Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
             case 2:
-                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _xSpawnPos = Random.Range(-18f, 18f);
+                _ySpawnPos = Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
             case 3:
-                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _xSpawnPos = Random.Range(-18f, 18f);
+                _ySpawnPos = Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
             case 4:
-                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _xSpawnPos = Random.Range(-18f, 18f);
+                _ySpawnPos = Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
             case 5:
-                _xSpawnPos = UnityEngine.Random.Range(-18f, 18f);
-                _ySpawnPos = UnityEngine.Random.Range(9.11f, 8f);
+                _xSpawnPos = Random.Range(-18f, 18f);
+                _ySpawnPos = Random.Range(9.11f, 8f);
                 _enemySpawnPos = new Vector3(_xSpawnPos, _ySpawnPos, 0f);
                 break;
 
             default:
-                _xSpawnPos = Mathf.Round(UnityEngine.Random.Range(-9.0f, 9.0f));
+                _xSpawnPos = Mathf.Round(Random.Range(-9.0f, 9.0f));
                 _enemySpawnPos = new Vector3(_xSpawnPos, 9.11f, 0f);
                 break;
         }
@@ -149,7 +155,7 @@ public class SpawnManager : MonoBehaviour
 
             while (_waveValue > 0)
             {               
-                int randomEnemy = GenerateEnemyIndex(UnityEngine.Random.Range(0, 50));
+                int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
@@ -208,7 +214,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator WaitToStartNewWaveCouroutine()
     {
-           //_uiManager.UpdateWave();
+           _uiManager.UpdateWave();
         WaitForSeconds wait = new WaitForSeconds(3);
         while (_enemyContainer.transform.childCount > 0)
         {

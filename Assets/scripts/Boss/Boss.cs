@@ -17,8 +17,8 @@ public class Boss : MonoBehaviour
     private BossHealthBar _healthBarPrefab;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private BoxCollider2D[] cols;
-    private UIManager ui;
+    private BoxCollider2D[] _cols;
+    private UIManager _ui;
     private bool bossDefeatedCoroutineStarted = false;
 
     public BossHealthBar _healthBar;
@@ -45,8 +45,8 @@ public class Boss : MonoBehaviour
         _currentBossHealth = _maxBossHealth;
         _healthBar.SetMaxHealth(_maxBossHealth);
         _healthBar.SetHealth(_currentBossHealth);
-        cols = GetComponents<BoxCollider2D>();
-        ui = Object.FindObjectOfType<UIManager>();
+        _cols = GetComponents<BoxCollider2D>();
+        _ui = Object.FindObjectOfType<UIManager>();
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _audioSource = GetComponent<AudioSource>();
@@ -188,7 +188,7 @@ public class Boss : MonoBehaviour
             _audioSource.Play();
         //foreach (BoxCollider2D - char -in -cols)
         //    c.enabled = false;
-        ui.StartCoroutine(ui.GameWonSequence());
+        _ui.StartCoroutine(_ui.GameWonSequence());
         Destroy(this.gameObject, -3);
         Destroy(GetComponent<Collider2D>());
 
