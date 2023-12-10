@@ -5,14 +5,16 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
-    [SerializeField] private GameObject _bossPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject _powerupContainer;
+    [SerializeField] private GameObject _bossContainer;
     [SerializeField] private GameObject[] _powerups;
+    [SerializeField] private int _currWave;
     private bool _stopSpawning = false;
     private bool _isRegularWave = false;
     private float _spawnPowerupDelay = 3f;
     private UIManager _uiManager;
+    private GameObject _bossPrefab;
 
     private int _enemyID;
     private int currWave;
@@ -54,7 +56,7 @@ public class SpawnManager : MonoBehaviour
             newPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
 
-           
+
         }
 
     }
@@ -97,7 +99,7 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-  
+
 
     private Vector3 GetEnemySpawnPos(int EnemyID)
     {
@@ -154,12 +156,12 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3.0f);
 
             while (_waveValue > 0)
-            {               
+            {
                 int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
                 Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
                 GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
 
-              
+
                 _enemy.transform.parent = _enemyContainer.transform;
                 _waveValue--;
                 _enemyCount++;
@@ -205,7 +207,7 @@ public class SpawnManager : MonoBehaviour
 
             return 0;
         }
-        
+
     }
     public void OnPlayerDeath()
     {
@@ -214,14 +216,15 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator WaitToStartNewWaveCouroutine()
     {
-           _uiManager.UpdateWave();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _uiManager.UpdateWave(_currWave);
         WaitForSeconds wait = new WaitForSeconds(3);
         while (_enemyContainer.transform.childCount > 0)
         {
             yield return null;
         }
         //check wave number if wave 10 boss wave
-            yield return wait;
+        yield return wait;
         if (currWave == 2)
         {
             if (_isRegularWave == true)
@@ -239,10 +242,10 @@ public class SpawnManager : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(3);
         Vector3 _startPos = new Vector3(0, 12, 0);
-       
+
         GameObject bossSpawn = Instantiate(_bossPrefab, _startPos, Quaternion.identity);
         BossHealthBar bosshealthbar = bossSpawn.GetComponent<BossHealthBar>();
-        bosshealthbar.transform.parent = _enemyContainer.transform;
+        bosshealthbar.transform.parent = _bossContainer.transform;
         bosshealthbar.HideHealthBar();
         yield return wait;
         bosshealthbar.DisplayHealthBar();

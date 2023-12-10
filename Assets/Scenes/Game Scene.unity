@@ -4036,7 +4036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1854278071}
   m_Layer: 0
-  m_Name: Boss
+  m_Name: Boss_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4733,9 +4733,9 @@ MonoBehaviour:
   - {fileID: 8658599246959589924, guid: 3edd13314d82c8b4794a1d104af958dd, type: 3}
   - {fileID: 4259415385054587546, guid: 736402b5b68cfee46be62035ed9f9f49, type: 3}
   - {fileID: 3375372802884827895, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
-  _bossPrefab: {fileID: 1854278070}
   _enemyContainer: {fileID: 955404439}
   _powerupContainer: {fileID: 187086290}
+  _bossContainer: {fileID: 1854278070}
   _powerups:
   - {fileID: 8430668821751775207, guid: 21fc8b9785d8cd54bb996c8890797da6, type: 3}
   - {fileID: 258325723620919395, guid: 912cafb4d06f632488e943bb9a4f04d9, type: 3}
@@ -4746,6 +4746,7 @@ MonoBehaviour:
   - {fileID: 7412901440307533239, guid: 24dc48d4efa357248a1977b34dd5416c, type: 3}
   - {fileID: 3937334260171388987, guid: 77feab023c8aa96469460659e5692f20, type: 3}
   - {fileID: 3937334260171388987, guid: 77feab023c8aa96469460659e5692f20, type: 3}
+  _currWave: 1
 --- !u!4 &2126228722
 Transform:
   m_ObjectHideFlags: 0
