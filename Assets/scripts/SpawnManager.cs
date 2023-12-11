@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour
     private bool _isRegularWave = false;
     private float _spawnPowerupDelay = 3f;
     private UIManager _uiManager;
-    private GameObject _bossPrefab;
+    [SerializeField] private GameObject _bossPrefab;
 
     private int _enemyID;
     private int currWave;
@@ -233,23 +233,19 @@ public class SpawnManager : MonoBehaviour
             }
             else if (_isRegularWave == false)
             {
-                StartCoroutine(SpawnBossCoroutine());
+               SpawnBoss();
             }
         }
     }
 
-    public IEnumerator SpawnBossCoroutine()
+    public void SpawnBoss()
     {
         WaitForSeconds wait = new WaitForSeconds(3);
-        Vector3 _startPos = new Vector3(0, 12, 0);
+        Vector3 startPos = new Vector3(0, 12, 0);
 
-        GameObject bossSpawn = Instantiate(_bossPrefab, _startPos, Quaternion.identity);
-        BossHealthBar bosshealthbar = bossSpawn.GetComponent<BossHealthBar>();
-        bosshealthbar.transform.parent = _bossContainer.transform;
-        bosshealthbar.HideHealthBar();
-        yield return wait;
-        bosshealthbar.DisplayHealthBar();
-        //foreach (BoxCollider2D - c - in -boss.GetComponents<BoxCollider2D>()) ;
+        GameObject bossSpawn = Instantiate(_bossPrefab, startPos, Quaternion.identity);
+        
+        //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
         //c.enabled = true;
     }
 

@@ -59,6 +59,18 @@ public class BossHealthBar : MonoBehaviour
         _healthBar.fillAmount = _healthTotal / 40f;
     }
 
+     IEnumerator HealthBarCoroutine()
+     {
+        HideHealthBar();
+        yield return new WaitForSeconds(3f);
+        DisplayHealthBar();
 
+     }
+    /*
+       transform.parent = _bossContainer.transform;
+       HideHealthBar();
+        yield return wait;
+       DisplayHealthBar();
+     */
 
 }

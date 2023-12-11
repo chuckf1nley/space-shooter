@@ -37,11 +37,11 @@ public class SmartEnemy : MonoBehaviour
 
     private Vector3 _smartWeaponOffset = new Vector3(0.1f, 0.08f, 0);
 
-
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+    //search for when item (player) is called in scene 
+         player = GameObject.FindGameObjectWithTag("Player").transform;
        // _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();

@@ -13,9 +13,8 @@ public class Boss : MonoBehaviour
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
     [SerializeField] private int _maxBossHealth = 40;
-
-    private BossHealthBar _healthBarPrefab;
-    private Animator _enemyDeathAnim;
+    [SerializeField] private GameObject _healthBarPrefab;
+    [SerializeField] private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private BoxCollider2D[] _cols;
     private UIManager _ui;
@@ -35,24 +34,19 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
-        _healthBar = Component.Instantiate(_healthBarPrefab);
-        _enemyDeathAnim.GetComponent<Animator>();
-        _audioSource.GetComponent<AudioSource>();
+        _healthBar = Instantiate(_healthBarPrefab).GetComponent<BossHealthBar>();
     }
 
     void Start()
     {
+        _audioSource.GetComponent<AudioSource>();
         _currentBossHealth = _maxBossHealth;
         _healthBar.SetMaxHealth(_maxBossHealth);
         _healthBar.SetHealth(_currentBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
 
-        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _audioSource = GetComponent<AudioSource>();
-        _bossSpawn = GetComponent<AudioClip>();
-        _audioDeathClip = GetComponent<AudioClip>();
-        _enemyDeathAnim = transform.GetComponent<Animator>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();       
 
         _startX = transform.position.x;
         _positionX = transform.position.x;

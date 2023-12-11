@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
         }
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-       // _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        // _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _audioSource = GetComponent<AudioSource>();
         _currentAmmo = _maxAmmo;

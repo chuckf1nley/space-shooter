@@ -4747,6 +4747,7 @@ MonoBehaviour:
   - {fileID: 3937334260171388987, guid: 77feab023c8aa96469460659e5692f20, type: 3}
   - {fileID: 3937334260171388987, guid: 77feab023c8aa96469460659e5692f20, type: 3}
   _currWave: 1
+  _bossPrefab: {fileID: 3375372802884827895, guid: d616eb12f1904e04fa8d97963a6fd597, type: 3}
 --- !u!4 &2126228722
 Transform:
   m_ObjectHideFlags: 0
