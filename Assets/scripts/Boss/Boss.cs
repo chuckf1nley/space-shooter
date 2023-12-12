@@ -30,7 +30,7 @@ public class Boss : MonoBehaviour
     private bool _isBossAlive = true;
     private Player _player;
     private SpawnManager _spawnManager;
-    private Vector3 _endPos = new Vector3(0, -4, 0);
+    private Vector3 _endPos = new Vector3(0, 5, 0);
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
-        _audioSource.GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         _currentBossHealth = _maxBossHealth;
         _healthBar.SetMaxHealth(_maxBossHealth);
         _healthBar.SetHealth(_currentBossHealth);

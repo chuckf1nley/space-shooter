@@ -174,8 +174,20 @@ public class SpawnManager : MonoBehaviour
                 _waveValue = currWave * 10;
                 StartCoroutine(WaitToStartNewWaveCouroutine());
             }
+            else if (_isRegularWave == false)
+            {
+                WavePowerDownRoutine();
+            }
         }
     }
+
+    public IEnumerator WavePowerDownRoutine()
+    {
+        _waveValue = 0;
+        _enemyCount = 0;
+        yield return new WaitForSeconds(2f);
+    }
+
     public void EnemyDeath()
     {
         _enemyCount--;
