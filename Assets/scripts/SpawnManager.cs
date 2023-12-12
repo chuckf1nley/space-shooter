@@ -158,8 +158,8 @@ public class SpawnManager : MonoBehaviour
             while (_waveValue > 0)
             {
                 int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
-                Vector3 _enemySpawnPos = GetEnemySpawnPos(randomEnemy);
-                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], _enemySpawnPos, Quaternion.identity);
+                Vector3 enemySpawnPos = GetEnemySpawnPos(randomEnemy);
+                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], enemySpawnPos, Quaternion.identity);
 
 
                 _enemy.transform.parent = _enemyContainer.transform;

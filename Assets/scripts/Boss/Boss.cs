@@ -46,7 +46,7 @@ public class Boss : MonoBehaviour
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
 
-        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();       
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();       
 
         _startX = transform.position.x;
         _positionX = transform.position.x;
@@ -161,7 +161,7 @@ public class Boss : MonoBehaviour
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
             for (int i = 0; i < lasers.Length; i++)
             {
-                lasers[i].AssignBossLaser();
+                lasers[i].AssignEnemyLaser();
             }
         }
 
@@ -176,9 +176,9 @@ public class Boss : MonoBehaviour
 
     public void EnemyDeathSequence()
     {
-        if (_enemyDeathAnim != null)
-            _enemyDeathAnim.SetTrigger("onEnemyDeath");
-        if (_audioSource != null)
+        if (_enemyDeathAnim == null)
+            _enemyDeathAnim.SetTrigger("OnEnemyDeath");
+        if (_audioSource == null)
             _audioSource.Play();
         //foreach (BoxCollider2D - char -in -cols)
         //    c.enabled = false;
@@ -190,7 +190,7 @@ public class Boss : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_healthBar != null)
+        if (_healthBar == null)
             GameObject.Destroy(_healthBar.gameObject);
     }
 
