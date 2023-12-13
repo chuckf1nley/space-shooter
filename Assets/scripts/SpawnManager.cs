@@ -10,11 +10,13 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _bossContainer;
     [SerializeField] private GameObject[] _powerups;
     [SerializeField] private int _currWave;
+    [SerializeField] private GameObject _bossPrefab;
+    [SerializeField] private GameObject _bossHealthBar;
     private bool _stopSpawning = false;
     private bool _isRegularWave = false;
+    private bool _isBossActive = false;
     private float _spawnPowerupDelay = 3f;
     private UIManager _uiManager;
-    [SerializeField] private GameObject _bossPrefab;
 
     private int _enemyID;
     private int currWave;
@@ -28,6 +30,7 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager = Object.FindObjectOfType<UIManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
     }
 
     public void StartSpawning()
@@ -40,6 +43,14 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerupRoutine());
     }
 
+    public void StopSpawning()
+    {
+        if (_isBossActive == true)
+        {
+            StartCoroutine(WavePowerDownRoutine());
+        }
+
+    }
 
     IEnumerator SpawnPowerupRoutine()
     {
@@ -174,7 +185,7 @@ public class SpawnManager : MonoBehaviour
                 _waveValue = currWave * 10;
                 StartCoroutine(WaitToStartNewWaveCouroutine());
             }
-            else if (_isRegularWave == false)
+            else if (_isRegularWave == false || _isBossActive == true)
             {
                 WavePowerDownRoutine();
             }
@@ -185,6 +196,7 @@ public class SpawnManager : MonoBehaviour
     {
         _waveValue = 0;
         _enemyCount = 0;
+        _stopSpawning = true;
         yield return new WaitForSeconds(2f);
     }
 

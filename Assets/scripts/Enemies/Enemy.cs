@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
     private int _enemyShieldLives = 1;
     private int _direction;
     private int _enemy;
-  //  private int _fastEnemy;
     private SpawnManager _spawnManager;
 
     private Vector3 _laserOffset = new Vector3(-.1f, -.4f, 0);

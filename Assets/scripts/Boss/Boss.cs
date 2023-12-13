@@ -39,10 +39,9 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
         _currentBossHealth = _maxBossHealth;
+        _audioSource = GetComponent<AudioSource>();
         _healthBar.SetMaxHealth(_maxBossHealth);
-        _healthBar.SetHealth(_currentBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
 
@@ -81,6 +80,11 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _healthBar.SetHealth(_currentBossHealth);
+        if (_currentBossHealth == 40)
+        {
+            BossMovement();
+        }
         if (_currentBossHealth >= 20)
         {
             BossMovementBelow50();
@@ -96,6 +100,8 @@ public class Boss : MonoBehaviour
                 BossMovement();
                 return;
         }
+
+
     }
 
     public void BossMovement()

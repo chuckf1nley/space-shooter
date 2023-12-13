@@ -11,6 +11,7 @@ public class BossHealthBar : MonoBehaviour
     private float _healthTotal = 40f;
     private Laser _laser;
     private Missile _missile;
+    private float _currentHealth;
 
     void Update()
     {
@@ -27,6 +28,7 @@ public class BossHealthBar : MonoBehaviour
             TakeDamage(5);
         }
 
+        HealthBarCoroutine();
     }
 
     public void DisplayHealthBar()
@@ -64,6 +66,11 @@ public class BossHealthBar : MonoBehaviour
         HideHealthBar();
         yield return new WaitForSeconds(3f);
         DisplayHealthBar();
+
+        if (_currentHealth == 0)
+        {
+            HideHealthBar();
+        }
 
      }
     /*

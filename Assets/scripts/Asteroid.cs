@@ -8,6 +8,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private GameObject _explosionPrefab;
     private SpawnManager _spawnManager;
     private AudioSource _audioSource;
+    private bool _isBossActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,10 @@ public class Asteroid : MonoBehaviour
         _spawnManager.StartSpawning();
         _audioSource.Play();
         Destroy(this.gameObject, 0.15f);
+        if (_isBossActive == true)
+        {
+            _spawnManager.StopSpawning();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
