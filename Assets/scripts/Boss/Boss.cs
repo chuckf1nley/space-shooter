@@ -32,10 +32,10 @@ public class Boss : MonoBehaviour
     private SpawnManager _spawnManager;
     private Vector3 _endPos = new Vector3(0, 5, 0);
 
-    private void Awake()
-    {
-        _healthBar = Instantiate(_healthBarPrefab).GetComponent<BossHealthBar>();
-    }
+    //private void Awake()
+    //{
+    //    _healthBar = Instantiate(_healthBarPrefab).GetComponent<BossHealthBar>();
+    //}
 
     void Start()
     {
@@ -89,7 +89,7 @@ public class Boss : MonoBehaviour
         {
             BossMovementBelow50();
         }
-        if (_currentBossHealth <= 0 && bossDefeatedCoroutineStarted)
+        if (_currentBossHealth == 0 )
         {
             EnemyDeathSequence();
             bossDefeatedCoroutineStarted = true;

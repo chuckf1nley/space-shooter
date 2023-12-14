@@ -75,6 +75,7 @@ public class Enemy : MonoBehaviour
 
         int rng = Random.Range(0, 60);
         GenerateShieldIndex(rng);
+        
     }
 
     // Update is called once per frame

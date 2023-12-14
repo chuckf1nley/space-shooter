@@ -23,8 +23,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _bossDefatedPrefab;
     [SerializeField] private TMP_Text _youWinText;
     [SerializeField] private TMP_Text _currWave;
+    private bool _isBossActive;
     private TMP_Text bossDefeated;
     private GameManager _gameManager;
+    private SpawnManager _spawnManager;
+
+    private GameObject _bossHealthBar;
 
     public void UpdateScore(int playerscore)
     {
@@ -71,6 +75,22 @@ public class UIManager : MonoBehaviour
         _currWave.text = "Wave:" + currentWave.ToString(); 
     }
 
+    public void BossHealth()
+    {
+        if (_spawnManager)
+        {
+            _isBossActive = true;
+            _bossHealthBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            _isBossActive = false;
+            _bossHealthBar.gameObject.SetActive(false);
+
+        }
+    }
+
+
     void GameOverSequence()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();       
@@ -89,7 +109,6 @@ public class UIManager : MonoBehaviour
         {
             _gameOverText.text = "Game Over";
             yield return new WaitForSeconds(0.5f);
-
         }
     }
 

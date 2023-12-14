@@ -23,6 +23,11 @@ public class SpawnManager : MonoBehaviour
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
+    //private GameObject _enemy;
+    //private GameObject _fastEnemy;
+    //private GameObject _aggressiveEnemy;
+    //private GameObject _smartEnemy;
+    //private GameObject _enemyAvoidShot;
 
     //private object NewWaveDisplay ShowWaveText();
 
@@ -30,7 +35,11 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager = Object.FindObjectOfType<UIManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-
+        //_enemy.SetActive(true);
+        //_fastEnemy.SetActive(true);
+        //_aggressiveEnemy.SetActive(true);
+        //_smartEnemy.SetActive(true);
+        //_enemyAvoidShot.SetActive(true);
     }
 
     public void StartSpawning()
@@ -264,11 +273,14 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnBoss()
     {
+        _stopSpawning = true;
         WaitForSeconds wait = new WaitForSeconds(3);
-        Vector3 startPos = new Vector3(0, 12, 0);
+        Vector3 startPos = new Vector3(0, 10, 0);
 
         GameObject bossSpawn = Instantiate(_bossPrefab, startPos, Quaternion.identity);
-        
+        _uiManager.BossHealth();
+
+
         //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
         //c.enabled = true;
     }

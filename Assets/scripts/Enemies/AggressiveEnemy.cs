@@ -31,6 +31,7 @@ public class AggressiveEnemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
+        //SetActive(true);
 
         _isEnemyAlive = true;
         _startX = transform.position.x;
