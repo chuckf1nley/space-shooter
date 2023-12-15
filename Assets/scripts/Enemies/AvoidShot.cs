@@ -5,10 +5,9 @@ using UnityEngine;
 public class AvoidShot : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private int _enemyID; // 5 avoid shot
+    [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
     [SerializeField] private AudioClip _audioClip;
-    private SpriteRenderer _spriteRenderer;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _enemyShieldStrength = 1;
@@ -126,28 +125,10 @@ public class AvoidShot : MonoBehaviour
             yield return wait;
         }
     }
-
-
-    public void EnemyShield()
-    {
-        _isEnemyShieldActive = true;
-        ShieldActive(true);
-        ShieldStrength();
-        EnemyShieldStrength();
-
-
-    }
-    public int ShieldStrength()
-    {
-        EnemyShield();
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives = 1;
-
-    }
+  
     public void ShieldActive(bool state)
-    {
-        _spriteRenderer.gameObject.SetActive(state);
+    {   //active method called
+        _shieldSpriteRenderer.gameObject.SetActive(state);
         _isEnemyShieldActive = state;
         if (state == true)
         {
@@ -162,10 +143,7 @@ public class AvoidShot : MonoBehaviour
             ShieldActive(true);
         }
     }
-    public int EnemyShieldStrength()
-    {
-        return _enemyShieldLives; 
-    }
+  
 
     public void Damage()
     {

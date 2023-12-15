@@ -166,7 +166,7 @@ MonoBehaviour:
   _enemyID: 0
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyShieldStrength: 1
-  _spriteRenderer: {fileID: 4513636766571482674}
+  _spriteRenderer: {fileID: 1667649038101005343}
   _playerProx: 2
 --- !u!212 &4513636766571482674
 SpriteRenderer:

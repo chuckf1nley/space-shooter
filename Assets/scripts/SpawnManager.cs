@@ -12,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int _currWave;
     [SerializeField] private GameObject _bossPrefab;
     [SerializeField] private GameObject _bossHealthBar;
+
     private bool _stopSpawning = false;
     private bool _isRegularWave = false;
     private bool _isBossActive = false;
@@ -23,11 +24,7 @@ public class SpawnManager : MonoBehaviour
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
-    //private GameObject _enemy;
-    //private GameObject _fastEnemy;
-    //private GameObject _aggressiveEnemy;
-    //private GameObject _smartEnemy;
-    //private GameObject _enemyAvoidShot;
+
 
     //private object NewWaveDisplay ShowWaveText();
 
@@ -35,11 +32,7 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager = Object.FindObjectOfType<UIManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        //_enemy.SetActive(true);
-        //_fastEnemy.SetActive(true);
-        //_aggressiveEnemy.SetActive(true);
-        //_smartEnemy.SetActive(true);
-        //_enemyAvoidShot.SetActive(true);
+       
     }
 
     public void StartSpawning()

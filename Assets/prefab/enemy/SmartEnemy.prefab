@@ -245,7 +245,7 @@ MonoBehaviour:
   _smartWeaponPrefab: {fileID: 6618980843449305480, guid: 02052a604cdcabd4da7f3dcffe59b51c, type: 3}
   _smartEnemy: {fileID: 8658599246959589924}
   _speed: 3.5
-  _spriteRenderer: {fileID: 3217143335620248462}
+  _spriteRenderer: {fileID: 8305430548135921385}
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyID: 3
   _fireRate: 2

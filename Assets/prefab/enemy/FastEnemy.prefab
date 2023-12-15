@@ -418,7 +418,7 @@ MonoBehaviour:
   _enemyID: 1
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyShieldStrength: 1
-  _spriteRenderer: {fileID: 2533100690194887162}
+  _spriteRenderer: {fileID: 7530867059363163508}
   _playerProx: 2
 --- !u!61 &6667723834124428593
 BoxCollider2D:
