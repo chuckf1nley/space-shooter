@@ -16,7 +16,7 @@ public class AggressiveEnemy : MonoBehaviour
     private float _interceptDistance = 4f;
     private float _enemyShieldStrength = 1;
     private Player _player;
-    private bool _isEnemyAlive = true;
+    private bool _isEnemyAlive = false;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
     private int _direction;

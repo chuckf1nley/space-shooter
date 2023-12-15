@@ -42,12 +42,12 @@ public class SmartEnemy : MonoBehaviour
     {
     //search for when item (player) is called in scene 
          player = GameObject.FindGameObjectWithTag("Player").transform;
-       // _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-       // SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
+        SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
         _startRotaion = transform.rotation;
 
         _isEnemyAlive = true;

@@ -77,17 +77,16 @@ public class UIManager : MonoBehaviour
 
     public void BossHealth()
     {
-        if (_spawnManager)
+        if (_isBossActive == true)
         {
-            _isBossActive = true;
             _bossHealthBar.gameObject.SetActive(true);
         }
-        else
-        {
-            _isBossActive = false;
-            _bossHealthBar.gameObject.SetActive(false);
+        //else
+        //{
+        //    _isBossActive = false;
+        //    _bossHealthBar.gameObject.SetActive(false);
 
-        }
+        //}
     }
 
 

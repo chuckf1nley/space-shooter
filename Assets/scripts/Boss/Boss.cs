@@ -18,7 +18,6 @@ public class Boss : MonoBehaviour
     private AudioSource _audioSource;
     private BoxCollider2D[] _cols;
     private UIManager _ui;
-    private bool bossDefeatedCoroutineStarted = false;
 
     public BossHealthBar _healthBar;
 
@@ -30,7 +29,7 @@ public class Boss : MonoBehaviour
     private bool _isBossAlive = true;
     private Player _player;
     private SpawnManager _spawnManager;
-    private Vector3 _endPos = new Vector3(0, 5, 0);
+    private Vector3 _endPos = new Vector3(0, 4f, 0);
 
     //private void Awake()
     //{
@@ -92,14 +91,9 @@ public class Boss : MonoBehaviour
         if (_currentBossHealth == 0 )
         {
             EnemyDeathSequence();
-            bossDefeatedCoroutineStarted = true;
+           
         }
-        switch (_enemyID)
-        {
-            default:
-                BossMovement();
-                return;
-        }
+
 
 
     }
@@ -182,6 +176,7 @@ public class Boss : MonoBehaviour
 
     public void EnemyDeathSequence()
     {
+        _isBossAlive = false;
         if (_enemyDeathAnim == null)
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
         if (_audioSource == null)
