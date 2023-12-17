@@ -8,7 +8,7 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private GameObject _smartWeaponPrefab;
     [SerializeField] private GameObject _smartEnemy;
     [SerializeField] private float _speed = 3.5f;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _enemyID; // 3 smart enemy
     [SerializeField] private float _fireRate = 2f;
@@ -16,39 +16,34 @@ public class SmartEnemy : MonoBehaviour
     [SerializeField] private float _rotationModifier;
     [SerializeField] private float _distanceFrom;
     [SerializeField] private float rangeX = 10f;
-    Quaternion _startRotaion;
-    private SmartWeapon _smartWeapon;
+    private Quaternion _startRotaion;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _playerY;
     private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
-    private float _playerDistance = -1f;
+    //private float _playerDistance = -1f;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
-    private bool _canEnemyFire = true;
     private bool _isBehindPlayer = false;
     private SpawnManager _spawnManager;
     private Player _player;
     private int _direction;
     private int _enemyShieldLives = 1;
     private int _enemyLives;
-    private Transform player;
+    private Transform _playerPos;
 
-    private Vector3 _smartWeaponOffset = new Vector3(0.1f, 0.08f, 0);
 
     // Start is called before the first frame update
     void Start()
     {
-    //search for when item (player) is called in scene 
-         player = GameObject.FindGameObjectWithTag("Player").transform;
+         _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-        SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
         _startRotaion = transform.rotation;
+        SmartWeapon smartWeapon = GetComponent<SmartWeapon>();
 
         _isEnemyAlive = true;
         _isBehindPlayer = false;
@@ -136,10 +131,10 @@ public class SmartEnemy : MonoBehaviour
         WaitForSeconds wait = new WaitForSeconds(0.5f);
         while(true)
         {
-            float distanceX = Mathf.Abs(player.position.x - transform.position.x);
+            float distanceX = Mathf.Abs(_playerPos.position.x - transform.position.x);
                        
 
-            if(distanceX <= rangeX && transform.position.y < player.position.y)
+            if(distanceX <= rangeX && transform.position.y < _playerPos.position.y)
             {
                 _isBehindPlayer = true;
             }
@@ -154,10 +149,10 @@ public class SmartEnemy : MonoBehaviour
 
     public void EnemyShield()
     {
-        EnemyShieldStrength();
+        //EnemyShieldStrength();
         _isEnemyShieldActive = true;
         ShieldActive(true);
-        ShieldStrength();
+        //ShieldStrength();
     }
     public void GenerateShieldIndex(int random)
     {
@@ -167,22 +162,22 @@ public class SmartEnemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    public int ShieldStrength()
-    {
-        EnemyShield();
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives;
-    }
-    public int EnemyShieldStrength()
-    {
+    //public int ShieldStrength()
+    //{
+    //    EnemyShield();
+    //    GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
+    //    _enemyShieldStrength = 1;
+    //    return _enemyLives;
+    //}
+    //public int EnemyShieldStrength()
+    //{
 
-        return _enemyShieldLives;
-    }
+    //    return _enemyShieldLives;
+    //}
 
     public void ShieldActive(bool state)
     {
-        _spriteRenderer.gameObject.SetActive(state);
+        _shieldSpriteRenderer.gameObject.SetActive(state);
         _isEnemyShieldActive = state;
         if (state == true)
         {

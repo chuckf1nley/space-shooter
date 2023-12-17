@@ -7,10 +7,9 @@ public class AvoidShot : MonoBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID; // 5 avoid shot
     [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
-    [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private AudioClip _deathAudioClip;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _enemyShieldStrength = 1;
     private float _avoidSpeed = 4f;
     private float _startX;
     private float _distanceX;
@@ -34,7 +33,7 @@ public class AvoidShot : MonoBehaviour
     {
         _enemyDeathAnim = transform.GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-        _audioClip = GetComponent<AudioClip>();
+        _deathAudioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _startX = transform.position.x;
         _speed = 5;
@@ -64,7 +63,7 @@ public class AvoidShot : MonoBehaviour
         }
         else
         {
-            _audioSource.clip = _audioClip;
+            _audioSource.clip = _deathAudioClip;
         }
 
         int rng = Random.Range(0, 70);
@@ -75,6 +74,7 @@ public class AvoidShot : MonoBehaviour
     void Update()
     {
         Movement();
+        LaserInRange();
 
         if (transform.position.y < -7.5)
         {
@@ -90,17 +90,13 @@ public class AvoidShot : MonoBehaviour
     }
 
     public void Movement()
-    {
-
-        
-            transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);
-        
+    {        
+            transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);        
                   
             if (transform.position.x > _laserX + 3)
             {
                 transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
 
-                LaserInRange();
             }            
         
     }   

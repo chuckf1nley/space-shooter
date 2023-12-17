@@ -7,7 +7,7 @@ public class AggressiveEnemy : MonoBehaviour
     [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _chaseSpeed = 5f;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private int _enemyID; // 3 aggro enemy
     private Animator _enemyDeathAnim;
@@ -31,7 +31,6 @@ public class AggressiveEnemy : MonoBehaviour
         _audioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
-        //SetActive(true);
 
         _isEnemyAlive = true;
         _startX = transform.position.x;
@@ -124,7 +123,7 @@ public class AggressiveEnemy : MonoBehaviour
     }
     public void ShieldActive(bool state)
     {
-        _spriteRenderer.gameObject.SetActive(state);
+        _shieldSpriteRenderer.gameObject.SetActive(state);
         _isEnemyShieldActive = state;
         if (state == true)
         {

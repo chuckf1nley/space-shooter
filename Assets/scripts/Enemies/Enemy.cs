@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _enemyShieldStrength = 1;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
     public float _playerProx = 2f;
     private float _fireRate = 3f;
     private float _canfire = -1f;
@@ -200,7 +200,7 @@ public class Enemy : MonoBehaviour
 
     public void ShieldActive(bool state)
     {
-        _spriteRenderer.gameObject.SetActive(state);
+        _shieldSpriteRenderer.gameObject.SetActive(state);
         _isEnemyShieldActive = state;
         if (state == true)
         {
