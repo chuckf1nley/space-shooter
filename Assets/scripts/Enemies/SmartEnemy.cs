@@ -19,9 +19,7 @@ public class SmartEnemy : MonoBehaviour
     private Quaternion _startRotaion;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _enemyShieldStrength = 1;
     private float _canFire = -1f;
-    //private float _playerDistance = -1f;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private bool _isBehindPlayer = false;
@@ -29,8 +27,10 @@ public class SmartEnemy : MonoBehaviour
     private Player _player;
     private int _direction;
     private int _enemyShieldLives = 1;
-    private int _enemyLives;
     private Transform _playerPos;
+    //private int _enemyLives;
+    //private float _playerDistance = -1f;
+    //private float _enemyShieldStrength = 1;
 
 
     // Start is called before the first frame update
@@ -48,9 +48,6 @@ public class SmartEnemy : MonoBehaviour
         _isEnemyAlive = true;
         _isBehindPlayer = false;
         _direction = Random.Range(0, 2);
-
-        int rng = Random.Range( 0, 70);
-        GenerateShieldIndex(rng);
 
         if (_direction == 0)
             _direction = -1;
@@ -73,8 +70,11 @@ public class SmartEnemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
+        EnemyShield();
         StartCoroutine(PlayerInRange());
 
+        int rng = Random.Range( 0, 70);
+        GenerateShieldIndex(rng);
     }
 
     // Update is called once per frame
@@ -149,7 +149,6 @@ public class SmartEnemy : MonoBehaviour
 
     public void EnemyShield()
     {
-        //EnemyShieldStrength();
         _isEnemyShieldActive = true;
         ShieldActive(true);
         //ShieldStrength();
@@ -169,11 +168,7 @@ public class SmartEnemy : MonoBehaviour
     //    _enemyShieldStrength = 1;
     //    return _enemyLives;
     //}
-    //public int EnemyShieldStrength()
-    //{
-
-    //    return _enemyShieldLives;
-    //}
+   
 
     public void ShieldActive(bool state)
     {

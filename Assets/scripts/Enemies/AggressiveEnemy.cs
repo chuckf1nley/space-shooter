@@ -99,7 +99,6 @@ public class AggressiveEnemy : MonoBehaviour
         {
             float randomx = Random.Range(-18f, 18f);
             transform.position = new Vector3(randomx, 9f, 0);
-
         }
     }
 
@@ -114,13 +113,13 @@ public class AggressiveEnemy : MonoBehaviour
        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
     }
 
-    public int ShieldStrength()
-    {
-        EnemyShield();
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives;
-    }
+    //public int ShieldStrength()
+    //{
+    //    EnemyShield();
+    //    GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
+    //    _enemyShieldStrength = 1;
+    //    return _enemyLives;
+    //}
     public void ShieldActive(bool state)
     {
         _shieldSpriteRenderer.gameObject.SetActive(state);
@@ -138,17 +137,17 @@ public class AggressiveEnemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    public int EnemyShieldStrength()
-    {
-        return _enemyShieldLives;
-    }
-    public void EnemyShield()
-    {
-        _isEnemyShieldActive = true;
-        ShieldActive(true);
-        ShieldStrength();
-        EnemyShieldStrength();
-    }
+    //public int EnemyShieldStrength()
+    //{
+    //    return _enemyShieldLives;
+    //}
+    //public void EnemyShield()
+    //{
+    //    _isEnemyShieldActive = true;
+    //    ShieldActive(true);
+    //    //ShieldStrength();
+    //    //EnemyShieldStrength();
+    //}
 
     public void Damage()
     {

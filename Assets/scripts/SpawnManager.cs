@@ -32,7 +32,7 @@ public class SpawnManager : MonoBehaviour
     {
         _uiManager = Object.FindObjectOfType<UIManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-       
+
     }
 
     public void StartSpawning()
@@ -259,24 +259,23 @@ public class SpawnManager : MonoBehaviour
             }
             else if (_isRegularWave == false)
             {
-               SpawnBoss();
+                SpawnBoss();
+                _stopSpawning = true;
+
             }
         }
     }
 
     public void SpawnBoss()
     {
-        _stopSpawning = true;
         WaitForSeconds wait = new WaitForSeconds(3);
         Vector3 startPos = new Vector3(0, 10, 0);
 
         GameObject bossSpawn = Instantiate(_bossPrefab, startPos, Quaternion.identity);
         _uiManager.BossHealth();
 
-
         //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
         //c.enabled = true;
     }
-
 
 }

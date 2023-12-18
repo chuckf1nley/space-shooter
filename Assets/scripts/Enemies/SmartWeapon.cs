@@ -7,10 +7,10 @@ public class SmartWeapon : MonoBehaviour
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _chaseSpeed = 2.5f;
     private Player _player;
-    private GameObject Player;
-    private GameObject Projectile;
+    //private GameObject Player;
+    //private GameObject Projectile;
     private float _playerDistance;
-    private float _interceptDistance;
+    private float _interceptDistance = 4f;
     private bool _isPlayerAlive;
     private Transform player;
 
@@ -36,6 +36,10 @@ public class SmartWeapon : MonoBehaviour
             {
                 Weapon();
             }
+        
+        _interceptDistance = Vector3.Distance(transform.position, _player.transform.position);
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
     }
 
     public void Weapon()
@@ -67,8 +71,22 @@ public class SmartWeapon : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+        MoveToPlayer();
     }
 
+    public void MoveToPlayer()
+    {
+        if (_interceptDistance < 5)
+        {
+            _chaseSpeed += 1;
+        }
+
+        Vector3 direction = _player.transform.position - transform.position;
+        direction = direction.normalized;
+
+        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+    }
+    
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (_isPlayerAlive == true)

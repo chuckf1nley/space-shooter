@@ -50,15 +50,12 @@ public class Player : MonoBehaviour
     private int _maxAmmo = 15;
     private int _currentMissiles;
     private SpawnManager _spawnManager;
-    private Missile _missile;
-    private GameObject _powerup;
     private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     private TMP_Text _shieldLivesDisplay;
     private CameraShake _camShake;
     private Vector3 _laserOffset = new Vector3(0, .884f, 0);
     private UIManager _uiManager;
     private GameManager _gameManager;
-    //private Powerup _powerup;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
@@ -74,7 +71,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
-         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _audioSource = GetComponent<AudioSource>();
@@ -121,12 +118,12 @@ public class Player : MonoBehaviour
             FireLaser();
         }
 
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -5.3f, 0), 0);
 
-            if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
-            {
-                HomingMissile();
-            }        
+        if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
+        {
+            HomingMissile();
+        }
     }
 
     public void CalculateMovement()
@@ -143,7 +140,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, 0, 0);
 
         }
-        else if (transform.position.y <= -4.8f)
+        else if (transform.position.y <= -5.3f)
         {
             transform.position = new Vector3(transform.position.x, -4.8f, 0);
         }
@@ -162,7 +159,6 @@ public class Player : MonoBehaviour
     public void Thruster()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        //UIManager _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
         if (_uiManager != null)
         {
@@ -180,7 +176,6 @@ public class Player : MonoBehaviour
                 _thrusterInactive.text = "thruster on cooldown";
             }
         }
-
     }
     IEnumerator thrusterPowerDownRoutine()
     {
@@ -292,9 +287,9 @@ public class Player : MonoBehaviour
         }
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-       // _shieldLivesDisplay.text = "shield lives";
+        // _shieldLivesDisplay.text = "shield lives";
     }
-   
+
     public void TripleShotActive()
     {
         _isTriple_ShotActive = true;
@@ -305,17 +300,27 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         _isTriple_ShotActive = false;
     }
-
-    public void SpeedBoostActive()
+    public void AltFire()
     {
-        _speed *= _speedMultiplier;
-        StartCoroutine(SpeedBoostPowerDownRoutine());
+        _firingConstantly = true;
+        StartCoroutine(AltFirePowerDownRoutine());
+        StartCoroutine(AltFiring());
     }
-    IEnumerator SpeedBoostPowerDownRoutine()
+    IEnumerator AltFiring()
+    {
+        while (_firingConstantly)
+        {
+            yield return new WaitForSeconds(_fireRate);
+            Instantiate(_altFire, transform.position + _laserOffset, Quaternion.identity);
+        }
+    }
+    IEnumerator AltFirePowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _speed /= _speedMultiplier;
+        _isAltFireActive = false;
+        _firingConstantly = false;
     }
+
 
     public void AddScore(int points)
     {
@@ -353,25 +358,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void AltFire()
+    public void SpeedBoostActive()
     {
-        _firingConstantly = true;
-        StartCoroutine(AltFirePowerDownRoutine());
-        StartCoroutine(AltFiring());
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
     }
-    IEnumerator AltFiring()
-    {
-        while (_firingConstantly)
-        {
-            yield return new WaitForSeconds(_fireRate);
-            Instantiate(_altFire, transform.position + _laserOffset, Quaternion.identity);
-        }
-    }
-    IEnumerator AltFirePowerDownRoutine()
+    IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _isAltFireActive = false;
-        _firingConstantly = false;
+        _speed /= _speedMultiplier;
     }
 
     public void NegSpeed()
@@ -382,7 +377,7 @@ public class Player : MonoBehaviour
             _speed *= _negSpeedMultiplier;
             StartCoroutine(NegSpeedPowerDownRoutine());
             StartCoroutine(thrusterPowerDownRoutine());
-           // Debug.Log("debuff collected");
+            // Debug.Log("debuff collected");
         }
     }
     IEnumerator NegSpeedPowerDownRoutine()

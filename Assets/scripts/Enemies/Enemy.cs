@@ -177,26 +177,27 @@ public class Enemy : MonoBehaviour
         else if (transform.position.x < _startX - 8)
             _direction = 1;
 
-        transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);      
+        transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
         
+        if (transform.position.x > 18f)
+        {
+            transform.position = new Vector3(-18f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -18f)
+        {
+            transform.position = new Vector3(18f, transform.position.y, 0);
+        }
+
     }
 
     public void FastEnemy()
     {
         _isFastEnemy = true;
-       // _isFastEnemy.SetActive(true);
         FastEnemyMovement();
         FireMissile();
         CalculateMovement();      
     }
     
-    public int ShieldStrength()
-    {
-        EnemyShield();
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives;
-    }
 
     public void ShieldActive(bool state)
     {
@@ -221,18 +222,7 @@ public class Enemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    public int EnemyShieldStrength()
-    {
-        return _enemyShieldLives;
-    }
-
-    public void EnemyShield()
-    {
-        _isEnemyShieldActive = true;
-        ShieldActive(true);
-        ShieldStrength();
-        EnemyShieldStrength();
-    }
+   
 
     public void Damage()
     {

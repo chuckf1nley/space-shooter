@@ -29,7 +29,7 @@ public class Boss : MonoBehaviour
     private bool _isBossAlive = true;
     private Player _player;
     private SpawnManager _spawnManager;
-    private Vector3 _endPos = new Vector3(0, 4f, 0);
+    private Vector3 _endPos = new Vector3(0, 3.5f, 0);
 
     //private void Awake()
     //{
@@ -94,14 +94,11 @@ public class Boss : MonoBehaviour
            
         }
 
-
-
     }
 
     public void BossMovement()
     {
         //move to -4 and stay there, move left to right
-
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (transform.position.y < _endPos.y)
             transform.position = _endPos;
@@ -152,7 +149,6 @@ public class Boss : MonoBehaviour
 
     public void BossLaser()
     {
-
         if (Time.time > _canfire && _isBossAlive == true)
         {
             _fireRate = Random.Range(2f, 7f);
@@ -164,8 +160,6 @@ public class Boss : MonoBehaviour
                 lasers[i].AssignEnemyLaser();
             }
         }
-
-
     }
     public void Damage(int damage)
     {
@@ -189,11 +183,11 @@ public class Boss : MonoBehaviour
 
     }
 
-    private void OnDestroy()
-    {
-        if (_healthBar == null)
-            GameObject.Destroy(_healthBar.gameObject);
-    }
+    //private void OnDestroy()
+    //{
+    //    if (_healthBar == null)
+    //        GameObject.Destroy(_healthBar.gameObject);
+    //}
 
     public void OnTriggerEnter2D(Collider2D other)
     {

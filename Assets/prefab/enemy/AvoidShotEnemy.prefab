@@ -302,7 +302,7 @@ MonoBehaviour:
   _speed: 5
   _enemyID: 4
   _shieldSpriteRenderer: {fileID: 1079916670655179325}
-  _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _deathAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!95 &2061337507868069111
 Animator:
   serializedVersion: 4

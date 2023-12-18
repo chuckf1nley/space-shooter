@@ -74,10 +74,7 @@ public class BossHealthBar : MonoBehaviour
 
      }
     /*
-       transform.parent = _bossContainer.transform;
-       HideHealthBar();
-        yield return wait;
-       DisplayHealthBar();
+       transform.parent = _bossContainer.transform;    
      */
 
 }
