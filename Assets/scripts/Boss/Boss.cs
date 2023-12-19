@@ -93,17 +93,16 @@ public class Boss : MonoBehaviour
             EnemyDeathSequence();
            
         }
+        BossLaser();
 
     }
 
     public void BossMovement()
     {
-        //move to -4 and stay there, move left to right
+        //move to 0, 3.5, 0 and stay there, move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (transform.position.y < _endPos.y)
             transform.position = _endPos;
-
-        BossLaser();
     }
 
     public void BossMovementBelow50()

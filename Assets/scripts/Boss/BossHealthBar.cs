@@ -66,15 +66,13 @@ public class BossHealthBar : MonoBehaviour
         HideHealthBar();
         yield return new WaitForSeconds(3f);
         DisplayHealthBar();
+        //transform.parent = _bossContainer.transform;
 
         if (_currentHealth == 0)
         {
             HideHealthBar();
         }
 
-     }
-    /*
-       transform.parent = _bossContainer.transform;    
-     */
+     }   
 
 }

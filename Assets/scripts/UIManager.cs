@@ -81,12 +81,11 @@ public class UIManager : MonoBehaviour
         {
             _bossHealthBar.gameObject.SetActive(true);
         }
-        //else if (_isBossActive == false)
-        //{
-        //    _bossHealthBar.gameObject.SetActive(false);
-        //}
+        else 
+        {
+            _bossHealthBar.gameObject.SetActive(false);
+        }
     }
-
 
     void GameOverSequence()
     {
@@ -124,17 +123,11 @@ public class UIManager : MonoBehaviour
     private void RestartDisplay()
     {
         _restartText.enabled = true;
-        Assert.IsTrue(_restartText.isActiveAndEnabled, "The Restart Game Text Must Be both " + "active and enabled for the text to show");
     }
 
     private void ExitDisplay()
     {
         _exitGame.enabled = true;
-        Assert.IsTrue(_exitGame.isActiveAndEnabled, " the exit game text must be both" + "active and enabled for the text to show");
     }
-
-    internal void UpdateWave()
-    {
-        throw new NotImplementedException();
-    }
+    
 }

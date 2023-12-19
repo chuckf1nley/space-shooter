@@ -49,8 +49,8 @@ public class SpawnManager : MonoBehaviour
     {
         if (_isBossActive == true)
         {
+            _isBossActive = true;
             _stopSpawning = true;
-            //StartCoroutine(WavePowerDownRoutine());
         }
 
     }
@@ -165,44 +165,30 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
-        while (_stopSpawning == false)
+        yield return new WaitForSeconds(3.0f);
+
+        while (_waveValue > 0)
         {
-            yield return new WaitForSeconds(3.0f);
+            int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
+            Vector3 enemySpawnPos = GetEnemySpawnPos(randomEnemy);
+            GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], enemySpawnPos, Quaternion.identity);
 
-            while (_waveValue > 0)
-            {
-                int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
-                Vector3 enemySpawnPos = GetEnemySpawnPos(randomEnemy);
-                GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], enemySpawnPos, Quaternion.identity);
-
-
-                _enemy.transform.parent = _enemyContainer.transform;
-                _waveValue--;
-                _enemyCount++;
-                yield return new WaitForSeconds(5.0f);
-
-            }
-            if (_enemyCount <= 0)
-            {
-                currWave++;
-                _waveValue = currWave * 10;
-                StartCoroutine(WaitToStartNewWaveCouroutine());
-            }
-            else if (_isRegularWave == false || _isBossActive == true)
-            {
-                StopSpawning();
-                //WavePowerDownRoutine();
-            }
+            _enemy.transform.parent = _enemyContainer.transform;
+            _waveValue--;
+            _enemyCount++;
+            yield return new WaitForSeconds(5.0f);
         }
+        while (_enemyCount > 0)
+        {
+            yield return null;
+        }
+
+        currWave++;
+        _waveValue = currWave * 10;
+        StartCoroutine(WaitToStartNewWaveCouroutine());
+
     }
 
-    //public IEnumerator WavePowerDownRoutine()
-    //{
-    //    //_waveValue = 0;
-    //    //_enemyCount = 0;
-    //    _stopSpawning = true;
-    //    yield return new WaitForSeconds(2f);
-    //}
 
     public void EnemyDeath()
     {
@@ -232,7 +218,6 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
-
             return 0;
         }
 
@@ -244,7 +229,6 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator WaitToStartNewWaveCouroutine()
     {
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _uiManager.UpdateWave(_currWave);
         WaitForSeconds wait = new WaitForSeconds(3);
         while (_enemyContainer.transform.childCount > 0)
@@ -253,27 +237,26 @@ public class SpawnManager : MonoBehaviour
         }
         //check wave number if wave 10 boss wave
         yield return wait;
-        if (currWave == 2)
-        {
-            if (_isRegularWave == true)
+       
+            if (_currWave != 2)
             {
-                StartCoroutine(SpawnEnemyRoutine());
+                SpawnEnemyRoutine();
             }
-            else if (_isRegularWave == false)
+            else 
             {
                 SpawnBoss();
                 StopSpawning();
-
             }
-        }
+        
     }
 
     public void SpawnBoss()
     {
-        WaitForSeconds wait = new WaitForSeconds(3);
+        new WaitForSeconds(3);
         Vector3 startPos = new Vector3(0, 10, 0);
+        _isBossActive = true;
 
-        GameObject bossSpawn = Instantiate(_bossPrefab, startPos, Quaternion.identity);
+        Instantiate(_bossPrefab, startPos, Quaternion.identity);
         _uiManager.BossHealth();
 
         //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
