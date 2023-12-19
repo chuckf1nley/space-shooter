@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
             FireLaser();
         }
 
-        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -5.3f, 0), 0);
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -8f, 0), 0);
 
         if (Input.GetKeyDown(KeyCode.E) && Time.time > _missileFireRate)
         {
@@ -140,9 +140,9 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, 0, 0);
 
         }
-        else if (transform.position.y <= -5.3f)
+        else if (transform.position.y <= -8f)
         {
-            transform.position = new Vector3(transform.position.x, -4.8f, 0);
+            transform.position = new Vector3(transform.position.x, -8f, 0);
         }
 
         if (transform.position.x > 18f)

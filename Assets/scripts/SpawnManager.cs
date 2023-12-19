@@ -49,7 +49,8 @@ public class SpawnManager : MonoBehaviour
     {
         if (_isBossActive == true)
         {
-            StartCoroutine(WavePowerDownRoutine());
+            _stopSpawning = true;
+            //StartCoroutine(WavePowerDownRoutine());
         }
 
     }
@@ -189,18 +190,19 @@ public class SpawnManager : MonoBehaviour
             }
             else if (_isRegularWave == false || _isBossActive == true)
             {
-                WavePowerDownRoutine();
+                StopSpawning();
+                //WavePowerDownRoutine();
             }
         }
     }
 
-    public IEnumerator WavePowerDownRoutine()
-    {
-        _waveValue = 0;
-        _enemyCount = 0;
-        _stopSpawning = true;
-        yield return new WaitForSeconds(2f);
-    }
+    //public IEnumerator WavePowerDownRoutine()
+    //{
+    //    //_waveValue = 0;
+    //    //_enemyCount = 0;
+    //    _stopSpawning = true;
+    //    yield return new WaitForSeconds(2f);
+    //}
 
     public void EnemyDeath()
     {
@@ -260,7 +262,7 @@ public class SpawnManager : MonoBehaviour
             else if (_isRegularWave == false)
             {
                 SpawnBoss();
-                _stopSpawning = true;
+                StopSpawning();
 
             }
         }

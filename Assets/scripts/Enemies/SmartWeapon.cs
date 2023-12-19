@@ -12,12 +12,12 @@ public class SmartWeapon : MonoBehaviour
     private float _playerDistance;
     private float _interceptDistance = 4f;
     private bool _isPlayerAlive;
-    private Transform player;
+    private Transform _playerPos;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-       // _player = GameObject.Find("Player").GetComponent<Player>();
+        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _isPlayerAlive = true;
       
 
@@ -71,22 +71,22 @@ public class SmartWeapon : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-        MoveToPlayer();
+        //MoveToPlayer();
     }
 
-    public void MoveToPlayer()
-    {
-        if (_interceptDistance < 5)
-        {
-            _chaseSpeed += 1;
-        }
+    //public void MoveToPlayer()
+    //{
+    //    if (_interceptDistance < 5)
+    //    {
+    //        _chaseSpeed += 1;
+    //    }
 
-        Vector3 direction = _player.transform.position - transform.position;
-        direction = direction.normalized;
+    //    Vector3 direction = _player.transform.position - transform.position;
+    //    direction = direction.normalized;
 
-        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-    }
-    
+    //    transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+    //}
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (_isPlayerAlive == true)

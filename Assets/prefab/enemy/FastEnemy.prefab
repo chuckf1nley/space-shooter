@@ -418,7 +418,8 @@ MonoBehaviour:
   _enemyID: 1
   _audioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyShieldStrength: 1
-  _spriteRenderer: {fileID: 7530867059363163508}
+  _shieldSpriteRenderer: {fileID: 813517602146589155, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
+  _fastEnemyShieldSpriteRnederer: {fileID: 0}
   _playerProx: 2
 --- !u!61 &6667723834124428593
 BoxCollider2D:
@@ -621,8 +622,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1099014083
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
