@@ -51,6 +51,7 @@ public class SpawnManager : MonoBehaviour
         {
             _isBossActive = true;
             _stopSpawning = true;
+            _isRegularWave = false;
         }
 
     }
@@ -165,10 +166,12 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+       
         yield return new WaitForSeconds(3.0f);
 
         while (_waveValue > 0)
         {
+            _isRegularWave = true;
             int randomEnemy = GenerateEnemyIndex(Random.Range(0, 50));
             Vector3 enemySpawnPos = GetEnemySpawnPos(randomEnemy);
             GameObject _enemy = Instantiate(_enemyPrefab[randomEnemy], enemySpawnPos, Quaternion.identity);
@@ -182,9 +185,13 @@ public class SpawnManager : MonoBehaviour
         {
             yield return null;
         }
+      
 
         currWave++;
         _waveValue = currWave * 10;
+
+        if (_isRegularWave == false || _isBossActive == true)
+
         StartCoroutine(WaitToStartNewWaveCouroutine());
 
     }
@@ -252,8 +259,9 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnBoss()
     {
+        _isRegularWave = false;
         new WaitForSeconds(3);
-        Vector3 startPos = new Vector3(0, 10, 0);
+        Vector3 startPos = new Vector3(0, 1, 0);
         _isBossActive = true;
 
         Instantiate(_bossPrefab, startPos, Quaternion.identity);
