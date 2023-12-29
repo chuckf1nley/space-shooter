@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _shield_Lives_Display;
     [SerializeField] private TMP_Text _bossDefatedPrefab;
     [SerializeField] private TMP_Text _youWinText;
-    [SerializeField] private TMP_Text _currWave;
+    [SerializeField] private TMP_Text _currWaveText;
     private bool _isBossActive;
     private TMP_Text bossDefeated;
     private GameManager _gameManager;
@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateWave(int currentWave)
     {
-        _currWave.text = "Wave:" + currentWave.ToString(); 
+        _currWaveText.text = "Wave:" + currentWave.ToString(); 
     }
 
     public void BossHealth()

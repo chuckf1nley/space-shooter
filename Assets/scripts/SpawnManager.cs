@@ -251,8 +251,8 @@ public class SpawnManager : MonoBehaviour
             }
             else 
             {
-                SpawnBoss();
                 StopSpawning();
+                SpawnBoss();
             }
         
     }

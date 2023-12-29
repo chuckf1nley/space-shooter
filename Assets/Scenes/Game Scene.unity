@@ -947,7 +947,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 187.4, y: -43.1}
+  m_AnchoredPosition: {x: 192.7, y: -42}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &632791279
@@ -3501,7 +3501,7 @@ MonoBehaviour:
   _shield_Lives_Display: {fileID: 1130667708}
   _bossDefatedPrefab: {fileID: 632791280}
   _youWinText: {fileID: 632791280}
-  _currWave: {fileID: 1866735837}
+  _currWaveText: {fileID: 0}
 --- !u!1 &1641933630
 GameObject:
   m_ObjectHideFlags: 0
@@ -4068,6 +4068,7 @@ GameObject:
   - component: {fileID: 1866735836}
   - component: {fileID: 1866735838}
   - component: {fileID: 1866735837}
+  - component: {fileID: 1866735839}
   m_Layer: 5
   m_Name: Current_Wave
   m_TagString: Untagged
@@ -4084,16 +4085,16 @@ RectTransform:
   m_GameObject: {fileID: 1866735835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.40673086, y: 0.3900159, z: 0.44573244}
+  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1574783386}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -390.59, y: -218.03}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -154.5, y: -30.9}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1866735837
 MonoBehaviour:
@@ -4142,8 +4143,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4168,7 +4169,7 @@ MonoBehaviour:
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -4229,6 +4230,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!222 &1866735839
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866735835}
+  m_CullTransparentMesh: 1
 --- !u!1 &1904842517
 GameObject:
   m_ObjectHideFlags: 0
