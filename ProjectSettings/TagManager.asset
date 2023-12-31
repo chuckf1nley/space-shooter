@@ -20,7 +20,6 @@ TagManager:
   - Powerup
   - Homingmissile
   - laser
-  - FastEnemy
   - BossWeapon
   - Boss
   layers:

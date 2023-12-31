@@ -20,7 +20,7 @@ public class SpawnManager : MonoBehaviour
     private UIManager _uiManager;
 
     private int _enemyID;
-    private int currWave;
+    private int _currentWave;
     private int _waveValue;
     private int _enemyCount;
     private int _waveTotal;
@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
-        currWave = 1;
+        _currentWave = 1;
         _waveValue = 10;
         _enemyCount = 0;
         _waveTotal = _waveValue;
@@ -70,7 +70,6 @@ public class SpawnManager : MonoBehaviour
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
-
 
         }
 
@@ -109,6 +108,7 @@ public class SpawnManager : MonoBehaviour
         {
             return 7; //homing Missile
         }
+        else
         {
             return 3;
         }
@@ -162,8 +162,6 @@ public class SpawnManager : MonoBehaviour
         return _enemySpawnPos;
     }
 
-
-
     IEnumerator SpawnEnemyRoutine()
     {
        
@@ -184,13 +182,13 @@ public class SpawnManager : MonoBehaviour
         while (_enemyCount > 0)
         {
             yield return null;
-        }
-      
+        }      
 
-        currWave++;
-        _waveValue = currWave * 10;
+        _currentWave++;
+        _waveValue = _currentWave * 10;
 
-        if (_isRegularWave == false || _isBossActive == true)
+        //following line Thomas said dont use, isnt needed, need to define the normal wave, will help
+        //if (_isRegularWave == false || _isBossActive == true)
 
         StartCoroutine(WaitToStartNewWaveCouroutine());
 
@@ -236,6 +234,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator WaitToStartNewWaveCouroutine()
     {
+        _currWave++;
         _uiManager.UpdateWave(_currWave);
         WaitForSeconds wait = new WaitForSeconds(3);
         while (_enemyContainer.transform.childCount > 0)

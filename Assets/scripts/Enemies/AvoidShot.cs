@@ -7,6 +7,7 @@ public class AvoidShot : MonoBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID; // 5 avoid shot
     [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
+    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private AudioClip _deathAudioClip;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
