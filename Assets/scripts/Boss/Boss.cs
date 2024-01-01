@@ -12,7 +12,6 @@ public class Boss : MonoBehaviour
     [SerializeField] private AudioClip _bossSpawn;
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
-    [SerializeField] private int _maxBossHealth = 40;
     [SerializeField] private GameObject _healthBarPrefab;
     [SerializeField] private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
@@ -21,6 +20,8 @@ public class Boss : MonoBehaviour
 
     public BossHealthBar _healthBar;
 
+     private int _maxBossHealth = 40;
+    private int _minBossHealth = 0;
     private float _positionX;
     private float _fireRate = 2f;
     private float _startX;
@@ -38,13 +39,13 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();       
         _currentBossHealth = _maxBossHealth;
         _audioSource = GetComponent<AudioSource>();
         _healthBar.SetMaxHealth(_maxBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
 
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();       
 
         _startX = transform.position.x;
         _positionX = transform.position.x;
@@ -80,6 +81,13 @@ public class Boss : MonoBehaviour
     void Update()
     {
         _healthBar.SetHealth(_currentBossHealth);
+        BossFireLaser();
+        BossPhases();
+
+    }
+
+    public void BossPhases()
+    {
         if (_currentBossHealth == 40)
         {
             BossMovement();
@@ -93,14 +101,16 @@ public class Boss : MonoBehaviour
             EnemyDeathSequence();
            
         }
-        BossLaser();
 
     }
+
 
     public void BossMovement()
     {
         //move to 0, 3.5, 0 and stay there, move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (transform.position.x < _startX) 
+            
         if (transform.position.y < _endPos.y)
             transform.position = _endPos;
     }
@@ -146,11 +156,11 @@ public class Boss : MonoBehaviour
     }
 
 
-    public void BossLaser()
+    public void BossFireLaser()
     {
         if (Time.time > _canfire && _isBossAlive == true)
         {
-            _fireRate = Random.Range(2f, 7f);
+            _fireRate = Random.Range(2f, 5.5f);
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();

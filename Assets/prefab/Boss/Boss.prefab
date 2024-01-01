@@ -59,7 +59,7 @@ MonoBehaviour:
   _speed: 3
   _enemyID: 6
   _bossWeaponPrefab: {fileID: 2628944221914753156, guid: df3a354e7ad95e7409cffa36cb3b8d6e, type: 3}
-  _laserPrefab: {fileID: 6915159565038734937, guid: e34f4beb2c1ef94428c4a312dc63a24f, type: 3}
+  _laserPrefab: {fileID: 5522119868211626154, guid: 19711c8b4b30ca544a796680c4e302ff, type: 3}
   _spriteRenderer: {fileID: 0}
   _bossSpawn: {fileID: 8300000, guid: 35179bf9103834dcca7ed39c9d5f58e5, type: 3}
   _audioDeathClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
