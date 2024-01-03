@@ -81,6 +81,7 @@ public class UIManager : MonoBehaviour
         {
             _bossHealthBar.gameObject.SetActive(true);
         }
+
         //else 
         //{
         //    _bossHealthBar.gameObject.SetActive(false);

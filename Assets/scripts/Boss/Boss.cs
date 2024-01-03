@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour
         _healthBar.SetMaxHealth(_maxBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
-
+        _isBossAlive = true;
 
         _startX = transform.position.x;
         _positionX = transform.position.x;
@@ -170,12 +170,35 @@ public class Boss : MonoBehaviour
             }
         }
     }
-    public void Damage(int damage)
+    public void Damage()
     {
-        _currentBossHealth -= damage;
-        _healthBar.SetHealth(_currentBossHealth);
+        //_currentBossHealth -= damage;
+        //_healthBar.SetHealth(_currentBossHealth);
+
+        _currentBossHealth--;
+        BossPhases();
     }
 
+    /*
+      public void Damage()
+    {
+
+        if (_isShieldActive == true)
+        {
+            _shieldVisualizer.Damage();
+
+            if (_shieldVisualizer.ShieldStrength() <= 0)
+            {
+                _isShieldActive = false;
+                _shieldVisualizer.ShieldActive(false);
+            }
+
+            return;
+        }
+        _currentLives--;       
+        _uiManager.UpdateLives(_currentLives);
+       
+     */
 
     public void EnemyDeathSequence()
     {
