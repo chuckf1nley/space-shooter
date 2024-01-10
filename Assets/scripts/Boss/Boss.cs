@@ -20,7 +20,7 @@ public class Boss : MonoBehaviour
 
     public BossHealthBar _healthBar;
 
-     private int _maxBossHealth = 40;
+    private int _maxBossHealth = 40;
     private int _minBossHealth = 0;
     private float _positionX;
     private float _fireRate = 2f;
@@ -39,12 +39,14 @@ public class Boss : MonoBehaviour
 
     void Start()
     {
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();       
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _currentBossHealth = _maxBossHealth;
         _audioSource = GetComponent<AudioSource>();
+        _audioDeathClip = GetComponent<AudioClip>();
         _healthBar.SetMaxHealth(_maxBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
+
         _isBossAlive = true;
 
         _startX = transform.position.x;
@@ -75,16 +77,29 @@ public class Boss : MonoBehaviour
         {
             _audioSource.clip = _audioDeathClip;
         }
+
+        /*
+         *   int rng = Random.Range(0, 60);
+        GenerateShieldIndex(rng);
+         */
+
+
     }
 
     // Update is called once per frame
     void Update()
+    {
+        BossLogic();
+    }
+
+    public void BossLogic()
     {
         _healthBar.SetHealth(_currentBossHealth);
         BossFireLaser();
         BossPhases();
 
     }
+
 
     public void BossPhases()
     {
@@ -98,6 +113,7 @@ public class Boss : MonoBehaviour
         }
         if (_currentBossHealth == 0 )
         {
+            _currentBossHealth = _minBossHealth;
             EnemyDeathSequence();
            
         }
@@ -207,8 +223,7 @@ public class Boss : MonoBehaviour
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
         if (_audioSource == null)
             _audioSource.Play();
-        //foreach (BoxCollider2D - char -in -cols)
-        //    c.enabled = false;
+       
         _ui.StartCoroutine(_ui.GameWonSequence());
         Destroy(this.gameObject, -3);
         Destroy(GetComponent<Collider2D>());
