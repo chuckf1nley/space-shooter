@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
         _currWaveText.text = "Wave:" + currentWave.ToString(); 
     }
 
-    public void BossHealth()
+    public void BossHealth(int _currentBossHealth)
     {
         if (_isBossActive == true)
         {

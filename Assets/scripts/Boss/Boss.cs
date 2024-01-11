@@ -12,8 +12,8 @@ public class Boss : MonoBehaviour
     [SerializeField] private AudioClip _bossSpawn;
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
-    [SerializeField] private GameObject _healthBarPrefab;
     [SerializeField] private Animator _enemyDeathAnim;
+    private GameObject _healthBarObject;
     private AudioSource _audioSource;
     private BoxCollider2D[] _cols;
     private UIManager _ui;
@@ -43,9 +43,13 @@ public class Boss : MonoBehaviour
         _currentBossHealth = _maxBossHealth;
         _audioSource = GetComponent<AudioSource>();
         _audioDeathClip = GetComponent<AudioClip>();
-        _healthBar.SetMaxHealth(_maxBossHealth);
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
+
+        _healthBarObject = GameObject.Find("BossHealthBar").gameObject;
+        _healthBarObject.transform.GetChild(0).gameObject.SetActive(true);
+        _healthBar = _healthBarObject.transform.GetChild(0).GetComponent<BossHealthBar>();
+        _healthBar.SetMaxHealth(_maxBossHealth);
 
         _isBossAlive = true;
 
@@ -78,11 +82,10 @@ public class Boss : MonoBehaviour
             _audioSource.clip = _audioDeathClip;
         }
 
-        /*
-         *   int rng = Random.Range(0, 60);
-        GenerateShieldIndex(rng);
-         */
+       
 
+        int rng = Random.Range(0, 20);
+        //GenerateWeaponIndex(rng);
 
     }
 
@@ -176,6 +179,7 @@ public class Boss : MonoBehaviour
     {
         if (Time.time > _canfire && _isBossAlive == true)
         {
+            Debug.Log("BossLaserCalled");
             _fireRate = Random.Range(2f, 5.5f);
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
@@ -186,35 +190,16 @@ public class Boss : MonoBehaviour
             }
         }
     }
+    
     public void Damage()
     {
-        //_currentBossHealth -= damage;
         //_healthBar.SetHealth(_currentBossHealth);
 
         _currentBossHealth--;
+        _ui.BossHealth(_currentBossHealth);
         BossPhases();
     }
-
-    /*
-      public void Damage()
-    {
-
-        if (_isShieldActive == true)
-        {
-            _shieldVisualizer.Damage();
-
-            if (_shieldVisualizer.ShieldStrength() <= 0)
-            {
-                _isShieldActive = false;
-                _shieldVisualizer.ShieldActive(false);
-            }
-
-            return;
-        }
-        _currentLives--;       
-        _uiManager.UpdateLives(_currentLives);
-       
-     */
+    
 
     public void EnemyDeathSequence()
     {
@@ -236,6 +221,8 @@ public class Boss : MonoBehaviour
     //        GameObject.Destroy(_healthBar.gameObject);
     //}
 
+    //set the laser to damage before being destroyed, make sure the lasers are tagged correctly
+    //make sure the lasers are firing
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (_isBossAlive == true)
@@ -251,15 +238,18 @@ public class Boss : MonoBehaviour
 
         if (other.CompareTag("Laser"))
         {
+            Damage();
             Destroy(other.gameObject);
         }
 
         if (other.CompareTag("Shield"))
         {
+            Damage();
             other.GetComponent<Shield>();
         }
         if (other.CompareTag("PlayerMissile"))
         {
+            Damage();
             Destroy(other.gameObject);
         }
 

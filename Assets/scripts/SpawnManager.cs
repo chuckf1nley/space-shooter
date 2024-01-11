@@ -264,7 +264,7 @@ public class SpawnManager : MonoBehaviour
         _isBossActive = true;
 
         Instantiate(_bossPrefab, startPos, Quaternion.identity);
-        _uiManager.BossHealth();
+        //_uiManager.BossHealth();
 
         //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
         //c.enabled = true;

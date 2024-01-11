@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SmartWeapon : MonoBehaviour
 {
-    [SerializeField] private float _speed = 2f;
+    [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _chaseSpeed = 2.5f;
     private Player _player;
     //private GameObject Player;
