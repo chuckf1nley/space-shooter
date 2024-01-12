@@ -187,9 +187,7 @@ public class SpawnManager : MonoBehaviour
         _currentWave++;
         _waveValue = _currentWave * 10;
 
-        //following line Thomas said dont use, isnt needed, need to define the normal wave, will help
-        //if (_isRegularWave == false || _isBossActive == true)
-
+        
         StartCoroutine(WaitToStartNewWaveCouroutine());
 
     }
@@ -266,8 +264,7 @@ public class SpawnManager : MonoBehaviour
         Instantiate(_bossPrefab, startPos, Quaternion.identity);
         //_uiManager.BossHealth();
 
-        //foreach (BoxCollider2D - c - in -Boss.GetComponents<BoxCollider2D>()) ;
-        //c.enabled = true;
+       
     }
 
 }

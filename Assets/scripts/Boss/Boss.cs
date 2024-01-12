@@ -128,10 +128,11 @@ public class Boss : MonoBehaviour
     {
         //move to 0, 3.5, 0 and stay there, move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (transform.position.x < _startX) 
-            
-        if (transform.position.y < _endPos.y)
-            transform.position = _endPos;
+        if (transform.position.x < _startX)
+        {
+            if (transform.position.y < _endPos.y)
+                transform.position = _endPos;
+        }
     }
 
     public void BossMovementBelow50()
@@ -175,6 +176,7 @@ public class Boss : MonoBehaviour
     }
 
 
+    //make sure the lasers are firing
     public void BossFireLaser()
     {
         if (Time.time > _canfire && _isBossAlive == true)
@@ -210,7 +212,7 @@ public class Boss : MonoBehaviour
             _audioSource.Play();
        
         _ui.StartCoroutine(_ui.GameWonSequence());
-        Destroy(this.gameObject, -3);
+        Destroy(this.gameObject, -3f);
         Destroy(GetComponent<Collider2D>());
 
     }
@@ -221,8 +223,7 @@ public class Boss : MonoBehaviour
     //        GameObject.Destroy(_healthBar.gameObject);
     //}
 
-    //set the laser to damage before being destroyed, make sure the lasers are tagged correctly
-    //make sure the lasers are firing
+    //set the laser to damage boss before being destroyed
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (_isBossAlive == true)

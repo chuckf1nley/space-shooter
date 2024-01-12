@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _youWinText;
     [SerializeField] private TMP_Text _currWaveText;
     private bool _isBossActive;
-    private TMP_Text bossDefeated;
+    private TMP_Text _bossDefeated;
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
 
@@ -112,8 +112,8 @@ public class UIManager : MonoBehaviour
     public IEnumerator GameWonSequence()
     {
         yield return new WaitForSeconds(3);
-        bossDefeated = Component.Instantiate(_bossDefatedPrefab);
-        bossDefeated.enabled = true;
+        _bossDefeated = Component.Instantiate(_bossDefatedPrefab);
+        _bossDefeated.enabled = true;
         _gameManager.GameOver();
         _youWinText.gameObject.SetActive(true);
         RestartDisplay();

@@ -98,6 +98,7 @@ public class SmartWeapon : MonoBehaviour
                 {
                     player.Damage();
                     _isPlayerAlive = false;
+                    Destroy(this.gameObject);
                 }
             }
         }
