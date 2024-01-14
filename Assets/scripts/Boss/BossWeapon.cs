@@ -17,8 +17,7 @@ public class BossWeapon : MonoBehaviour
 
     }
 
-
-    public void AssignBossWeaponA()
+    public void AssignBossFlameThrower()
     {
         
         transform.Translate(Vector3.down * _speed * Time.deltaTime);

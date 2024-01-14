@@ -20,7 +20,7 @@ public class Boss : MonoBehaviour
 
     public BossHealthBar _healthBar;
 
-    private int _maxBossHealth = 40;
+    private int _maxBossHealth = 60;
     private int _minBossHealth = 0;
     private float _positionX;
     private float _fireRate = 2f;
@@ -80,9 +80,7 @@ public class Boss : MonoBehaviour
         else
         {
             _audioSource.clip = _audioDeathClip;
-        }
-
-       
+        }       
 
         int rng = Random.Range(0, 20);
         //GenerateWeaponIndex(rng);
@@ -97,6 +95,7 @@ public class Boss : MonoBehaviour
 
     public void BossLogic()
     {
+        _isBossAlive = true;
         _healthBar.SetHealth(_currentBossHealth);
         BossFireLaser();
         BossPhases();
@@ -112,13 +111,13 @@ public class Boss : MonoBehaviour
         }
         if (_currentBossHealth >= 20)
         {
-            BossMovementBelow50();
+            BossMovementBelowHalf();
+            BossFlameThrower();
         }
         if (_currentBossHealth == 0 )
         {
             _currentBossHealth = _minBossHealth;
-            EnemyDeathSequence();
-           
+            EnemyDeathSequence();           
         }
 
     }
@@ -135,7 +134,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    public void BossMovementBelow50()
+    public void BossMovementBelowHalf()
     {
         if (transform.position.y >= 0)
         {
@@ -156,7 +155,6 @@ public class Boss : MonoBehaviour
         }
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
 
-        BossFlameThrower();
 
     }
 
@@ -170,7 +168,7 @@ public class Boss : MonoBehaviour
             BossWeapon[] bossWeapons = bossWeapon.GetComponentsInChildren<BossWeapon>();
             for (int i = 0; i < bossWeapons.Length; i++)
             {
-                bossWeapons[i].AssignBossWeaponA();
+                bossWeapons[i].AssignBossFlameThrower();
             }
         }
     }
@@ -182,7 +180,7 @@ public class Boss : MonoBehaviour
         if (Time.time > _canfire && _isBossAlive == true)
         {
             Debug.Log("BossLaserCalled");
-            _fireRate = Random.Range(2f, 5.5f);
+            _fireRate = Random.Range(2f, 5f);
             _canfire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
@@ -217,11 +215,11 @@ public class Boss : MonoBehaviour
 
     }
 
-    //private void OnDestroy()
-    //{
-    //    if (_healthBar == null)
-    //        GameObject.Destroy(_healthBar.gameObject);
-    //}
+    public void OnDestroy()
+    {
+        if (_healthBar != null)
+            GameObject.Destroy(_healthBar.gameObject);
+    }
 
     //set the laser to damage boss before being destroyed
     public void OnTriggerEnter2D(Collider2D other)
