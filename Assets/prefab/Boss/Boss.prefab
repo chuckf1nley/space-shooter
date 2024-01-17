@@ -59,13 +59,11 @@ MonoBehaviour:
   _speed: 3
   _enemyID: 6
   _bossWeaponPrefab: {fileID: 2628944221914753156, guid: df3a354e7ad95e7409cffa36cb3b8d6e, type: 3}
-  _laserPrefab: {fileID: 5522119868211626154, guid: 19711c8b4b30ca544a796680c4e302ff, type: 3}
+  _laserPrefab: {fileID: 7307605454100376541, guid: 4b3e840bdf8e4e044b19a3fcd80e1ef6, type: 3}
   _spriteRenderer: {fileID: 0}
   _bossSpawn: {fileID: 8300000, guid: 35179bf9103834dcca7ed39c9d5f58e5, type: 3}
   _audioDeathClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _currentBossHealth: 0
-  _maxBossHealth: 40
-  _healthBarPrefab: {fileID: 3481445068200004062, guid: 8f6ddcda79f16354fa57dc0d6b713cad, type: 3}
   _enemyDeathAnim: {fileID: 9144779321158922206}
   _healthBar: {fileID: 1877752940664172459, guid: 8f6ddcda79f16354fa57dc0d6b713cad, type: 3}
 --- !u!61 &4527874154672201285

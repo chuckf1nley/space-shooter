@@ -114,6 +114,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         _bossDefeated = Component.Instantiate(_bossDefatedPrefab);
         _bossDefeated.enabled = true;
+        _gameManager.YouWin();
         _gameManager.GameOver();
         _youWinText.gameObject.SetActive(true);
         RestartDisplay();

@@ -597,7 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8617064596472996318}
-  - component: {fileID: -4459389934930720225}
+  - component: {fileID: 5171542032727330193}
   m_Layer: 0
   m_Name: BossLaser
   m_TagString: laser
@@ -626,7 +626,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4459389934930720225
+--- !u!114 &5171542032727330193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -635,10 +635,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7307605454100376541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9923af106ec18a74289983c587ca574d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fdfba6fad07ea242971ae09088524c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 8
+  _speed: 2.5
 --- !u!1 &8383747545826290667
 GameObject:
   m_ObjectHideFlags: 0

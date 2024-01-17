@@ -105,11 +105,11 @@ public class Boss : MonoBehaviour
 
     public void BossPhases()
     {
-        if (_currentBossHealth == 40)
+        if (_currentBossHealth == _maxBossHealth)
         {
             BossMovement();
         }
-        if (_currentBossHealth >= 20)
+        if (_currentBossHealth >= 30)
         {
             BossMovementBelowHalf();
             BossFlameThrower();
