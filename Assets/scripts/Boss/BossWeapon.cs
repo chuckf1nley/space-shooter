@@ -6,16 +6,23 @@ using UnityEngine;
 public class BossWeapon : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
+    private GameObject _player;
     private float _fireRate = 2f;
     private bool _isWeaponActive = false;
 
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         _isWeaponActive = true;
-
+        _player = GameObject.Find("Player");
     }
+
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+
+    //}
 
     public void AssignBossFlameThrower()
     {
@@ -29,6 +36,15 @@ public class BossWeapon : MonoBehaviour
             }
         }
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "player")
+        {
+            other.GetComponent<Player>().Damage();
+            Destroy(this.gameObject);
+        }
     }
 
 }
