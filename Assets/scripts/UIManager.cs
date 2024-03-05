@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator GameWonSequence()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3f);
         _bossDefeated = Component.Instantiate(_bossDefatedPrefab);
         _bossDefeated.enabled = true;
         _gameManager.YouWin();

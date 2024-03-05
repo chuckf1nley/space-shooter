@@ -258,7 +258,7 @@ public class SpawnManager : MonoBehaviour
     {
         _isRegularWave = false;
         new WaitForSeconds(3);
-        Vector3 startPos = new Vector3(0, 1, 0);
+        Vector3 startPos = new Vector3(0, 10, 0);
         _isBossActive = true;
 
         Instantiate(_bossPrefab, startPos, Quaternion.identity);

@@ -105,11 +105,11 @@ public class Boss : MonoBehaviour
 
     public void BossPhases()
     {
-        if (_currentBossHealth == _maxBossHealth)
+        if (_currentBossHealth > 30)
         {
             BossMovement();
         }
-        if (_currentBossHealth >= 30)
+        if (_currentBossHealth <= 30)
         {
             BossMovementBelowHalf();
             BossFlameThrower();
@@ -127,22 +127,21 @@ public class Boss : MonoBehaviour
     {
         //move to 0, 3.5, 0 and stay there, move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (transform.position.x < _startX)
-        {
+       
             if (transform.position.y < _endPos.y)
                 transform.position = _endPos;
-        }
+        
     }
 
     public void BossMovementBelowHalf()
     {
-        if (transform.position.y >= 0)
+        if (transform.position.y <= 0)
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
         }
-        else if (transform.position.y <= -4f)
+        else if (transform.position.y >= 4f)
         {
-            transform.position = new Vector3(transform.position.x, -4f, 0);
+            transform.position = new Vector3(transform.position.x, 4f, 0);
         }
 
         if (transform.position.x > _startX + 3)
@@ -160,17 +159,8 @@ public class Boss : MonoBehaviour
 
     public void BossFlameThrower()
     {
-        if (Time.time > _canfire && _isBossAlive == true)
-        {
-            _fireRate = Random.Range(3f, 5f);
-            _canfire = Time.time + _fireRate;
-            GameObject bossWeapon = Instantiate(_bossWeaponPrefab, transform.position, Quaternion.identity);
-            BossWeapon[] bossWeapons = bossWeapon.GetComponentsInChildren<BossWeapon>();
-            for (int i = 0; i < bossWeapons.Length; i++)
-            {
-                bossWeapons[i].AssignBossFlameThrower();
-            }
-        }
+        //turn on instead / set active - enemy shield / powerup
+
     }
 
 
