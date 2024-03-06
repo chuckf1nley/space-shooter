@@ -183,7 +183,8 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector3(-18f, transform.position.y, 0);
         }
-        else if (transform.position.x < -18f)
+
+        if (transform.position.x < -18f)
         {
             transform.position = new Vector3(18f, transform.position.y, 0);
         }

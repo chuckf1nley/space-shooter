@@ -20,18 +20,18 @@ public class SmartEnemy : MonoBehaviour
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
     private float _canFire = -1f;
+    private float _enemyShieldStrength;
     private bool _isEnemyAlive = true;
     private bool _isEnemyShieldActive = false;
     private bool _isBehindPlayer = false;
+    private bool _isPlayerAlive = true;
     private SpawnManager _spawnManager;
     private Player _player;
+    private int _enemyLives;
     private int _direction;
     private int _enemyShieldLives = 1;
     private Transform _playerPos;
-    //private int _enemyLives;
-    //private float _playerDistance = -1f;
-    //private float _enemyShieldStrength = 1;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -124,25 +124,28 @@ public class SmartEnemy : MonoBehaviour
 
         }
     }
-   
+
 
     private IEnumerator PlayerInRange()
     {
         WaitForSeconds wait = new WaitForSeconds(0.5f);
-        while(true)
+        while (true)
         {
             float distanceX = Mathf.Abs(_playerPos.position.x - transform.position.x);
-                       
 
-            if(distanceX <= rangeX && transform.position.y < _playerPos.position.y)
+
+            if (distanceX <= rangeX && transform.position.y < _playerPos.position.y)
             {
                 _isBehindPlayer = true;
+                _isPlayerAlive = true;
             }
-            else 
+            else
             {
                 if (_isBehindPlayer)
                     _isBehindPlayer = false;
-            } yield return wait;
+                _isPlayerAlive = false;
+            }
+            yield return wait;
         }
 
     }
@@ -161,14 +164,14 @@ public class SmartEnemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    //public int ShieldStrength()
-    //{
-    //    EnemyShield();
-    //    GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-    //    _enemyShieldStrength = 1;
-    //    return _enemyLives;
-    //}
-   
+    public int ShieldStrength()
+    {
+        EnemyShield();
+        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
+        _enemyShieldStrength = 1;
+        return _enemyLives;
+    }
+
 
     public void ShieldActive(bool state)
     {

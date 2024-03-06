@@ -287,7 +287,7 @@ public class Player : MonoBehaviour
         }
         _isShieldActive = true;
         _shieldVisualizer.ShieldActive(true);
-        // _shieldLivesDisplay.text = "shield lives";
+        //_shieldLivesDisplay.text = "shield lives";
     }
 
     public void TripleShotActive()

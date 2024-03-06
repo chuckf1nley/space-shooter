@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour
     private float _direction;
     private float _canfire = 1f;
     private bool _isBossAlive = true;
+    private bool _isWeaponActive;
     private Player _player;
     private SpawnManager _spawnManager;
     private Vector3 _endPos = new Vector3(0, 3.5f, 0);
@@ -80,7 +81,7 @@ public class Boss : MonoBehaviour
         else
         {
             _audioSource.clip = _audioDeathClip;
-        }       
+        }
 
         int rng = Random.Range(0, 20);
         //GenerateWeaponIndex(rng);
@@ -102,7 +103,6 @@ public class Boss : MonoBehaviour
 
     }
 
-
     public void BossPhases()
     {
         if (_currentBossHealth > 30)
@@ -114,23 +114,22 @@ public class Boss : MonoBehaviour
             BossMovementBelowHalf();
             BossFlameThrower();
         }
-        if (_currentBossHealth == 0 )
+        if (_currentBossHealth == 0)
         {
             _currentBossHealth = _minBossHealth;
-            EnemyDeathSequence();           
+            EnemyDeathSequence();
         }
 
     }
-
 
     public void BossMovement()
     {
         //move to 0, 3.5, 0 and stay there, move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-       
-            if (transform.position.y < _endPos.y)
-                transform.position = _endPos;
-        
+
+        if (transform.position.y < _endPos.y)
+            transform.position = _endPos;
+
     }
 
     public void BossMovementBelowHalf()
@@ -154,13 +153,12 @@ public class Boss : MonoBehaviour
         }
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
 
-
     }
 
     public void BossFlameThrower()
     {
         //turn on instead / set active - enemy shield / powerup
-
+        _isWeaponActive = true;
     }
 
 
@@ -180,7 +178,7 @@ public class Boss : MonoBehaviour
             }
         }
     }
-    
+
     public void Damage()
     {
         //_healthBar.SetHealth(_currentBossHealth);
@@ -189,7 +187,6 @@ public class Boss : MonoBehaviour
         _ui.BossHealth(_currentBossHealth);
         BossPhases();
     }
-    
 
     public void EnemyDeathSequence()
     {
@@ -198,7 +195,7 @@ public class Boss : MonoBehaviour
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
         if (_audioSource == null)
             _audioSource.Play();
-       
+
         _ui.StartCoroutine(_ui.GameWonSequence());
         Destroy(this.gameObject, -3f);
         Destroy(GetComponent<Collider2D>());
