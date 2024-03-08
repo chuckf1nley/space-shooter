@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SmartWeapon : MonoBehaviour
 {
-    [SerializeField] private float _speed = 3.5f;
-    [SerializeField] private float _chaseSpeed = 2.5f;
+    [SerializeField] private float _speed = 2.5f;
+    [SerializeField] private float _chaseSpeed = 3f;
     private Player _player;
     //private GameObject Player;
     //private GameObject Projectile;
@@ -71,21 +71,25 @@ public class SmartWeapon : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
-        //MoveToPlayer();
+        MoveToPlayer();
     }
 
-    //public void MoveToPlayer()
-    //{
-    //    if (_interceptDistance < 5)
-    //    {
-    //        _chaseSpeed += 1;
-    //    }
+    public void MoveToPlayer()
+    {
+        if (_interceptDistance < 5)
+        {
+            _chaseSpeed += 1;
+        }
+        if (_player == null)
+        {
+            Destroy(this.gameObject);
+        }
 
-    //    Vector3 direction = _player.transform.position - transform.position;
-    //    direction = direction.normalized;
+        Vector3 direction = _player.transform.position - transform.position;
+        direction = direction.normalized;
 
-    //    transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-    //}
+        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {

@@ -124,7 +124,7 @@ public class Boss : MonoBehaviour
 
     public void BossMovement()
     {
-        //move to 0, 3.5, 0 and stay there, move left to right
+        //move to 0, 3.5, 0 and move left to right
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if (transform.position.y < _endPos.y)
@@ -196,7 +196,7 @@ public class Boss : MonoBehaviour
         if (_audioSource == null)
             _audioSource.Play();
 
-        _ui.StartCoroutine(_ui.GameWonSequence());
+        _ui.GameWon();
         Destroy(this.gameObject, -3f);
         Destroy(GetComponent<Collider2D>());
 

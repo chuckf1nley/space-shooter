@@ -109,17 +109,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator GameWonSequence()
+    public void GameWon()
     {
-        yield return new WaitForSeconds(3f);
         _bossDefeated = Component.Instantiate(_bossDefatedPrefab);
         _bossDefeated.enabled = true;
         _gameManager.YouWin();
-        _gameManager.GameOver();
         _youWinText.gameObject.SetActive(true);
         RestartDisplay();
         ExitDisplay();
-        yield break;
     }
 
     private void RestartDisplay()

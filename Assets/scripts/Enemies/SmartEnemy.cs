@@ -102,19 +102,20 @@ public class SmartEnemy : MonoBehaviour
         {
            // Debug.Log("Smart enemy is alive");
 
-            if (Time.time > _canFire && _isEnemyAlive && _isBehindPlayer)
+            if (Time.time > _canFire && _isEnemyAlive == true && _isBehindPlayer == true)
             {
-               // Debug.Log("Smart Enemy firing");
+                // Debug.Log("Smart Enemy firing");
+                _fireRate = Random.Range(2f, 5f);
                 _canFire = Time.time + _fireRate;
-                GameObject smartWeapon = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
-                SmartWeapon[] smartWeapons = smartWeapon.GetComponentsInChildren<SmartWeapon>();
-                for (int i = 0; i < smartWeapons.Length; i++)
+                GameObject smartWeapons = Instantiate(_smartWeaponPrefab, transform.position, Quaternion.identity);
+                SmartWeapon[] smartWeapon = smartWeapons.GetComponentsInChildren<SmartWeapon>();
+                for (int i = 0; i < smartWeapon.Length; i++)
                 {
-                    smartWeapons[i].Weapon();
+                    smartWeapon[i].Weapon();
                 }
                 transform.rotation = _startRotaion;
                 _speed = 3f;
-                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
                 if (transform.position.y <= -7f)
                 {
@@ -132,19 +133,22 @@ public class SmartEnemy : MonoBehaviour
         while (true)
         {
             float distanceX = Mathf.Abs(_playerPos.position.x - transform.position.x);
-
-
-            if (distanceX <= rangeX && transform.position.y < _playerPos.position.y)
+            if (_player != null)
             {
-                _isBehindPlayer = true;
-                _isPlayerAlive = true;
+                if (distanceX <= rangeX && transform.position.y < _playerPos.position.y)
+                {
+                    _isBehindPlayer = true;
+                    _isPlayerAlive = true;
+                }
+
+                else
+                {
+                    if (_isBehindPlayer)
+                        _isBehindPlayer = false;
+                    _isPlayerAlive = false;
+                }
             }
-            else
-            {
-                if (_isBehindPlayer)
-                    _isBehindPlayer = false;
-                _isPlayerAlive = false;
-            }
+
             yield return wait;
         }
 
@@ -218,7 +222,7 @@ public class SmartEnemy : MonoBehaviour
                 if (player != null)
                 {
                     player.Damage();
-                }
+                    _player.AddScore(10);                }
                 Damage();
             }
             if (other.CompareTag("Laser"))

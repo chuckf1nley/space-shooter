@@ -17,7 +17,7 @@ public class BossHealthBar : MonoBehaviour
     {
         if (_healthTotal <= 0)
         {
-            _uimanager.GameWonSequence();
+            _uimanager.GameWon();
         }
         if (_laser)
         {
