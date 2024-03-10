@@ -77,6 +77,10 @@ public class SmartEnemy : MonoBehaviour
         GenerateShieldIndex(rng);
     }
 
+
+    //BUGS - shield spawns on enemy but stays there, inactive
+
+
     // Update is called once per frame
     void  Update()
     {
@@ -154,11 +158,12 @@ public class SmartEnemy : MonoBehaviour
 
     }
 
-    public void EnemyShield()
+    public int EnemyShield()
     {
         _isEnemyShieldActive = true;
-        ShieldActive(true);
-        //ShieldStrength();
+        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
+        _enemyShieldStrength = 1;
+        return _enemyLives;
     }
     public void GenerateShieldIndex(int random)
     {
@@ -168,15 +173,6 @@ public class SmartEnemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    public int ShieldStrength()
-    {
-        EnemyShield();
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives;
-    }
-
-
     public void ShieldActive(bool state)
     {
         _shieldSpriteRenderer.gameObject.SetActive(state);

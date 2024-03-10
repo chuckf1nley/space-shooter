@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _thrusterText;
     [SerializeField] private TMP_Text _thrusterInactiveText;
     [SerializeField] private TMP_Text _shield_Lives_Display;
-    [SerializeField] private TMP_Text _bossDefatedPrefab;
+    [SerializeField] private TMP_Text _bossDefeatText;
     [SerializeField] private TMP_Text _youWinText;
     [SerializeField] private TMP_Text _currWaveText;
     private bool _isBossActive;
@@ -111,9 +111,11 @@ public class UIManager : MonoBehaviour
 
     public void GameWon()
     {
-        _bossDefeated = Component.Instantiate(_bossDefatedPrefab);
-        _bossDefeated.enabled = true;
+        //reference line below, 115
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _gameManager.YouWin();
+        _bossDefeated = Component.Instantiate(_bossDefeatText);
+        _bossDefeated.enabled = true;
         _youWinText.gameObject.SetActive(true);
         RestartDisplay();
         ExitDisplay();

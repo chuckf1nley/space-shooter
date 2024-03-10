@@ -88,6 +88,10 @@ public class Boss : MonoBehaviour
 
     }
 
+    //BUGS - boss stays active and shooting but victory is on screen
+    //create an index for firing weapons, either flame or lasser every 2,5f
+
+
     // Update is called once per frame
     void Update()
     {

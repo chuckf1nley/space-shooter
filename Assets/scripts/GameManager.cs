@@ -36,10 +36,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _isGameOver = true;
+        _isPlayerVictorious = false;
     }
 
    public void YouWin()
     {
         _isPlayerVictorious = true;
+        _isGameOver = false;
+
     }
 }

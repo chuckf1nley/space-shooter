@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
 
         if (_player == null)
         {
-            Debug.Log("player is null");
+            Debug.Log("player is null - enemy");
         }
 
         if (_enemyDeathAnim == null)
@@ -77,6 +77,9 @@ public class Enemy : MonoBehaviour
         GenerateShieldIndex(rng);
         
     }
+
+
+    //BUGS - no shields, fast enemy screen glitch, movement
 
     // Update is called once per frame
     void Update()
@@ -148,6 +151,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void EnemyRight()
+    {
+        _isEnemy = true;
+        RegularEnemyMovement();
+        CalculateMovement();
+        FireLaser();
+        
+    }
     public void RegularEnemyMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -159,15 +170,15 @@ public class Enemy : MonoBehaviour
 
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
     }
-    public void EnemyRight()
-    {
-        _isEnemy = true;
-        RegularEnemyMovement();
-        CalculateMovement();
-        FireLaser();
-        
-    }
 
+
+    public void FastEnemy()
+    {
+        _isFastEnemy = true;
+        FastEnemyMovement();
+        FireMissile();
+        CalculateMovement();      
+    }
     public void FastEnemyMovement()
     {
         transform.Translate(Vector3.down * _fastSpeed * Time.deltaTime);
@@ -179,24 +190,16 @@ public class Enemy : MonoBehaviour
 
         transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
         
-        if (transform.position.x > 18f)
+        if (transform.position.x > _positionX)
         {
             transform.position = new Vector3(-18f, transform.position.y, 0);
         }
 
-        if (transform.position.x < -18f)
+        if (transform.position.x < -_positionX)
         {
             transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
-    }
-
-    public void FastEnemy()
-    {
-        _isFastEnemy = true;
-        FastEnemyMovement();
-        FireMissile();
-        CalculateMovement();      
     }
     
 

@@ -53,10 +53,10 @@ public class AvoidShot : MonoBehaviour
             Debug.Log("animator is null - avoidShot");
         }
 
-        if (_laser == null)
-        {
-            Debug.Log("Laser is null - avoidShot");
-        }
+        //if (_laser == null)
+        //{
+        //    Debug.Log("Laser is null - avoidShot");
+        //}
 
         if (_audioSource == null)
         {
@@ -71,17 +71,16 @@ public class AvoidShot : MonoBehaviour
         GenerateShieldIndex(rng);
     }
 
+    // BUGS - movement, shields - sometimes enemy will stay where it spawns, no shields
+
+
+
     // Update is called once per frame
     void Update()
     {
         Movement();
         LaserInRange();
 
-        if (transform.position.y < -7.5)
-        {
-            float randomx = Random.Range(-18f, 18f);
-            transform.position = new Vector3(randomx, 9f, 0);
-        }
     }
 
     public void AvoidShots()
@@ -91,16 +90,22 @@ public class AvoidShot : MonoBehaviour
     }
 
     public void Movement()
-    {        
-            transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);        
-                  
-            if (transform.position.x > _laserX + 3)
-            {
-                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);
 
-            }            
-        
-    }   
+        if (transform.position.x > _laserX + 3)
+        {
+            transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
+
+        }
+
+        if (transform.position.y < -7.5)
+        {
+            float randomx = Random.Range(-18f, 18f);
+            transform.position = new Vector3(randomx, 9f, 0);
+        }
+
+    }
 
     IEnumerator LaserInRange()
     {
@@ -122,7 +127,7 @@ public class AvoidShot : MonoBehaviour
             yield return wait;
         }
     }
-  
+
     public void ShieldActive(bool state)
     {   //active method called
         _shieldSpriteRenderer.gameObject.SetActive(state);
@@ -134,13 +139,13 @@ public class AvoidShot : MonoBehaviour
     }
     public void GenerateShieldIndex(int random)
     {
-        if (_enemyID == 5 )
+        if (_enemyID == 5)
         {
             if (random >= 60 && random <= 70)
-            ShieldActive(true);
+                ShieldActive(true);
         }
     }
-  
+
 
     public void Damage()
     {
