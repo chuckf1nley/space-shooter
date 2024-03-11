@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SmartEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private GameObject _smartWeaponPrefab;
     [SerializeField] private GameObject _smartEnemy;
     [SerializeField] private float _speed = 3.5f;
@@ -70,7 +69,6 @@ public class SmartEnemy : MonoBehaviour
             _audioSource.clip = _audioClip;
         }
 
-        EnemyShield();
         StartCoroutine(PlayerInRange());
 
         int rng = Random.Range( 0, 70);
@@ -158,13 +156,7 @@ public class SmartEnemy : MonoBehaviour
 
     }
 
-    public int EnemyShield()
-    {
-        _isEnemyShieldActive = true;
-        GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-        _enemyShieldStrength = 1;
-        return _enemyLives;
-    }
+    
     public void GenerateShieldIndex(int random)
     {
         if (_enemyID == 3)

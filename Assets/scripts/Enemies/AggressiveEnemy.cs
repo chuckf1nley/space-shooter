@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AggressiveEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _chaseSpeed = 5f;
     [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
@@ -14,14 +13,13 @@ public class AggressiveEnemy : MonoBehaviour
     private AudioSource _audioSource;
     private float _startX;
     private float _interceptDistance = 4f;
-    private float _enemyShieldStrength = 1;
     private Player _player;
     private bool _isEnemyAlive = false;
     private bool _isEnemyShieldActive = false;
     private SpawnManager _spawnManager;
     private int _direction;
     private int _enemyShieldLives = 1;
-    private int _enemyLives;
+    //private int _enemyLives;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +49,7 @@ public class AggressiveEnemy : MonoBehaviour
         if (_audioSource == null)
         {
             Debug.Log("AudioSource on aggro enemy is null");
-        }       
+        }
         else
         {
             _audioSource.clip = _audioClip;
@@ -78,11 +76,11 @@ public class AggressiveEnemy : MonoBehaviour
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (_interceptDistance > 4)
         {
-          NormalMovement();
+            NormalMovement();
         }
         else
         {
-          AggroMovement();
+            AggroMovement();
         }
     }
 
@@ -110,7 +108,7 @@ public class AggressiveEnemy : MonoBehaviour
         Vector3 direction = _player.transform.position - transform.position;
         direction = direction.normalized;
 
-       transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
     }
 
     public void ShieldActive(bool state)
@@ -130,24 +128,7 @@ public class AggressiveEnemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-    //public int ShieldStrength()
-    //{
-    //    EnemyShield();
-    //    GameObject.Instantiate(_enemyShieldPrefab, transform.position, Quaternion.identity);
-    //    _enemyShieldStrength = 1;
-    //    return _enemyLives;
-    //}
-    //public int EnemyShieldStrength()
-    //{
-    //    return _enemyShieldLives;
-    //}
-    //public void EnemyShield()
-    //{
-    //    _isEnemyShieldActive = true;
-    //    ShieldActive(true);
-    //    //ShieldStrength();
-    //    //EnemyShieldStrength();
-    //}
+
 
     public void Damage()
     {
@@ -160,9 +141,9 @@ public class AggressiveEnemy : MonoBehaviour
         EnemyDeathSequence();
     }
 
-   public void EnemyDeathSequence()
+    public void EnemyDeathSequence()
     {
-       if (_enemyDeathAnim != null)
+        if (_enemyDeathAnim != null)
         {
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
         }
@@ -214,5 +195,5 @@ public class AggressiveEnemy : MonoBehaviour
             }
         }
     }
-   
+
 }

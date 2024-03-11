@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _fastSpeed = 4.5f;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _missilePrefab;
-    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private GameObject _fastEnemy;
     [SerializeField] private int _enemyID; //0 normal enemy, 1 Fast Enemy
     [SerializeField] private AudioClip _audioClip;
@@ -171,7 +170,6 @@ public class Enemy : MonoBehaviour
         transform.Translate(Vector3.right * _direction * _speed * Time.deltaTime);
     }
 
-
     public void FastEnemy()
     {
         _isFastEnemy = true;
@@ -189,19 +187,19 @@ public class Enemy : MonoBehaviour
             _direction = 1;
 
         transform.Translate(Vector3.left * _direction * _fastSpeed * Time.deltaTime);
-        
+
+        //edge detection / placement are same position
         if (transform.position.x > _positionX)
         {
-            transform.position = new Vector3(-18f, transform.position.y, 0);
+            transform.position = new Vector3(-17.5f, transform.position.y, 0);
         }
 
         if (transform.position.x < -_positionX)
         {
-            transform.position = new Vector3(18f, transform.position.y, 0);
+            transform.position = new Vector3(17.5f, transform.position.y, 0);
         }
 
-    }
-    
+    }    
 
     public void ShieldActive(bool state)
     {
@@ -212,7 +210,6 @@ public class Enemy : MonoBehaviour
             _enemyShieldLives = 1;
         }
     }
-
     public void GenerateShieldIndex(int random)
     {
         if (_enemyID == 0)
@@ -226,7 +223,7 @@ public class Enemy : MonoBehaviour
                 ShieldActive(true);
         }
     }
-   
+    
 
     public void Damage()
     {
@@ -238,7 +235,6 @@ public class Enemy : MonoBehaviour
         }
         EnemyDeathSequence();
     }
-
     public void EnemyDeathSequence()
     {
         if (_enemyDeathAnim != null)

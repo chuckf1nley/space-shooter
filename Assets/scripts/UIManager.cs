@@ -111,10 +111,12 @@ public class UIManager : MonoBehaviour
 
     public void GameWon()
     {
-        //reference line below, 115
+        //reference line - null reference execption - 115
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _gameManager.YouWin();
-        _bossDefeated = Component.Instantiate(_bossDefeatText);
+        //set text active intead
+        //
+        //_bossDefeated = Instantiate(_bossDefeatText);
         _bossDefeated.enabled = true;
         _youWinText.gameObject.SetActive(true);
         RestartDisplay();

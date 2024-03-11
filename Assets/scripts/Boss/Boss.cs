@@ -6,9 +6,8 @@ public class Boss : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID;
-    [SerializeField] private GameObject _bossWeaponPrefab;
+    [SerializeField] private GameObject _bossFlameThrowerPrefab;
     [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioClip _bossSpawn;
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
@@ -20,6 +19,7 @@ public class Boss : MonoBehaviour
 
     public BossHealthBar _healthBar;
 
+    private int _weaponID; //0 - lasers, 1 - flamethrower
     private int _maxBossHealth = 60;
     private int _minBossHealth = 0;
     private float _positionX;
@@ -28,7 +28,7 @@ public class Boss : MonoBehaviour
     private float _direction;
     private float _canfire = 1f;
     private bool _isBossAlive = true;
-    private bool _isWeaponActive;
+    private bool _isFlameActive;
     private Player _player;
     private SpawnManager _spawnManager;
     private Vector3 _endPos = new Vector3(0, 3.5f, 0);
@@ -89,7 +89,7 @@ public class Boss : MonoBehaviour
     }
 
     //BUGS - boss stays active and shooting but victory is on screen
-    //create an index for firing weapons, either flame or lasser every 2,5f
+    //create an index for firing weapons, either flame or lasser
 
 
     // Update is called once per frame
@@ -102,7 +102,6 @@ public class Boss : MonoBehaviour
     {
         _isBossAlive = true;
         _healthBar.SetHealth(_currentBossHealth);
-        BossFireLaser();
         BossPhases();
 
     }
@@ -112,11 +111,13 @@ public class Boss : MonoBehaviour
         if (_currentBossHealth > 30)
         {
             BossMovement();
+            BossFireLaser();
         }
         if (_currentBossHealth <= 30)
         {
             BossMovementBelowHalf();
-            BossFlameThrower();
+            int rng = Random.Range(0, 50);
+            GeneratWeaopnIndex(rng);
         }
         if (_currentBossHealth == 0)
         {
@@ -159,10 +160,37 @@ public class Boss : MonoBehaviour
 
     }
 
-    public void BossFlameThrower()
+    public void GeneratWeaopnIndex(int random)
+    {
+
+        if (_weaponID == 0)
+        {
+            if (random >= 20 && random < 30)
+            {
+                BossFlameThrower(true);
+            }
+        }
+        else if (_weaponID == 1)
+        {
+            if (random >= 30 && random < 40)
+            {
+                BossFireLaser();
+                BossFlameThrower(false);
+            }
+        }
+
+    }
+
+    public void BossFlameThrower(bool state)
     {
         //turn on instead / set active - enemy shield / powerup
-        _isWeaponActive = true;
+       
+        _bossFlameThrowerPrefab.gameObject.SetActive(state);
+        _isFlameActive = state;
+        if (state == true)
+        {
+            _isFlameActive = true;
+        }
     }
 
 

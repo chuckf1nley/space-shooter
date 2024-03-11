@@ -7,7 +7,6 @@ public class AvoidShot : MonoBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private int _enemyID; // 5 avoid shot
     [SerializeField] private SpriteRenderer _shieldSpriteRenderer;
-    [SerializeField] private GameObject _enemyShieldPrefab;
     [SerializeField] private AudioClip _deathAudioClip;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
@@ -37,11 +36,10 @@ public class AvoidShot : MonoBehaviour
         _deathAudioClip = GetComponent<AudioClip>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _startX = transform.position.x;
-        _speed = 5;
         _enemyLives = 1;
 
         _isEnemyAlive = true;
-        _movement = Random.Range(0, 3);
+        _movement = Random.Range(1, 3);
 
         if (_player == null)
         {
@@ -79,7 +77,7 @@ public class AvoidShot : MonoBehaviour
     void Update()
     {
         Movement();
-        LaserInRange();
+       // LaserInRange();
 
     }
 
@@ -87,17 +85,18 @@ public class AvoidShot : MonoBehaviour
     {
         Debug.Log("AvoidShot - parent of radar");
         _avoidShot = true;
+
     }
 
     public void Movement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime * _movement);
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.x > _laserX + 3)
-        {
-            transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
+        //if (transform.position.x > _laserX + 3)
+        //{
+        //    transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
 
-        }
+        //}
 
         if (transform.position.y < -7.5)
         {
@@ -107,26 +106,32 @@ public class AvoidShot : MonoBehaviour
 
     }
 
-    IEnumerator LaserInRange()
-    {
-        Debug.Log("Laser in range called");
-        WaitForSeconds wait = new WaitForSeconds(0.5f);
-        while (true)
-        {
-            float distancex = Mathf.Abs(laser.position.x + transform.position.x);
+    //IEnumerator LaserInRange()
+    //{
+    //    //use while loop not (true)
+    //    // have move for set time / distsnce
 
-            if (_distanceX <= _rangeX && transform.position.y < laser.position.y)
-            {
-                _isLaserClose = true;
-            }
-            else
-            {
-                if (_isLaserClose)
-                    _isLaserClose = false;
-            }
-            yield return wait;
-        }
-    }
+
+
+
+    //    //Debug.Log("Laser in range called");
+    //    //WaitForSeconds wait = new WaitForSeconds(0.5f);
+    //    //while (true)
+    //    //{
+    //    //    float distancex = Mathf.Abs(laser.position.x - transform.position.x);
+
+    //    //    if (_distanceX <= _rangeX && transform.position.y > laser.position.y)
+    //    //    {
+    //    //        _isLaserClose = true;
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        if (_isLaserClose)
+    //    //            _isLaserClose = false;
+    //    //    }
+    //    //    yield return wait;
+    //    //}
+    //}
 
     public void ShieldActive(bool state)
     {   //active method called

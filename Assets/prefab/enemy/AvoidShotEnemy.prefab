@@ -302,7 +302,7 @@ MonoBehaviour:
   _speed: 5
   _enemyID: 4
   _shieldSpriteRenderer: {fileID: 1079916670655179325}
-  _enemyShieldPrefab: {fileID: 1716696902119978974, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
+  _enemyShieldPrefab: {fileID: 8000109773822327437}
   _deathAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!95 &2061337507868069111
 Animator:
