@@ -221,7 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d79c9052ff5674cb414a6eb06774bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyShieldPrefab: {fileID: 9105597657914134332}
   _speed: 3.5
   _chaseSpeed: 5
   _shieldSpriteRenderer: {fileID: 813517602146589155, guid: 77d0dcad6c82cc746b2375ed5b8e055b, type: 3}
@@ -314,7 +313,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2.8665774
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

@@ -24,9 +24,8 @@ public class AvoidShot : MonoBehaviour
     private SpawnManager _spawnManager;
     private int _enemyLives;
     private int _enemyShieldLives = 1;
-    private int _movement;
-    //private Vector3 _direction;
-    private Transform laser;
+    private int _movement = 2;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +76,6 @@ public class AvoidShot : MonoBehaviour
     void Update()
     {
         Movement();
-       // LaserInRange();
 
     }
 
@@ -85,6 +83,7 @@ public class AvoidShot : MonoBehaviour
     {
         Debug.Log("AvoidShot - parent of radar");
         _avoidShot = true;
+        StartCoroutine(LaserInRange());
 
     }
 
@@ -92,11 +91,6 @@ public class AvoidShot : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        //if (transform.position.x > _laserX + 3)
-        //{
-        //    transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
-
-        //}
 
         if (transform.position.y < -7.5)
         {
@@ -106,32 +100,36 @@ public class AvoidShot : MonoBehaviour
 
     }
 
-    //IEnumerator LaserInRange()
-    //{
-    //    //use while loop not (true)
-    //    // have move for set time / distsnce
+    IEnumerator LaserInRange()
+    {
+        //    //use while loop not (true)
+        //    // have move for set time / distsnce
 
+        Debug.Log("Laser in range called");
+        WaitForSeconds wait = new WaitForSeconds(0f);
+        while (_laserX < 5)
+        {
+            float distancex = Mathf.Abs(_laser.position.x - transform.position.x);
 
+            if (transform.position.x > _laserX + 3)
+            {
+                transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
+            }
+            /*if (_interceptDistance < 5)
+            _chaseSpeed += 1;
 
+        Vector3 direction = _player.transform.position - transform.position;
+        direction = direction.normalized;
 
-    //    //Debug.Log("Laser in range called");
-    //    //WaitForSeconds wait = new WaitForSeconds(0.5f);
-    //    //while (true)
-    //    //{
-    //    //    float distancex = Mathf.Abs(laser.position.x - transform.position.x);
+        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
+             */
 
-    //    //    if (_distanceX <= _rangeX && transform.position.y > laser.position.y)
-    //    //    {
-    //    //        _isLaserClose = true;
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        if (_isLaserClose)
-    //    //            _isLaserClose = false;
-    //    //    }
-    //    //    yield return wait;
-    //    //}
-    //}
+        }
+
+        //    //WaitForSeconds wait = new WaitForSeconds(0.5f);
+         
+        yield return wait;
+    }
 
     public void ShieldActive(bool state)
     {   //active method called
