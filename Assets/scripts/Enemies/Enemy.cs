@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioClip = GetComponent<AudioClip>();
         _enemyDeathAnim = transform.GetComponent<Animator>();
+        _player = GameObject.Find("Player").GetComponent<Player>();
 
         _isEnemyAlive = true;
         _isEnemy = true;

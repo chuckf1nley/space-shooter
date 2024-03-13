@@ -115,12 +115,17 @@ public class UIManager : MonoBehaviour
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _gameManager.YouWin();
         //set text active intead
-        //
         //_bossDefeated = Instantiate(_bossDefeatText);
-        _bossDefeated.enabled = true;
-        _youWinText.gameObject.SetActive(true);
-        RestartDisplay();
-        ExitDisplay();
+
+        if (_bossDefeated != true)
+        {
+           
+            _bossDefeated.enabled = true;
+            _youWinText.gameObject.SetActive(true);
+            RestartDisplay();
+            ExitDisplay();
+        }
+       
     }
 
     private void RestartDisplay()

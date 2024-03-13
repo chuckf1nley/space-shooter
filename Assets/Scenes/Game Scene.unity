@@ -3515,7 +3515,7 @@ MonoBehaviour:
   _thrusterText: {fileID: 930148502}
   _thrusterInactiveText: {fileID: 942334386}
   _shield_Lives_Display: {fileID: 1130667708}
-  _bossDefatedPrefab: {fileID: 632791280}
+  _bossDefeatText: {fileID: 0}
   _youWinText: {fileID: 632791280}
   _currWaveText: {fileID: 1866735837}
 --- !u!1 &1641933630

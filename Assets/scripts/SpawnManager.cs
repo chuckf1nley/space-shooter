@@ -25,7 +25,6 @@ public class SpawnManager : MonoBehaviour
     private int _enemyCount;
     private int _waveTotal;
 
-
     //private object NewWaveDisplay ShowWaveText();
 
     void Start()
@@ -70,9 +69,7 @@ public class SpawnManager : MonoBehaviour
             GameObject newPowerup = Instantiate(_powerups[randomPowerup], RandomPosition, Quaternion.identity);
             newPowerup.transform.parent = _powerupContainer.transform;
             yield return new WaitForSeconds(_spawnPowerupDelay);
-
         }
-
     }
     public int GeneratePowerupIndex(int random)
     {
@@ -100,11 +97,11 @@ public class SpawnManager : MonoBehaviour
         {
             return 5; // altfire
         }
-        else if (random >= 60 && random > 70)
+        else if (random >= 60 && random < 70)
         {
             return 6; // negspeed
         }
-        else if (random >= 70 && random > 80)
+        else if (random >= 70 && random < 80)
         {
             return 7; //homing Missile
         }
@@ -112,7 +109,6 @@ public class SpawnManager : MonoBehaviour
         {
             return 3;
         }
-
     }
 
 
@@ -161,7 +157,6 @@ public class SpawnManager : MonoBehaviour
         }
         return _enemySpawnPos;
     }
-
     IEnumerator SpawnEnemyRoutine()
     {
        
@@ -182,14 +177,11 @@ public class SpawnManager : MonoBehaviour
         while (_enemyCount > 0)
         {
             yield return null;
-        }      
-
+        }
         _currentWave++;
         _waveValue = _currentWave * 10;
-
         
         StartCoroutine(WaitToStartNewWaveCouroutine());
-
     }
 
 

@@ -119,7 +119,7 @@ public class Boss : MonoBehaviour
             int rng = Random.Range(0, 50);
             GeneratWeaopnIndex(rng);
         }
-        if (_currentBossHealth == 0)
+        if (_currentBossHealth <= 0)
         {
             _currentBossHealth = _minBossHealth;
             EnemyDeathSequence();
@@ -222,16 +222,17 @@ public class Boss : MonoBehaviour
 
     public void EnemyDeathSequence()
     {
+        Debug.Log("Enemy Death Sequence Started");
         _isBossAlive = false;
-        if (_enemyDeathAnim == null)
+        if (_enemyDeathAnim != null)
             _enemyDeathAnim.SetTrigger("OnEnemyDeath");
-        if (_audioSource == null)
+        if (_audioSource != null)
             _audioSource.Play();
 
         _ui.GameWon();
         Destroy(this.gameObject, -3f);
         Destroy(GetComponent<Collider2D>());
-
+        Debug.Log("Death Sequence Ended");
     }
 
     public void OnDestroy()

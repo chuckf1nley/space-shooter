@@ -10,7 +10,7 @@ public class AvoidShot : MonoBehaviour
     [SerializeField] private AudioClip _deathAudioClip;
     private Animator _enemyDeathAnim;
     private AudioSource _audioSource;
-    private float _avoidSpeed = 4f;
+    private float _avoidSpeed = 4.5f;
     private float _startX;
     private float _distanceX;
     private float _rangeX;
@@ -33,6 +33,7 @@ public class AvoidShot : MonoBehaviour
         _enemyDeathAnim = transform.GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _deathAudioClip = GetComponent<AudioClip>();
+        _player = GameObject.Find("Player").GetComponent<Player>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _startX = transform.position.x;
         _enemyLives = 1;
@@ -82,8 +83,7 @@ public class AvoidShot : MonoBehaviour
     public void AvoidShots()
     {
         Debug.Log("AvoidShot - parent of radar");
-        _avoidShot = true;
-        StartCoroutine(LaserInRange());
+        StartCoroutine(LaserInRangeRoutine());
 
     }
 
@@ -100,35 +100,27 @@ public class AvoidShot : MonoBehaviour
 
     }
 
-    IEnumerator LaserInRange()
+    IEnumerator LaserInRangeRoutine()
     {
         //    //use while loop not (true)
         //    // have move for set time / distsnce
-
-        Debug.Log("Laser in range called");
-        WaitForSeconds wait = new WaitForSeconds(0f);
-        while (_laserX < 5)
+        if (_avoidShot != true)
         {
-            float distancex = Mathf.Abs(_laser.position.x - transform.position.x);
+            _avoidShot = true;
 
-            if (transform.position.x > _laserX + 3)
+            float moveTime = 2f;
+            Debug.Log("Laser in range called");
+            while (moveTime > 0)
             {
+
                 transform.Translate(Vector3.left * _avoidSpeed * Time.deltaTime * _movement);
+
+
+                yield return null;
+                moveTime -= Time.deltaTime;
             }
-            /*if (_interceptDistance < 5)
-            _chaseSpeed += 1;
-
-        Vector3 direction = _player.transform.position - transform.position;
-        direction = direction.normalized;
-
-        transform.Translate(direction * _chaseSpeed * Time.deltaTime);
-             */
-
+            _avoidShot = false;
         }
-
-        //    //WaitForSeconds wait = new WaitForSeconds(0.5f);
-         
-        yield return wait;
     }
 
     public void ShieldActive(bool state)
