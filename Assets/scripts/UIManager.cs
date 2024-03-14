@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _youWinText;
     [SerializeField] private TMP_Text _currWaveText;
     private bool _isBossActive;
-    private TMP_Text _bossDefeated;
+
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
 
@@ -54,10 +54,7 @@ public class UIManager : MonoBehaviour
         _thrusterText.text = "thruster active";
 
     }
-    public void thrusterInactive()
-    {
-        _thrusterInactiveText.text = "thruster on cooldown";
-    }
+    
 
     public void ShieldLives()
     {
@@ -117,10 +114,10 @@ public class UIManager : MonoBehaviour
         //set text active intead
         //_bossDefeated = Instantiate(_bossDefeatText);
 
-        if (_bossDefeated != true)
+        if (_isBossActive != true)
         {
-           
-            _bossDefeated.enabled = true;
+            _isBossActive = false;
+            //_bossDefeatText.enabled = true;
             _youWinText.gameObject.SetActive(true);
             RestartDisplay();
             ExitDisplay();

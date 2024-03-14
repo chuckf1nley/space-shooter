@@ -13,6 +13,12 @@ public class BossHealthBar : MonoBehaviour
     private Missile _missile;
     private float _currentHealth;
 
+    private void Start()
+    {
+        StartCoroutine(HealthBarCoroutine());
+        
+    }
+
     void Update()
     {
         if (_healthTotal <= 0)
@@ -28,7 +34,6 @@ public class BossHealthBar : MonoBehaviour
             TakeDamage(5);
         }
 
-        HealthBarCoroutine();
     }
 
     public void DisplayHealthBar()

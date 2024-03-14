@@ -12,12 +12,12 @@ public class Boss : MonoBehaviour
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
     [SerializeField] private Animator _enemyDeathAnim;
-    private GameObject _healthBarObject;
+    private GameObject _healthBarSlider;
     private AudioSource _audioSource;
     private BoxCollider2D[] _cols;
     private UIManager _ui;
 
-    public BossHealthBar _healthBar;
+    private BossHealthBar _healthBarScript;
 
     private int _weaponID; //0 - lasers, 1 - flamethrower
     private int _maxBossHealth = 60;
@@ -47,10 +47,10 @@ public class Boss : MonoBehaviour
         _cols = GetComponents<BoxCollider2D>();
         _ui = Object.FindObjectOfType<UIManager>();
 
-        _healthBarObject = GameObject.Find("BossHealthBar").gameObject;
-        _healthBarObject.transform.GetChild(0).gameObject.SetActive(true);
-        _healthBar = _healthBarObject.transform.GetChild(0).GetComponent<BossHealthBar>();
-        _healthBar.SetMaxHealth(_maxBossHealth);
+        _healthBarSlider = GameObject.Find("BossHealthBar").gameObject;
+        _healthBarSlider.transform.GetChild(0).gameObject.SetActive(true);
+        _healthBarScript = _healthBarSlider.transform.GetChild(0).GetComponent<BossHealthBar>();
+        _healthBarScript.SetMaxHealth(_maxBossHealth);
 
         _isBossAlive = true;
 
@@ -100,8 +100,7 @@ public class Boss : MonoBehaviour
 
     public void BossLogic()
     {
-        _isBossAlive = true;
-        _healthBar.SetHealth(_currentBossHealth);
+        _healthBarScript.SetHealth(_currentBossHealth);
         BossPhases();
 
     }
@@ -237,8 +236,8 @@ public class Boss : MonoBehaviour
 
     public void OnDestroy()
     {
-        if (_healthBar != null)
-            GameObject.Destroy(_healthBar.gameObject);
+        if (_healthBarScript != null)
+            GameObject.Destroy(_healthBarScript.gameObject);
     }
 
     //set the laser to damage boss before being destroyed

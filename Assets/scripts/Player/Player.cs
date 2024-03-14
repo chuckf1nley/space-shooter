@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private Slider _playerThrusterSlider;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private float _missileFireRate = 2f;
+    [SerializeField] private GameObject _thrustBar;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     [SerializeField] private GameObject _missilePrefab;
@@ -36,6 +39,8 @@ public class Player : MonoBehaviour
     private float _vertical;
     private float _canfire = -2f;
     private float _missileFire;
+    private float _thrustTotal = 5f;
+    private float _currThrust;
     private bool _canMissileFire = false;
     private bool _isShieldActive = false;
     private bool _isTriple_ShotActive = false;
@@ -59,6 +64,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
+    private object _maxThrust;
 
     // Start is called before the first frame update
     void Start()
@@ -104,6 +110,10 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
+        
+        _thrustBar = GameObject.Find("PlayerThruster").gameObject;
+        _thrustBar.transform.GetChild(0).gameObject.SetActive(true);
+        //SetMaxThrust();
     }
 
     // Update is called once per frame
@@ -165,23 +175,52 @@ public class Player : MonoBehaviour
             if (_isThrusterActive == true)
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
+                {
+                Debug.Log("Player Thruster is called");
+                    if (!this.gameObject.activeSelf)
+                        this.gameObject.SetActive(true);
+                }
+                _thrustBar.SetActive(true);
                 _uiManager.thruster();
                 thrusterPowerDownRoutine();
-                _thrusterText.text = "thruster active";
             }
             else if (_isThrusterActive == false)
             {
                 if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-                _uiManager.thrusterInactive();
-                _thrusterInactive.text = "thruster on cooldown";
             }
         }
     }
     IEnumerator thrusterPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _thruster.SetActive(false);
+        _thrustBar.SetActive(false);
     }
+    public void SetMaxThrust(int thrust)
+    {
+        _playerThrusterSlider.maxValue = thrust;
+        _playerThrusterSlider.value = thrust;
+
+    }
+    /* public void DisplayHealthBar()
+    {
+        if (!this.gameObject.activeSelf)
+            this.gameObject.SetActive(true);
+    }
+    public void HideHealthBar()
+    {
+        if (this.gameObject.activeSelf)
+            this.gameObject.SetActive(false);
+    }
+    public void SetMaxHealth(int health)
+    {
+        _slider.maxValue = health;
+        _slider.value = health;
+    }
+    public void SetHealth(int health)
+    {
+        _slider.value = health;
+    }
+     */
 
     public void FireLaser()
     {
