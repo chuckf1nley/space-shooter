@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     private int _minAmmo = 0;
     private int _maxAmmo = 15;
     private int _currentMissiles;
+    private Image _thrusterbar;
     private SpawnManager _spawnManager;
     private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     private TMP_Text _shieldLivesDisplay;
@@ -84,6 +85,7 @@ public class Player : MonoBehaviour
         _currentAmmo = _maxAmmo;
         _currentMissiles = _missileMaxAmmo;
         _currentLives = _maxLives;
+        _thrustTotal = 5f;
 
 
         if (_spawnManager == null)
@@ -179,9 +181,12 @@ public class Player : MonoBehaviour
                 Debug.Log("Player Thruster is called");
                     if (!this.gameObject.activeSelf)
                         this.gameObject.SetActive(true);
+                    /* _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+                     */
+
                 }
                 _thrustBar.SetActive(true);
-                _uiManager.thruster();
+                _uiManager.Thruster();
                 thrusterPowerDownRoutine();
             }
             else if (_isThrusterActive == false)
@@ -190,6 +195,13 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void ThrustTime(float damage)
+    {
+        _thrustTotal -= damage;
+        _thrusterbar.fillAmount = _thrustTotal / 5f;
+
+    }
+
     IEnumerator thrusterPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -201,7 +213,15 @@ public class Player : MonoBehaviour
         _playerThrusterSlider.value = thrust;
 
     }
-    /* public void DisplayHealthBar()
+    /*
+     *  public void TakeDamage(float damage)
+    {
+        _healthTotal -= damage;
+        _healthBar.fillAmount = _healthTotal / 40f;
+    }
+     
+     
+     public void DisplayHealthBar()
     {
         if (!this.gameObject.activeSelf)
             this.gameObject.SetActive(true);

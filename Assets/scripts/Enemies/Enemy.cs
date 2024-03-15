@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    //BUGS - no shields, fast enemy screen glitch, movement
+    //BUGS - no shields
 
     // Update is called once per frame
     void Update()

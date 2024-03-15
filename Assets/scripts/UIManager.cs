@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void thruster() //the text should appear only when the left shift key is pressed
+    public void Thruster() //the text should appear only when the left shift key is pressed
     {
         _thrusterText.text = "thruster active";
 

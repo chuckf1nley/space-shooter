@@ -88,7 +88,7 @@ public class Boss : MonoBehaviour
 
     }
 
-    //BUGS - boss stays active and shooting but victory is on screen
+    //BUGS - boss health doesnt show up, boss doesnt fire
     //create an index for firing weapons, either flame or lasser
 
 
@@ -193,7 +193,6 @@ public class Boss : MonoBehaviour
     }
 
 
-    //make sure the lasers are firing
     public void BossFireLaser()
     {
         if (Time.time > _canfire && _isBossAlive == true)
