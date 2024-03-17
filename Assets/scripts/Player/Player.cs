@@ -195,9 +195,9 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public void ThrustTime(float damage)
+    public void ThrustTime(float time)
     {
-        _thrustTotal -= damage;
+        _thrustTotal -= time;
         _thrusterbar.fillAmount = _thrustTotal / 5f;
 
     }
