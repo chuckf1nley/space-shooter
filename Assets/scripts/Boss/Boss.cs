@@ -90,7 +90,7 @@ public class Boss : MonoBehaviour
 
     //BUGS - boss health doesnt show up, boss doesnt fire
     //create an index for firing weapons, either flame or lasser
-
+    //add boss health bar to script
 
     // Update is called once per frame
     void Update()

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private Slider _playerThrusterSlider;
     [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private float _thrustSpeed = 7f;
+    [SerializeField] private float _boostedSpeed = 7f;
     [SerializeField] private float _negSpeedMultiplier = 1f;
     [SerializeField] private float _fireRate = 0.25f;
     [SerializeField] private float _missileFireRate = 2f;
@@ -28,7 +30,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shield;
     [SerializeField] private Shield _shieldVisualizer;
     [SerializeField] private TMP_Text _thrusterText;
-    [SerializeField] private TMP_Text _thrusterInactive;
     [SerializeField] private int _maxLives = 3;
     [SerializeField] private int _currentLives;
     [SerializeField] private int _currentAmmo;
@@ -123,10 +124,10 @@ public class Player : MonoBehaviour
     {
 
         CalculateMovement();
-        Thruster();
+        //Thruster();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
-            // Debug.Log("Fired");
+            // Debug.Log("Laser Fired");
             FireLaser();
         }
 
@@ -168,78 +169,63 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Thruster()
-    {
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+    //public void Thruster()
+    //{
+    //    Debug.Log("Player Thruster is called");
 
-        if (_uiManager != null)
-        {
-            if (_isThrusterActive == true)
-            {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false) _speed = 7f;
-                {
-                Debug.Log("Player Thruster is called");
-                    if (!this.gameObject.activeSelf)
-                        this.gameObject.SetActive(true);
-                    /* _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-                     */
+    //    if (_uiManager != null)
+    //    {
+    //                _uiManager.Thruster();
+    //        if (_isThrusterActive == true)
+    //        {
+    //            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
+    //            {
+    //                if (this.gameObject.activeSelf)
+    //                    this.gameObject.SetActive(true);
+    //                _speed = 7f;
+    //                _thrustBar.SetActive(true);
 
-                }
-                _thrustBar.SetActive(true);
-                _uiManager.Thruster();
-                thrusterPowerDownRoutine();
-            }
-            else if (_isThrusterActive == false)
-            {
-                if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-            }
-        }
-    }
-    public void ThrustTime(float time)
-    {
-        _thrustTotal -= time;
-        _thrusterbar.fillAmount = _thrustTotal / 5f;
+    //                thrusterPowerDownRoutine();
+    //            }
+    //        }
+    //        else if (_isThrusterActive == false)
+    //        {
+    //            if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
+                
+    //        }
+    //    }
+    //}
+    //public void ThrustTime(float time)
+    //{
+    //    _thrustTotal -= time;
+    //    _thrusterbar.fillAmount = _thrustTotal / 5f;
 
-    }
+    //}
 
-    IEnumerator thrusterPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(5.0f);
-        _thrustBar.SetActive(false);
-    }
-    public void SetMaxThrust(int thrust)
-    {
-        _playerThrusterSlider.maxValue = thrust;
-        _playerThrusterSlider.value = thrust;
+    //IEnumerator thrusterPowerDownRoutine()
+    //{
+    //    Debug.Log("thruster power down called ");
+    //    yield return new WaitForSeconds(5.0f);
+    //    _thrustBar.SetActive(false);
+    //}
+    //public void SetMaxThrust(int thrust)
+    //{
+    //    _playerThrusterSlider.maxValue = thrust;
+    //    _playerThrusterSlider.value = thrust;
 
-    }
+    //}
     /*
      *  public void TakeDamage(float damage)
     {
         _healthTotal -= damage;
         _healthBar.fillAmount = _healthTotal / 40f;
     }
-     
-     
-     public void DisplayHealthBar()
-    {
-        if (!this.gameObject.activeSelf)
-            this.gameObject.SetActive(true);
-    }
-    public void HideHealthBar()
-    {
-        if (this.gameObject.activeSelf)
-            this.gameObject.SetActive(false);
-    }
+    
     public void SetMaxHealth(int health)
     {
         _slider.maxValue = health;
         _slider.value = health;
-    }
-    public void SetHealth(int health)
-    {
-        _slider.value = health;
-    }
+    }    
      */
 
     public void FireLaser()
@@ -435,7 +421,7 @@ public class Player : MonoBehaviour
             _negSpeed = true;
             _speed *= _negSpeedMultiplier;
             StartCoroutine(NegSpeedPowerDownRoutine());
-            StartCoroutine(thrusterPowerDownRoutine());
+            //StartCoroutine(thrusterPowerDownRoutine());
             // Debug.Log("debuff collected");
         }
     }
