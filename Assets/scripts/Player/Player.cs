@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Slider _playerThrusterSlider;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private float _thrustSpeed = 7f;
     [SerializeField] private float _boostedSpeed = 7f;
@@ -48,14 +46,13 @@ public class Player : MonoBehaviour
     private bool _isAltFireActive = false;
     private bool _firingConstantly = false;
     private bool _negSpeed = false;
-    private bool _isThrusterActive = true;
+    private bool _isThrustEnabled = false;
     private bool _isMissilePowerupActive = false;
     private int _score;
     private int _minLives = 0;
     private int _minAmmo = 0;
     private int _maxAmmo = 15;
     private int _currentMissiles;
-    private Image _thrusterbar;
     private SpawnManager _spawnManager;
     private Vector3 _missileOffset = new Vector3(0, 1f, 0);
     private TMP_Text _shieldLivesDisplay;
@@ -67,6 +64,9 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
     private object _maxThrust;
+
+    //private Image _thrusterbar;
+    //[SerializeField] private Slider _playerThrusterSlider;
 
     // Start is called before the first frame update
     void Start()
@@ -114,8 +114,8 @@ public class Player : MonoBehaviour
             _audioSource.clip = _laserSoundClip;
         }
         
-        _thrustBar = GameObject.Find("PlayerThruster").gameObject;
-        _thrustBar.transform.GetChild(0).gameObject.SetActive(true);
+        //_thrustBar = GameObject.Find("PlayerThruster").gameObject;
+        //_thrustBar.transform.GetChild(0).gameObject.SetActive(true);
         //SetMaxThrust();
     }
 
@@ -167,6 +167,28 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(18f, transform.position.y, 0);
         }
 
+    }
+
+
+    public void Thruster()
+    {
+        Debug.Log("Thruster Is Called");
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
+        {
+            //neg spped false, _thrustSpeed;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == true)
+        {
+            //neg speed true, _speed;
+        }
+    }
+
+    IEnumerator ThrustCooldownCoroutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+
+        
     }
 
     //public void Thruster()
