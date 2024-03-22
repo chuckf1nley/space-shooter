@@ -17,8 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
-    [SerializeField] private TMP_Text _thrusterText;
-    [SerializeField] private TMP_Text _thrusterInactiveText;
+    [SerializeField] private TMP_Text _thrusterSlider;
     [SerializeField] private TMP_Text _shield_Lives_Display;
     [SerializeField] private TMP_Text _bossDefeatText;
     [SerializeField] private TMP_Text _youWinText;
@@ -49,9 +48,9 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void Thruster() //the text should appear only when the left shift key is pressed
+    public void Thruster() //the bar goes down as left shift is pressed
     {
-        _thrusterText.text = "thruster active";
+       
 
     }
     

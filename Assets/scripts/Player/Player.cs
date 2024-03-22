@@ -173,14 +173,21 @@ public class Player : MonoBehaviour
     public void Thruster()
     {
         Debug.Log("Thruster Is Called");
+        if (_isThrustEnabled == true)
+        {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
-        {
-            //neg spped false, _thrustSpeed;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == true)
-        {
-            //neg speed true, _speed;
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
+            {
+                //neg spped false, _thrustSpeed;
+                if (_negSpeed == false)
+                {
+
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == true)
+            {
+                //neg speed true, _speed;
+            }
         }
     }
 
