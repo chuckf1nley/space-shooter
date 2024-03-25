@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
-        
+
         //_thrustBar = GameObject.Find("PlayerThruster").gameObject;
         //_thrustBar.transform.GetChild(0).gameObject.SetActive(true);
         //SetMaxThrust();
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
     {
 
         CalculateMovement();
-        //Thruster();
+        Thruster();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canfire)
         {
             // Debug.Log("Laser Fired");
@@ -176,52 +176,55 @@ public class Player : MonoBehaviour
         if (_isThrustEnabled == true)
         {
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
+            if (Input.GetKeyDown(KeyCode.LeftShift) || _negSpeed == false)
             {
                 //neg spped false, _thrustSpeed;
                 if (_negSpeed == false)
                 {
+                    if (this.gameObject.activeSelf)
+                        this.gameObject.SetActive(true);
+
+                    Vector3 direction = new Vector3(_horizontal, _vertical, 0);
+                    transform.Translate(direction * _thrustSpeed * Time.deltaTime);
 
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == true)
+            else if (Input.GetKeyUp(KeyCode.LeftShift) || _negSpeed == true)
             {
                 //neg speed true, _speed;
+                if (this.gameObject.activeSelf)
+                    this.gameObject.SetActive(false);
+
+                Vector3 direction = new Vector3(_horizontal, _vertical, 0);
+                transform.Translate(direction * _speed * Time.deltaTime);
             }
+            StartCoroutine(ThrustCooldownCoroutine());
         }
     }
 
     IEnumerator ThrustCooldownCoroutine()
     {
         yield return new WaitForSeconds(5.0f);
+        _isThrustEnabled = false;
 
-        
     }
 
     //public void Thruster()
     //{
     //    Debug.Log("Player Thruster is called");
 
-    //    if (_uiManager != null)
-    //    {
-    //                _uiManager.Thruster();
     //        if (_isThrusterActive == true)
     //        {
     //            if (Input.GetKeyDown(KeyCode.LeftShift) && _negSpeed == false)
     //            {
     //                if (this.gameObject.activeSelf)
     //                    this.gameObject.SetActive(true);
-    //                _speed = 7f;
-    //                _thrustBar.SetActive(true);
-
     //                thrusterPowerDownRoutine();
     //            }
     //        }
     //        else if (_isThrusterActive == false)
     //        {
     //            if (Input.GetKeyUp(KeyCode.LeftShift) && _negSpeed == false) _speed = 3.5f;
-                
-    //        }
     //    }
     //}
     //public void ThrustTime(float time)
@@ -243,19 +246,7 @@ public class Player : MonoBehaviour
     //    _playerThrusterSlider.value = thrust;
 
     //}
-    /*
-     *  public void TakeDamage(float damage)
-    {
-        _healthTotal -= damage;
-        _healthBar.fillAmount = _healthTotal / 40f;
-    }
-    
-    public void SetMaxHealth(int health)
-    {
-        _slider.maxValue = health;
-        _slider.value = health;
-    }    
-     */
+
 
     public void FireLaser()
     {
@@ -447,6 +438,7 @@ public class Player : MonoBehaviour
     {
         if (_negSpeed == false)
         {
+            _isThrustEnabled = false;
             _negSpeed = true;
             _speed *= _negSpeedMultiplier;
             StartCoroutine(NegSpeedPowerDownRoutine());
@@ -458,6 +450,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _negSpeed = false;
+        _isThrustEnabled = true;
         _speed /= _negSpeedMultiplier;
     }
 
