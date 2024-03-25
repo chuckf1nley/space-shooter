@@ -45,7 +45,9 @@ public class Boss : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioDeathClip = GetComponent<AudioClip>();
         _cols = GetComponents<BoxCollider2D>();
-        _ui = Object.FindObjectOfType<UIManager>();
+        //_ui = Object.FindObjectOfType<UIManager>();
+        _ui = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
 
         _healthBarSlider = GameObject.Find("BossHealthBar").gameObject;
         _healthBarSlider.transform.GetChild(0).gameObject.SetActive(true);

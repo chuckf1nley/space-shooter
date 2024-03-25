@@ -46,7 +46,8 @@ public class Player : MonoBehaviour
     private bool _isAltFireActive = false;
     private bool _firingConstantly = false;
     private bool _negSpeed = false;
-    private bool _isThrustEnabled = false;
+    private bool _isThrustEnabled = true;
+    private bool _isThrustActive = false;
     private bool _isMissilePowerupActive = false;
     private int _score;
     private int _minLives = 0;
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSoundClip;
     [SerializeField] private AudioClip _playerDeathSoundClip;
-    private object _maxThrust;
+    private Coroutine _thrustCooldown;
 
     //private Image _thrusterbar;
     //[SerializeField] private Slider _playerThrusterSlider;
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
         _currentAmmo = _maxAmmo;
         _currentMissiles = _missileMaxAmmo;
         _currentLives = _maxLives;
-        _thrustTotal = 5f;
+        _currThrust = _thrustTotal;
 
 
         if (_spawnManager == null)
@@ -114,9 +115,12 @@ public class Player : MonoBehaviour
             _audioSource.clip = _laserSoundClip;
         }
 
-        //_thrustBar = GameObject.Find("PlayerThruster").gameObject;
-        //_thrustBar.transform.GetChild(0).gameObject.SetActive(true);
-        //SetMaxThrust();
+        _thrustBar = GameObject.Find("PlayerThruster").gameObject;
+        _thrustBar.transform.GetChild(0).gameObject.SetActive(true);
+        _uiManager = _thrustBar.transform.GetChild(0).GetComponent<UIManager>();
+        _uiManager.Thruster(_thrustTotal);
+
+
     }
 
     // Update is called once per frame
@@ -146,7 +150,17 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(_horizontal, _vertical, 0);
 
+        if (_isThrustActive == true)
+        {
+            transform.Translate(direction * _thrustSpeed * Time.deltaTime);
+            _currThrust -= Time.deltaTime;
+            //update ui - tell new value/s
+        }
+        else
+        {
         transform.Translate(direction * _speed * Time.deltaTime);
+        }
+
 
         if (transform.position.y >= 0)
         {
@@ -176,36 +190,44 @@ public class Player : MonoBehaviour
         if (_isThrustEnabled == true)
         {
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) || _negSpeed == false)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && _currThrust > 0)
             {
                 //neg spped false, _thrustSpeed;
-                if (_negSpeed == false)
-                {
-                    if (this.gameObject.activeSelf)
-                        this.gameObject.SetActive(true);
+             
 
-                    Vector3 direction = new Vector3(_horizontal, _vertical, 0);
-                    transform.Translate(direction * _thrustSpeed * Time.deltaTime);
-
-                }
+                _isThrustActive = true;
+                StopCoroutine(_thrustCooldown);
+                               
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift) || _negSpeed == true)
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 //neg speed true, _speed;
-                if (this.gameObject.activeSelf)
-                    this.gameObject.SetActive(false);
+              
+                _isThrustActive = false;
+                _thrustCooldown = StartCoroutine(ThrustCooldownCoroutine());
 
-                Vector3 direction = new Vector3(_horizontal, _vertical, 0);
-                transform.Translate(direction * _speed * Time.deltaTime);
             }
-            StartCoroutine(ThrustCooldownCoroutine());
+            else if (_currThrust <= 0)
+            {
+                _currThrust = 0;
+                _isThrustActive = false;
+            }
         }
     }
 
+
+
     IEnumerator ThrustCooldownCoroutine()
     {
-        yield return new WaitForSeconds(5.0f);
-        _isThrustEnabled = false;
+       while (_currThrust < _thrustTotal)
+        {
+            yield return null;
+            _currThrust += Time.deltaTime;
+            if (_currThrust >= _thrustTotal)
+            {
+                _currThrust = _thrustTotal;
+            }
+        }
 
     }
 

@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
-    [SerializeField] private TMP_Text _thrusterSlider;
+    [SerializeField] private Slider _thrusterSlider;
     [SerializeField] private TMP_Text _shield_Lives_Display;
     [SerializeField] private TMP_Text _bossDefeatText;
     [SerializeField] private TMP_Text _youWinText;
@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     private SpawnManager _spawnManager;
 
     private GameObject _bossHealthBar;
+    private GameObject _thrustBar;
 
     public void UpdateScore(int playerscore)
     {
@@ -48,10 +49,10 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void Thruster() //the bar goes down as left shift is pressed
+    public void Thruster(float currthrust) //the bar goes down as left shift is pressed
     {
-       
-
+        _thrusterSlider.value = currthrust;
+        _thrustBar.gameObject.SetActive(true);
     }
     
 
