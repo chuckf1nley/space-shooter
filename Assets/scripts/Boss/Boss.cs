@@ -12,7 +12,6 @@ public class Boss : MonoBehaviour
     [SerializeField] private AudioClip _audioDeathClip;
     [SerializeField] private int _currentBossHealth;
     [SerializeField] private Animator _enemyDeathAnim;
-    private GameObject _healthBarSlider;
     private AudioSource _audioSource;
     private BoxCollider2D[] _cols;
     private UIManager _ui;
@@ -45,14 +44,13 @@ public class Boss : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _audioDeathClip = GetComponent<AudioClip>();
         _cols = GetComponents<BoxCollider2D>();
-        //_ui = Object.FindObjectOfType<UIManager>();
         _ui = GameObject.Find("Canvas").GetComponent<UIManager>();
-        
 
-        _healthBarSlider = GameObject.Find("BossHealthBar").gameObject;
-        _healthBarSlider.transform.GetChild(0).gameObject.SetActive(true);
-        _healthBarScript = _healthBarSlider.transform.GetChild(0).GetComponent<BossHealthBar>();
-        _healthBarScript.SetMaxHealth(_maxBossHealth);
+
+        //_healthBarSlider = GameObject.Find("BossHealthBar").gameObject;
+        //_healthBarSlider.transform.GetChild(0).gameObject.SetActive(true);
+        //_healthBarScript = _healthBarSlider.transform.GetChild(0).GetComponent<BossHealthBar>();
+        //_healthBarScript.SetMaxHealth(_maxBossHealth);
 
         _isBossAlive = true;
 
@@ -88,6 +86,7 @@ public class Boss : MonoBehaviour
         int rng = Random.Range(0, 20);
         //GenerateWeaponIndex(rng);
 
+        _ui.BossHealthBar(_currentBossHealth);
     }
 
     //BUGS - boss health doesnt show up, boss doesnt fire

@@ -17,18 +17,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
     [SerializeField] private TMP_Text _takeTheL;
     [SerializeField] private TMP_Text _laserAmmoText;
-    [SerializeField] private Slider _thrusterSlider;
     [SerializeField] private TMP_Text _shield_Lives_Display;
     [SerializeField] private TMP_Text _bossDefeatText;
     [SerializeField] private TMP_Text _youWinText;
     [SerializeField] private TMP_Text _currWaveText;
+    [SerializeField] private Slider _thrusterSlider;
+    [SerializeField] private Slider _bossHealthSlider;
     private bool _isBossActive;
 
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
 
     private GameObject _bossHealthBar;
-    private GameObject _thrustBar;
 
     public void UpdateScore(int playerscore)
     {
@@ -52,7 +52,6 @@ public class UIManager : MonoBehaviour
     public void Thruster(float currthrust) //the bar goes down as left shift is pressed
     {
         _thrusterSlider.value = currthrust;
-        _thrustBar.gameObject.SetActive(true);
     }
     
 
@@ -72,17 +71,20 @@ public class UIManager : MonoBehaviour
         _currWaveText.text = "Wave:" + currentWave.ToString(); 
     }
 
-    public void BossHealth(int _currentBossHealth)
+    public void BossHealth(int bossHealthBar)
     {
         if (_isBossActive == true)
         {
             _bossHealthBar.gameObject.SetActive(true);
         }
+    }
 
-        //else 
-        //{
-        //    _bossHealthBar.gameObject.SetActive(false);
-        //}
+    public void BossHealthBar(float currBossHealth)
+    {
+        //code should look similar to this
+        //slider.value = currbosshealth;
+
+        _bossHealthSlider.value = currBossHealth;
     }
 
     void GameOverSequence()
@@ -92,6 +94,7 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         _takeTheL.gameObject.SetActive(true);
+        _spawnManager.StopSpawning();
         GameOverFlickerRoutine();
         RestartDisplay();
         ExitDisplay();
@@ -111,6 +114,7 @@ public class UIManager : MonoBehaviour
         //reference line - null reference execption - 115
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _gameManager.YouWin();
+        _spawnManager.StopSpawning();
         //set text active intead
         //_bossDefeated = Instantiate(_bossDefeatText);
 
